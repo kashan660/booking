@@ -14,7 +14,7 @@ body {
 
 /* Login Page Styles */
 .login-body {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: var(--brand-gradient);
     min-height: 100vh;
     display: flex;
     align-items: center;
@@ -50,7 +50,7 @@ body {
 }
 
 .login-header {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: var(--brand-gradient);
     color: white;
     text-align: center;
     padding: 2rem;
@@ -92,7 +92,7 @@ body {
 
 .login-form label i {
     margin-right: 0.5rem;
-    color: #667eea;
+    color: var(--secondary-blue);
     width: 16px;
 }
 
@@ -110,9 +110,9 @@ body {
 .login-form input[type="text"]:focus,
 .login-form input[type="password"]:focus {
     outline: none;
-    border-color: #667eea;
+    border-color: var(--secondary-blue);
     background-color: white;
-    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
 }
 
 .password-input {
@@ -133,7 +133,7 @@ body {
 }
 
 .password-toggle:hover {
-    color: #667eea;
+    color: var(--secondary-blue);
 }
 
 .checkbox-label {
@@ -150,7 +150,7 @@ body {
 
 .login-btn {
     width: 100%;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: var(--brand-gradient);
     color: white;
     border: none;
     padding: 0.875rem 1.5rem;
@@ -167,7 +167,7 @@ body {
 
 .login-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+    box-shadow: 0 10px 24px rgba(79, 70, 229, 0.35);
 }
 
 .login-btn:active {
@@ -236,7 +236,7 @@ body {
 }
 
 .back-link:hover {
-    color: #667eea;
+    color: var(--secondary-blue);
 }
 
 /* Responsive Design for Login */
@@ -260,7 +260,7 @@ body {
 
 /* Admin Header */
 .admin-header {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: var(--brand-gradient);
     color: white;
     padding: 1rem 0;
     position: fixed;
@@ -770,11 +770,11 @@ body {
 
 .strength-good .strength-fill {
     width: 75%;
-    background-color: #3b82f6;
+    background-color: var(--secondary-blue);
 }
 
 .strength-good .strength-text {
-    color: #3b82f6;
+    color: var(--secondary-blue);
 }
 
 .strength-strong .strength-fill {
@@ -1187,7 +1187,7 @@ body {
 }
 
 .stat-icon.open {
-    background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+    background: linear-gradient(135deg, var(--secondary-blue), #1d4ed8);
 }
 
 .stat-icon.progress {
@@ -1205,7 +1205,7 @@ body {
 .stat-info h3 {
     font-size: 2rem;
     font-weight: 700;
-    color: #1f2937;
+    color: var(--text-dark);
     margin-bottom: 0.25rem;
 }
 

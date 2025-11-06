@@ -22,7 +22,7 @@
 }
 
 .breadcrumb a {
-    color: #007bff;
+    color: var(--secondary-blue);
     text-decoration: none;
 }
 
@@ -50,7 +50,7 @@
 }
 
 .category {
-    background: #007bff;
+    background: var(--secondary-blue);
     color: white;
     padding: 0.25rem 0.75rem;
     border-radius: 20px;
@@ -120,14 +120,14 @@
 }
 
 .table-of-contents a {
-    color: #007bff;
+    color: var(--secondary-blue);
     text-decoration: none;
     font-weight: 500;
     transition: color 0.3s ease;
 }
 
 .table-of-contents a:hover {
-    color: #0056b3;
+    color: var(--secondary-blue);
     text-decoration: underline;
 }
 
@@ -147,7 +147,7 @@
     color: #2c3e50;
     margin-bottom: 1.5rem;
     padding-bottom: 0.5rem;
-    border-bottom: 3px solid #007bff;
+    border-bottom: 3px solid var(--secondary-blue);
 }
 
 .article-content h3 {
@@ -212,9 +212,9 @@
 }
 
 .cta-box {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: var(--brand-gradient);
     color: white;
-    border-left-color: #667eea;
+    border-left-color: var(--secondary-blue);
     text-align: center;
 }
 
@@ -281,7 +281,7 @@
 }
 
 .cost-item p {
-    color: #007bff;
+    color: var(--secondary-blue);
     font-size: 1.5rem;
     font-weight: 700;
     margin: 0;
@@ -310,7 +310,7 @@
 }
 
 .tag:hover {
-    background: #007bff;
+    background: var(--secondary-blue);
     color: white;
 }
 
@@ -400,7 +400,7 @@
 }
 
 .related-post h4 a:hover {
-    color: #007bff;
+    color: var(--secondary-blue);
 }
 
 .related-post p {
@@ -424,12 +424,12 @@
 }
 
 .btn-primary {
-    background: #007bff;
+    background: var(--secondary-blue);
     color: white;
 }
 
 .btn-primary:hover {
-    background: #0056b3;
+    background: var(--secondary-blue);
     transform: translateY(-2px);
     box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
 }

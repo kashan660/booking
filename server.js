@@ -62,6 +62,24 @@ const requireAdmin = async (req, res, next) => {
     }
 };
 const app = express();
+
+// Enforce canonical host (remove www.) in production to prevent split authority
+app.use((req, res, next) => {
+  try {
+    const host = req.headers.host || '';
+    const isProd = (process.env.NODE_ENV || 'production') === 'production';
+    // Only enforce in production and when the request uses a public host
+    if (isProd && host.startsWith('www.')) {
+      const newHost = host.slice(4); // remove 'www.'
+      const proto = (req.headers['x-forwarded-proto'] || req.protocol || 'https');
+      const targetUrl = `${proto}://${newHost}${req.originalUrl}`;
+      return res.redirect(301, targetUrl);
+    }
+  } catch (e) {
+    // Fail open if anything unexpected occurs
+  }
+  next();
+});
 const PORT = process.env.PORT || 3000;
 
 // Initialize services with error handling
@@ -719,6 +737,15 @@ app.get('/api/quotes', async (req, res) => {
   }
 });
 
+// Simple health check endpoint
+app.get('/api/health', (req, res) => {
+  try {
+    res.json({ ok: true, port: PORT, timestamp: new Date().toISOString() });
+  } catch (e) {
+    res.status(500).json({ ok: false, error: e.message });
+  }
+});
+
 app.post('/api/quotes', async (req, res) => {
   try {
     const quoteData = req.body;
@@ -752,7 +779,22 @@ app.post('/api/quotes', async (req, res) => {
 app.get('/api/tickets', async (req, res) => {
   try {
     const tickets = await db.getTickets();
-    res.json(tickets);
+    // Normalize fields for frontend expectations
+    const normalized = (tickets || []).map(t => ({
+      id: t.id,
+      customerName: t.customerName || t.customer_name || '',
+      email: t.customerEmail ? t.customerEmail : (t.customer_email || ''),
+      phone: t.customerPhone ? t.customerPhone : (t.customer_phone || ''),
+      subject: t.title || t.subject || '',
+      category: t.category || 'general',
+      priority: t.priority || 'medium',
+      status: t.status || 'open',
+      description: t.description || '',
+      createdAt: t.createdAt ? t.createdAt : (t.created_at ? new Date(t.created_at).toISOString() : new Date().toISOString()),
+      updatedAt: t.updatedAt ? t.updatedAt : (t.updated_at ? new Date(t.updated_at).toISOString() : new Date().toISOString()),
+      responses: t.responses || []
+    }));
+    res.json({ success: true, data: normalized });
   } catch (error) {
     console.error('Error fetching tickets:', error);
     res.status(500).json({ error: 'Failed to fetch tickets' });
@@ -761,8 +803,19 @@ app.get('/api/tickets', async (req, res) => {
 
 app.post('/api/tickets', async (req, res) => {
   try {
-    const ticketData = req.body;
-    
+    const body = req.body || {};
+    // Normalize incoming data to database expected fields (camelCase)
+    const ticketData = {
+      title: body.title || body.subject || 'Support Ticket',
+      description: body.description || '',
+      status: body.status || 'open',
+      priority: body.priority || 'medium',
+      category: body.category || 'general',
+      customerName: body.customerName || body.customer_name || body.name || '',
+      customerEmail: body.customerEmail || body.customer_email || body.email || '',
+      customerPhone: body.customerPhone || body.customer_phone || body.phone || ''
+    };
+
     // Add referral tracking if user is authenticated
     if (req.cookies.token) {
       try {

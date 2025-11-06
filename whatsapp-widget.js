@@ -19,21 +19,25 @@ class WhatsAppWidget {
         // Use fallback configuration as primary (API requires authentication)
         // TODO: Replace with your actual WhatsApp Business number (include country code)
         // Example: '+1234567890' for US number or '+447123456789' for UK number
-        this.whatsappNumber = '+15551234567'; // CHANGE THIS TO YOUR WHATSAPP NUMBER
+        this.whatsappNumber = '+16467197124'; // CHANGE THIS TO YOUR WHATSAPP NUMBER
         this.isEnabled = true;
         this.defaultMessage = 'Hello! I\'m interested in your moving services. Can you help me?';
         
         // Optionally try to load from API (but don't depend on it)
         try {
             const response = await fetch('/api/admin/whatsapp-settings');
-            if (response.ok) {
-                const data = await response.json();
-                
-                // Only override if API has valid settings
-                if (data.whatsapp_number && data.is_enabled) {
-                    this.whatsappNumber = data.whatsapp_number;
-                    this.isEnabled = data.is_enabled;
-                    this.defaultMessage = data.default_message || this.defaultMessage;
+            const contentType = response.headers.get('content-type') || '';
+            if (response.ok && contentType.includes('application/json')) {
+                try {
+                    const data = await response.json();
+                    // Only override if API has valid settings
+                    if (data.whatsapp_number && data.is_enabled) {
+                        this.whatsappNumber = data.whatsapp_number;
+                        this.isEnabled = data.is_enabled;
+                        this.defaultMessage = data.default_message || this.defaultMessage;
+                    }
+                } catch (parseErr) {
+                    console.warn('WhatsApp settings JSON parse failed:', parseErr);
                 }
             }
         } catch (error) {

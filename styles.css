@@ -38,9 +38,10 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Professional Moving Company Color Palette */
 :root {
-    --primary-blue: #3730A3;
-    --secondary-blue: #6366F1;
-    --accent-orange: #F59E0B;
+    /* Elevated Professional Theme Palette */
+    --primary-blue: #1E40AF; /* deep indigo */
+    --secondary-blue: #6366F1; /* indigo accent */
+    --accent-orange: #F59E0B; /* warm amber */
     --light-orange: #FED7AA;
     --success-green: #10B981;
     --warning-yellow: #FBBF24;
@@ -50,21 +51,199 @@ h1, h2, h3, h4, h5, h6 {
     --background-light: #F8FAFC;
     --background-section: #F3F4F6;
     --border-color: #E5E7EB;
-    --shadow-light: 0 1px 3px rgba(0, 0, 0, 0.1);
-    --shadow-medium: 0 4px 6px rgba(0, 0, 0, 0.1);
-    --shadow-heavy: 0 10px 25px rgba(0, 0, 0, 0.15);
+    --shadow-light: 0 1px 3px rgba(0, 0, 0, 0.08);
+    --shadow-medium: 0 6px 12px rgba(0, 0, 0, 0.12);
+    --shadow-heavy: 0 14px 35px rgba(0, 0, 0, 0.18);
+
+    /* New brand accents */
+    --brand-gradient: linear-gradient(135deg, #0EA5E9, #6366F1);
+    --brand-gradient-hover: linear-gradient(135deg, #0284C7, #4F46E5);
+    --surface: #FFFFFF;
 }
 
 /* Header Styles */
 .header {
     background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
-    box-shadow: 0 2px 20px rgba(30, 58, 138, 0.1);
+    box-shadow: 0 2px 24px rgba(30, 58, 138, 0.12);
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     z-index: 1000;
-    border-bottom: 3px solid var(--accent-orange);
+    border-bottom: 3px solid var(--secondary-blue);
+}
+
+/* Contact Strip Styles */
+.contact-strip {
+    background: var(--text-dark);
+    color: #ffffff;
+    font-size: 0.95rem;
+    line-height: 1.4;
+    padding: 8px 0;
+}
+
+.contact-strip a.contact-phone {
+    color: #ffffff;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.contact-strip a.contact-phone:hover {
+    text-decoration: underline;
+}
+
+.contact-strip-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+}
+
+.contact-label {
+    color: #e5e7eb;
+    margin-right: 8px;
+}
+
+.contact-hours {
+    color: #e5e7eb;
+}
+
+@media (max-width: 768px) {
+    .contact-strip-inner {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+    }
+}
+
+/* Mobile Micro-Banner (fixed bottom quick actions) */
+.micro-banner {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 999;
+    background: var(--text-dark);
+    box-shadow: 0 -6px 20px rgba(0,0,0,0.18);
+    display: none; /* default hidden on desktop */
+}
+
+.micro-banner-inner {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 16px;
+}
+
+.micro-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    text-decoration: none;
+    font-weight: 700;
+    border-radius: 10px;
+    padding: 10px 12px;
+    border: 2px solid transparent;
+    transition: all 0.2s ease;
+}
+
+.micro-call {
+    color: #ffffff;
+    background: transparent;
+    border-color: #ffffff;
+}
+
+.micro-quote {
+    color: #ffffff;
+    background: linear-gradient(135deg, #c2410c, #9a3412);
+    box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
+}
+
+.micro-btn:hover,
+.micro-btn:focus-visible {
+    transform: translateY(-1px);
+    outline: none;
+}
+
+.micro-icon {
+    font-size: 1rem;
+}
+
+.micro-text {
+    font-size: 0.95rem;
+}
+
+/* Provide reading room when banner is present */
+@media (max-width: 768px) {
+    .micro-banner { display: block; }
+    body.has-micro-banner { padding-bottom: 64px; }
+}
+
+/* Desktop floating Call Now button */
+.desktop-call-button {
+    position: fixed;
+    right: 20px;
+    bottom: 24px;
+    display: none; /* hidden by default, shown on desktop */
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, #0EA5E9, #6366F1);
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 700;
+    border-radius: 999px;
+    padding: 12px 16px;
+    box-shadow: 0 8px 24px rgba(99, 102, 241, 0.35);
+    border: 2px solid rgba(255,255,255,0.3);
+    z-index: 998;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Alternate position to avoid WhatsApp bubble overlap */
+.desktop-call-button.desktop-call-left {
+    right: auto;
+    left: 20px;
+}
+
+.desktop-call-button:hover,
+.desktop-call-button:focus-visible {
+    transform: translateY(-1px);
+    outline: none;
+    box-shadow: 0 12px 30px rgba(99, 102, 241, 0.45);
+}
+
+.desktop-call-button .call-icon {
+    font-size: 1.1rem;
+}
+
+.desktop-call-button .call-text {
+    font-size: 0.95rem;
+}
+
+@media (min-width: 769px) {
+    .desktop-call-button { display: inline-flex; }
+}
+
+/* Footer accessibility link styling */
+.footer-accessibility {
+    text-align: center;
+    padding: 12px 0;
+    margin-top: 8px;
+    border-top: 1px solid var(--border-color);
+}
+
+.footer-accessibility a {
+    color: var(--text-medium);
+    text-decoration: underline;
+    font-weight: 600;
+}
+
+.footer-accessibility a:hover,
+.footer-accessibility a:focus {
+    color: var(--primary-blue);
 }
 
 .navbar {
@@ -136,7 +315,7 @@ h1, h2, h3, h4, h5, h6 {
     left: 0;
     width: 0;
     height: 2px;
-    background: linear-gradient(90deg, #c2410c, var(--secondary-blue));
+    background: linear-gradient(90deg, var(--accent-orange), var(--secondary-blue));
     transition: width 0.3s ease;
 }
 
@@ -1190,26 +1369,25 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .btn-primary {
-    /* Darkened gradient for better contrast with white text */
-    background: linear-gradient(135deg, #c2410c, #9a3412);
+    background: var(--brand-gradient);
     color: white;
-    box-shadow: 0 6px 20px rgba(154, 52, 18, 0.35);
+    box-shadow: 0 6px 22px rgba(79, 70, 229, 0.35);
 }
 
 .btn-primary:hover {
-    background: linear-gradient(135deg, #9a3412, #7c2d12);
+    background: var(--brand-gradient-hover);
     transform: translateY(-3px);
-    box-shadow: 0 10px 30px rgba(154, 52, 18, 0.45);
+    box-shadow: 0 12px 32px rgba(79, 70, 229, 0.45);
 }
 
 .btn-secondary {
     background: transparent;
-    color: var(--primary-blue);
-    border: 3px solid var(--primary-blue);
+    color: var(--secondary-blue);
+    border: 3px solid var(--secondary-blue);
 }
 
 .btn-secondary:hover {
-    background: var(--primary-blue);
+    background: var(--brand-gradient);
     color: white;
     transform: translateY(-3px);
     box-shadow: var(--shadow-heavy);
@@ -1642,8 +1820,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .checkbox-label input[type="checkbox"]:checked + .checkmark {
-    background: #3b82f6;
-    border-color: #3b82f6;
+    background: var(--secondary-blue);
+    border-color: var(--secondary-blue);
 }
 
 .checkbox-label input[type="checkbox"]:checked + .checkmark::after {
@@ -1668,7 +1846,7 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 1.5rem;
     font-weight: 600;
     margin-bottom: 2rem;
-    color: #1f2937;
+    color: var(--text-dark);
 }
 
 .quotes-list {
@@ -1686,7 +1864,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .quote-card:hover {
-    border-color: #3b82f6;
+    border-color: var(--secondary-blue);
     transform: translateY(-2px);
 }
 
@@ -1700,13 +1878,13 @@ h1, h2, h3, h4, h5, h6 {
 .company-name {
     font-size: 1.25rem;
     font-weight: 600;
-    color: #1f2937;
+    color: var(--text-dark);
 }
 
 .quote-price {
     font-size: 1.5rem;
     font-weight: 700;
-    color: #3b82f6;
+    color: var(--secondary-blue);
 }
 
 .quote-details {
@@ -2214,6 +2392,23 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: 600;
     position: relative;
     z-index: 1;
+}
+
+/* Accessibility: Skip link for keyboard users */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: -9999px;
+  background: #fff;
+  color: var(--text-dark);
+  padding: 8px 12px;
+  border: 2px solid var(--secondary-blue);
+  border-radius: 6px;
+  z-index: 1000;
+}
+.skip-link:focus {
+  left: 12px;
+  top: 12px;
 }
 
 /* Universal form field overflow prevention for all mobile devices */
@@ -3193,7 +3388,7 @@ h1, h2, h3, h4, h5, h6 {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: var(--brand-gradient);
     color: white;
     border-radius: 12px 12px 0 0;
 }
@@ -3224,7 +3419,7 @@ h1, h2, h3, h4, h5, h6 {
     padding: 1.5rem;
     border-radius: 8px;
     margin-bottom: 2rem;
-    border-left: 4px solid #667eea;
+    border-left: 4px solid var(--secondary-blue);
 }
 
 .quote-summary p {
@@ -4464,7 +4659,7 @@ html {
 
 /* Enhanced CTA Styles */
 .enhanced-cta {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: var(--brand-gradient);
     position: relative;
     overflow: hidden;
 }

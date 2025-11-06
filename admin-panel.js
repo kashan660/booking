@@ -74,14 +74,21 @@ class AdminPanel {
     async loadWhatsAppSettings() {
         try {
             const response = await fetch('/api/admin/whatsapp-settings');
-            if (response.ok) {
-                const settings = await response.json();
-                document.getElementById('whatsappNumber').value = settings.whatsapp_number || '';
-                document.getElementById('businessHours').value = settings.business_hours || '';
-                document.getElementById('defaultMessage').value = settings.default_message || '';
-                document.getElementById('autoReply').value = settings.auto_reply || '';
-                document.getElementById('whatsappEnabled').checked = settings.is_enabled || false;
+            if (!response.ok) {
+                console.warn('WhatsApp settings request failed:', response.status);
+                return;
             }
+            const ct = response.headers.get('content-type') || '';
+            if (!ct.includes('application/json')) {
+                console.warn('WhatsApp settings returned non-JSON content-type:', ct);
+                return;
+            }
+            const settings = await response.json();
+            document.getElementById('whatsappNumber').value = settings.whatsapp_number || '';
+            document.getElementById('businessHours').value = settings.business_hours || '';
+            document.getElementById('defaultMessage').value = settings.default_message || '';
+            document.getElementById('autoReply').value = settings.auto_reply || '';
+            document.getElementById('whatsappEnabled').checked = settings.is_enabled || false;
         } catch (error) {
             console.error('Failed to load WhatsApp settings:', error);
         }
@@ -112,8 +119,15 @@ class AdminPanel {
                     window.whatsappWidget.loadSettings();
                 }
             } else {
-                const error = await response.json();
-                this.showAlert('whatsappError', error.error || 'Failed to save WhatsApp settings');
+                let errorMsg = 'Failed to save WhatsApp settings';
+                const ct = response.headers.get('content-type') || '';
+                if (ct.includes('application/json')) {
+                    try {
+                        const error = await response.json();
+                        errorMsg = error.error || error.message || errorMsg;
+                    } catch (_) {}
+                }
+                this.showAlert('whatsappError', errorMsg);
             }
         } catch (error) {
             console.error('Save WhatsApp settings error:', error);
@@ -124,13 +138,20 @@ class AdminPanel {
     async loadAnalyticsSettings() {
         try {
             const response = await fetch('/api/admin/analytics-settings');
-            if (response.ok) {
-                const settings = await response.json();
-                document.getElementById('gaTrackingId').value = settings.ga_tracking_id || '';
-                document.getElementById('gtmContainerId').value = settings.gtm_container_id || '';
-                document.getElementById('analyticsEnabled').checked = settings.is_enabled || false;
-                document.getElementById('trackEvents').checked = settings.track_events !== false;
+            if (!response.ok) {
+                console.warn('Analytics settings request failed:', response.status);
+                return;
             }
+            const ct = response.headers.get('content-type') || '';
+            if (!ct.includes('application/json')) {
+                console.warn('Analytics settings returned non-JSON content-type:', ct);
+                return;
+            }
+            const settings = await response.json();
+            document.getElementById('gaTrackingId').value = settings.ga_tracking_id || '';
+            document.getElementById('gtmContainerId').value = settings.gtm_container_id || '';
+            document.getElementById('analyticsEnabled').checked = settings.is_enabled || false;
+            document.getElementById('trackEvents').checked = settings.track_events !== false;
         } catch (error) {
             console.error('Failed to load analytics settings:', error);
         }
@@ -156,8 +177,15 @@ class AdminPanel {
             if (response.ok) {
                 this.showAlert('analyticsSuccess', 'Analytics settings saved successfully! Please refresh the page to apply changes.');
             } else {
-                const error = await response.json();
-                this.showAlert('analyticsError', error.error || 'Failed to save analytics settings');
+                let errorMsg = 'Failed to save analytics settings';
+                const ct = response.headers.get('content-type') || '';
+                if (ct.includes('application/json')) {
+                    try {
+                        const error = await response.json();
+                        errorMsg = error.error || error.message || errorMsg;
+                    } catch (_) {}
+                }
+                this.showAlert('analyticsError', errorMsg);
             }
         } catch (error) {
             console.error('Save analytics settings error:', error);
@@ -168,15 +196,22 @@ class AdminPanel {
     async loadWebsiteSettings() {
         try {
             const response = await fetch('/api/admin/website-settings');
-            if (response.ok) {
-                const settings = await response.json();
-                document.getElementById('siteTitle').value = settings.site_title || '';
-                document.getElementById('siteDescription').value = settings.site_description || '';
-                document.getElementById('contactEmail').value = settings.contact_email || '';
-                document.getElementById('contactPhone').value = settings.contact_phone || '';
-                document.getElementById('businessAddress').value = settings.business_address || '';
-                document.getElementById('maintenanceMode').checked = settings.maintenance_mode || false;
+            if (!response.ok) {
+                console.warn('Website settings request failed:', response.status);
+                return;
             }
+            const ct = response.headers.get('content-type') || '';
+            if (!ct.includes('application/json')) {
+                console.warn('Website settings returned non-JSON content-type:', ct);
+                return;
+            }
+            const settings = await response.json();
+            document.getElementById('siteTitle').value = settings.site_title || '';
+            document.getElementById('siteDescription').value = settings.site_description || '';
+            document.getElementById('contactEmail').value = settings.contact_email || '';
+            document.getElementById('contactPhone').value = settings.contact_phone || '';
+            document.getElementById('businessAddress').value = settings.business_address || '';
+            document.getElementById('maintenanceMode').checked = settings.maintenance_mode || false;
         } catch (error) {
             console.error('Failed to load website settings:', error);
         }
@@ -206,8 +241,15 @@ class AdminPanel {
             if (response.ok) {
                 this.showAlert('websiteSuccess', 'Website settings saved successfully!');
             } else {
-                const error = await response.json();
-                this.showAlert('websiteError', error.error || 'Failed to save website settings');
+                let errorMsg = 'Failed to save website settings';
+                const ct = response.headers.get('content-type') || '';
+                if (ct.includes('application/json')) {
+                    try {
+                        const error = await response.json();
+                        errorMsg = error.error || error.message || errorMsg;
+                    } catch (_) {}
+                }
+                this.showAlert('websiteError', errorMsg);
             }
         } catch (error) {
             console.error('Save website settings error:', error);

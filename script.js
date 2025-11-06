@@ -134,6 +134,50 @@ if (hamburger && navMenu) {
     });
 }
 
+// Inject a US-focused contact strip site-wide (for pages that include script.js)
+document.addEventListener('DOMContentLoaded', function() {
+    injectContactStrip();
+    injectMicroBanner();
+    injectDesktopCallButton();
+    injectAccessibilityLink();
+});
+
+function injectContactStrip() {
+    try {
+        // Avoid duplicate insertion if page already includes a contact strip
+        if (document.querySelector('.contact-strip')) return;
+
+        const strip = document.createElement('div');
+        strip.className = 'contact-strip';
+        strip.setAttribute('aria-label', 'Contact information');
+        strip.innerHTML = `
+            <div class="container contact-strip-inner">
+                <div class="contact-left">
+                    <span class="contact-label">Free Quote Hotline:</span>
+                    <a href="tel:+16467197124" class="contact-phone" aria-label="Call Lugvia free quote hotline at +1 646 719 7124">+1 (646) 719-7124</a>
+                </div>
+                <div class="contact-right">
+                    <span class="contact-hours" aria-label="Business hours">Mon-Sat 8am-8pm ET</span>
+                </div>
+            </div>
+        `;
+
+        const header = document.querySelector('header.header');
+        const skipLink = document.querySelector('.skip-link');
+
+        if (header && header.parentNode) {
+            header.parentNode.insertBefore(strip, header);
+        } else if (skipLink && skipLink.parentNode) {
+            // If no header, insert after skip link for accessibility flow
+            skipLink.parentNode.insertBefore(strip, skipLink.nextSibling);
+        } else if (document.body) {
+            document.body.insertBefore(strip, document.body.firstChild);
+        }
+    } catch (e) {
+        console.warn('Failed to inject contact strip:', e);
+    }
+}
+
 // Function to add auth buttons to mobile menu
 function addAuthButtonsToMobileMenu() {
     const navMenu = document.querySelector('.nav-menu');
@@ -1023,7 +1067,8 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         
         input.addEventListener('focus', function() {
-            this.style.borderColor = '#3b82f6';
+            const secondaryBlue = getComputedStyle(document.documentElement).getPropertyValue('--secondary-blue').trim() || '#6366F1';
+            this.style.borderColor = secondaryBlue;
         });
     });
     
@@ -1199,15 +1244,25 @@ async function checkAuthStatus() {
         const response = await fetch('/api/auth/me', {
             credentials: 'include'
         });
-        
-        if (response.ok) {
-            const userData = await response.json();
-            currentUser = userData.user;
-            userReferralCode = userData.user.referral_code;
-            updateUIForLoggedInUser(userData.user);
-        } else {
-            updateUIForGuest();
+
+        // Only attempt JSON parsing if content-type is JSON and status is OK
+        const contentType = response.headers.get('content-type') || '';
+        if (response.ok && contentType.includes('application/json')) {
+            try {
+                const userData = await response.json();
+                if (userData && userData.user) {
+                    currentUser = userData.user;
+                    userReferralCode = userData.user.referral_code;
+                    updateUIForLoggedInUser(userData.user);
+                    return;
+                }
+            } catch (parseErr) {
+                console.warn('Auth response JSON parse failed:', parseErr);
+            }
         }
+
+        // Fallback: treat as guest for non-JSON or non-OK responses
+        updateUIForGuest();
     } catch (error) {
         console.error('Auth check failed:', error);
         updateUIForGuest();
@@ -1545,4 +1600,146 @@ function initializeFAQ() {
             observer.observe(item, { attributes: true });
         }
     });
+}
+
+// Inject a mobile micro-banner with primary CTAs (Call + Get Quote)
+function injectMicroBanner() {
+    try {
+        // Opt-out: pages can add data-no-microbanner to <body> to skip injection
+        if (document.body && document.body.hasAttribute('data-no-microbanner')) return;
+
+        // Avoid duplicates
+        if (document.querySelector('.micro-banner')) return;
+
+        const banner = document.createElement('div');
+        banner.className = 'micro-banner';
+        banner.setAttribute('role', 'region');
+        banner.setAttribute('aria-label', 'Quick actions');
+        banner.innerHTML = `
+            <div class="micro-banner-inner">
+                <a href="tel:+16467197124" class="micro-btn micro-call" aria-label="Call Lugvia Movers">
+                    <span class="micro-icon" aria-hidden="true">📞</span>
+                    <span class="micro-text">Call</span>
+                </a>
+                <a href="/contact.html?utm_source=microbanner" class="micro-btn micro-quote" aria-label="Get a free quote">
+                    <span class="micro-icon" aria-hidden="true">💬</span>
+                    <span class="micro-text">Get Quote</span>
+                </a>
+            </div>
+        `;
+
+        // Insert at end of body to avoid reflow issues
+        if (document.body) {
+            document.body.appendChild(banner);
+            document.body.classList.add('has-micro-banner');
+        }
+
+        // Basic click tracking if analytics layer exists
+        banner.addEventListener('click', (e) => {
+            const link = e.target.closest('a.micro-btn');
+            if (!link) return;
+            try {
+                // Google Tag Manager / dataLayer
+                if (window.dataLayer && Array.isArray(window.dataLayer)) {
+                    window.dataLayer.push({
+                        event: 'micro_banner_click',
+                        action: link.classList.contains('micro-call') ? 'call' : 'quote',
+                        location: 'micro_banner'
+                    });
+                }
+            } catch (err) {
+                // Non-blocking
+                console.debug('Micro-banner tracking unavailable:', err);
+            }
+        });
+    } catch (e) {
+        console.warn('Failed to inject micro-banner:', e);
+    }
+}
+
+// Inject a desktop floating "Call Now" button (bottom-right)
+function injectDesktopCallButton() {
+    try {
+        // Opt-out: pages can add data-no-desktop-call to <body> to skip injection
+        if (document.body && document.body.hasAttribute('data-no-desktop-call')) return;
+
+        // Only show on desktop widths
+        const isDesktop = window.matchMedia('(min-width: 769px)').matches;
+        if (!isDesktop) return;
+
+        // Avoid duplicates
+        if (document.querySelector('.desktop-call-button')) return;
+
+        const btn = document.createElement('a');
+        btn.href = 'tel:+16467197124';
+        btn.className = 'desktop-call-button';
+        btn.setAttribute('aria-label', 'Call Lugvia Movers');
+        btn.innerHTML = `
+            <span class="call-icon" aria-hidden="true">📞</span>
+            <span class="call-text">Call Now</span>
+        `;
+
+        // Append to body
+        if (document.body) {
+            document.body.appendChild(btn);
+            positionDesktopCallButton(btn);
+
+            // Observe for WhatsApp widget appearing later
+            const observer = new MutationObserver(() => positionDesktopCallButton(btn));
+            observer.observe(document.body, { childList: true, subtree: true });
+        }
+
+        // Basic click tracking
+        btn.addEventListener('click', () => {
+            try {
+                if (window.dataLayer && Array.isArray(window.dataLayer)) {
+                    window.dataLayer.push({
+                        event: 'desktop_call_click',
+                        action: 'call',
+                        location: 'desktop_floating_button'
+                    });
+                }
+            } catch (err) {
+                console.debug('Desktop call tracking unavailable:', err);
+            }
+        });
+    } catch (e) {
+        console.warn('Failed to inject desktop call button:', e);
+    }
+}
+
+// Reposition desktop call button to avoid overlapping WhatsApp widget
+function positionDesktopCallButton(btn) {
+    try {
+        const whatsapp = document.getElementById('whatsapp-widget');
+        if (whatsapp) {
+            // Move call button to bottom-left when WhatsApp bubble occupies bottom-right
+            btn.classList.add('desktop-call-left');
+        } else {
+            btn.classList.remove('desktop-call-left');
+        }
+    } catch (err) {
+        // Non-blocking
+    }
+}
+
+// Inject Accessibility Statement link into footer if present
+function injectAccessibilityLink() {
+    try {
+        // Avoid duplicates
+        if (document.getElementById('accessibility-link')) return;
+
+        const footer = document.querySelector('footer.footer');
+        if (!footer) return;
+
+        const wrap = document.createElement('div');
+        wrap.className = 'footer-accessibility';
+        wrap.innerHTML = `
+            <a id="accessibility-link" href="/accessibility.html" aria-label="Read our Accessibility Statement">Accessibility Statement</a>
+        `;
+
+        footer.appendChild(wrap);
+    } catch (e) {
+        console.warn('Failed to inject accessibility link:', e);
+    }
 }

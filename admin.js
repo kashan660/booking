@@ -182,7 +182,14 @@ class AdminPanel {
         if (changePasswordForm) {
             changePasswordForm.addEventListener('submit', (e) => {
                 e.preventDefault();
-                this.changePassword();
+                this.changePassword(e.target);
+            });
+        }
+        const changePasswordForm2 = document.getElementById('change-password-form');
+        if (changePasswordForm2) {
+            changePasswordForm2.addEventListener('submit', (e) => {
+                e.preventDefault();
+                this.changePassword(e.target);
             });
         }
         
@@ -1732,10 +1739,27 @@ class AdminPanel {
     }
 
     // Password Change Functionality
-    async changePassword() {
-        const currentPassword = document.getElementById('currentPassword').value;
-        const newPassword = document.getElementById('newPassword').value;
-        const confirmPassword = document.getElementById('confirmPassword').value;
+    async changePassword(formEl) {
+        // Prefer form-scoped elements via name attributes; fallback to global IDs
+        let currentPassword = '';
+        let newPassword = '';
+        let confirmPassword = '';
+
+        if (formEl) {
+            const cp = formEl.querySelector('[name="currentPassword"], #currentPassword, #securityCurrentPassword');
+            const np = formEl.querySelector('[name="newPassword"], #newPassword, #securityNewPassword');
+            const cf = formEl.querySelector('[name="confirmPassword"], #confirmPassword, #securityConfirmPassword');
+            currentPassword = cp ? cp.value : '';
+            newPassword = np ? np.value : '';
+            confirmPassword = cf ? cf.value : '';
+        } else {
+            const cp = document.getElementById('currentPassword');
+            const np = document.getElementById('newPassword');
+            const cf = document.getElementById('confirmPassword');
+            currentPassword = cp ? cp.value : '';
+            newPassword = np ? np.value : '';
+            confirmPassword = cf ? cf.value : '';
+        }
 
         // Validate passwords
         const validation = this.validatePasswordChange(currentPassword, newPassword, confirmPassword);
@@ -1766,7 +1790,14 @@ class AdminPanel {
             if (result.success) {
                 this.showNotification(result.message || 'Password changed successfully!', 'success');
                 // Clear the form
-                document.getElementById('changePasswordForm').reset();
+                if (formEl && typeof formEl.reset === 'function') {
+                    formEl.reset();
+                } else {
+                    const f1 = document.getElementById('changePasswordForm');
+                    if (f1) f1.reset();
+                    const f2 = document.getElementById('change-password-form');
+                    if (f2) f2.reset();
+                }
                 this.hidePasswordStrength();
             } else {
                 this.showNotification(result.error || 'Failed to change password', 'error');
@@ -2216,7 +2247,7 @@ function handleFormSubmit(formId, form) {
             adminPanel.saveSmtpSettings();
             break;
         case 'change-password-form':
-            adminPanel.changePassword();
+            adminPanel.changePassword(form);
             break;
         default:
             console.log('Unhandled form submission:', formId);

@@ -20,11 +20,21 @@ class AnalyticsManager {
     async loadSettings() {
         try {
             const response = await fetch('/api/admin/analytics-settings');
-            if (response.ok) {
-                this.settings = await response.json();
+            const contentType = response.headers.get('content-type') || '';
+            if (response.ok && contentType.includes('application/json')) {
+                try {
+                    this.settings = await response.json();
+                } catch (parseErr) {
+                    console.warn('Analytics settings JSON parse failed:', parseErr);
+                    this.settings = null;
+                }
+            } else {
+                console.warn('Analytics settings endpoint did not return JSON or was not OK. Status:', response.status);
+                this.settings = null;
             }
         } catch (error) {
             console.error('Failed to load analytics settings:', error);
+            this.settings = null;
         }
     }
 

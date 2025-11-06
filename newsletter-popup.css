@@ -4,7 +4,7 @@
     z-index: 10000;
     width: 350px;
     max-width: 90vw;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: var(--brand-gradient);
     border-radius: 20px;
     box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
     color: white;
@@ -235,7 +235,7 @@
 }
 
 .exit-popup-content {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: var(--brand-gradient);
     border-radius: 20px;
     padding: 40px;
     max-width: 500px;

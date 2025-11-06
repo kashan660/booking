@@ -15,7 +15,7 @@
 .support-title {
     font-size: 3rem;
     font-weight: 700;
-    color: #1f2937;
+    color: var(--text-dark);
     margin-bottom: 1rem;
 }
 
@@ -42,7 +42,7 @@
     display: block;
     font-size: 2rem;
     font-weight: 700;
-    color: #3b82f6;
+    color: var(--secondary-blue);
     margin-bottom: 0.5rem;
 }
 
@@ -76,7 +76,7 @@
 .form-header h2 {
     font-size: 2rem;
     font-weight: 700;
-    color: #1f2937;
+    color: var(--text-dark);
     margin-bottom: 0.5rem;
 }
 
@@ -130,8 +130,8 @@
 .form-group select:focus,
 .form-group textarea:focus {
     outline: none;
-    border-color: #3b82f6;
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    border-color: var(--secondary-blue);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12);
 }
 
 .form-group textarea {
@@ -212,7 +212,7 @@
     font-weight: 700;
     text-align: center;
     margin-bottom: 3rem;
-    color: #1f2937;
+    color: var(--text-dark);
 }
 
 .faq-grid {
@@ -237,7 +237,7 @@
 .faq-item h4 {
     font-size: 1.125rem;
     font-weight: 600;
-    color: #1f2937;
+    color: var(--text-dark);
     margin-bottom: 0.75rem;
 }
 
@@ -249,7 +249,7 @@
 
 /* Active Navigation Link */
 .nav-link.active {
-    color: #3b82f6 !important;
+    color: var(--secondary-blue) !important;
     font-weight: 600;
 }
 

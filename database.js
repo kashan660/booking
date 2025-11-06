@@ -3,6 +3,11 @@ const { pool, testConnection, initializeTables } = require('./db-config');
 class Database {
     constructor() {
         this.pool = pool;
+        // In-memory fallback storage when DB is not available
+        this._fallback = {
+            tickets: [],
+            lastTicketId: 0
+        };
         this.init();
     }
 
@@ -28,6 +33,27 @@ class Database {
 
     // Ticket methods
     async createTicket(ticketData) {
+        // Fallback to in-memory storage if DB is not available
+        if (!this.pool) {
+            const id = ++this._fallback.lastTicketId;
+            const now = new Date().toISOString();
+            const normalized = {
+                id,
+                title: ticketData.title || ticketData.subject || 'Support Ticket',
+                description: ticketData.description || '',
+                status: ticketData.status || 'open',
+                priority: ticketData.priority || 'medium',
+                category: ticketData.category || 'general',
+                customer_name: ticketData.customerName || ticketData.customer_name || ticketData.name || '',
+                customer_email: ticketData.customerEmail || ticketData.customer_email || ticketData.email || '',
+                customer_phone: ticketData.customerPhone || ticketData.customer_phone || ticketData.phone || '',
+                created_at: now,
+                updated_at: now
+            };
+            this._fallback.tickets.unshift(normalized);
+            return { id, ...ticketData };
+        }
+
         const sql = `
             INSERT INTO tickets (title, description, status, priority, category, customer_name, customer_email, customer_phone)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?)
@@ -48,6 +74,10 @@ class Database {
     }
 
     async getTickets() {
+        // Fallback to in-memory storage if DB is not available
+        if (!this.pool) {
+            return this._fallback.tickets;
+        }
         const sql = 'SELECT * FROM tickets ORDER BY created_at DESC';
         return await this.query(sql);
     }

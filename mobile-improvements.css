@@ -940,7 +940,7 @@
         font-weight: 700 !important;
         text-align: center !important;
         margin-bottom: 24px !important;
-        color: #1f2937 !important;
+        color: var(--text-dark) !important;
     }
     
     .calculator-step,
@@ -1044,7 +1044,7 @@
     .quote-result {
         margin-top: 30px !important;
         padding: 24px !important;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+        background: var(--brand-gradient) !important;
         color: white !important;
         border-radius: 12px !important;
         text-align: center !important;

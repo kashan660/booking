@@ -2,7 +2,7 @@
 
 /* AI Chat Header */
 .ai-chat-header {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: var(--brand-gradient);
     color: white;
     padding: 160px 0 60px;
     text-align: center;
@@ -68,7 +68,7 @@
 
 /* Chat Header */
 .chat-header {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: var(--brand-gradient);
     color: white;
     padding: 20px;
     display: flex;
@@ -170,7 +170,7 @@
 }
 
 .user-message .message-avatar {
-    background: #667eea;
+    background: var(--secondary-blue);
     color: white;
     font-weight: 600;
     font-size: 0.9rem;
@@ -194,7 +194,7 @@
 }
 
 .message-content a {
-    color: #667eea;
+    color: var(--secondary-blue);
     text-decoration: none;
 }
 
@@ -203,7 +203,7 @@
 }
 
 .user-message .message-content {
-    background: #667eea;
+    background: var(--secondary-blue);
     color: white;
     border-bottom-left-radius: 18px;
     border-bottom-right-radius: 6px;
@@ -255,9 +255,9 @@
 }
 
 .quick-btn:hover {
-    background: #667eea;
+    background: var(--secondary-blue);
     color: white;
-    border-color: #667eea;
+    border-color: var(--secondary-blue);
 }
 
 /* Chat Input */
@@ -284,13 +284,13 @@
 }
 
 .chat-input input:focus {
-    border-color: #667eea;
+    border-color: var(--secondary-blue);
 }
 
 .send-btn {
     width: 45px;
     height: 45px;
-    background: #667eea;
+    background: var(--secondary-blue);
     color: white;
     border: none;
     border-radius: 50%;
@@ -302,7 +302,7 @@
 }
 
 .send-btn:hover {
-    background: #5a6fd8;
+    background: var(--secondary-blue);
 }
 
 .send-btn svg {
@@ -328,7 +328,7 @@
 .typing-indicator span {
     width: 8px;
     height: 8px;
-    background: #667eea;
+    background: var(--secondary-blue);
     border-radius: 50%;
     animation: typing 1.4s infinite;
 }
@@ -370,7 +370,7 @@
     font-size: 1.2rem;
     margin-bottom: 20px;
     color: #333;
-    border-bottom: 2px solid #667eea;
+    border-bottom: 2px solid var(--secondary-blue);
     padding-bottom: 8px;
 }
 
@@ -422,7 +422,7 @@
     padding: 15px;
     border-radius: 8px;
     margin-bottom: 10px;
-    border-left: 4px solid #667eea;
+    border-left: 4px solid var(--secondary-blue);
 }
 
 .quote-item h4 {
@@ -464,7 +464,7 @@
 
 /* Quote Display */
 .quote-display {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: var(--brand-gradient);
     color: white;
     padding: 20px;
     border-radius: 12px;
@@ -537,7 +537,7 @@
 }
 
 .quote-option:hover {
-    border-color: #667eea;
+    border-color: var(--secondary-blue);
     box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
     transform: translateY(-1px);
 }
@@ -561,7 +561,7 @@
 .quote-price {
     font-size: 20px;
     font-weight: 700;
-    color: #667eea;
+    color: var(--secondary-blue);
     margin: 0;
 }
 
@@ -616,12 +616,12 @@
 }
 
 .quote-btn:not(.secondary) {
-    background: #667eea;
+    background: var(--secondary-blue);
     color: white;
 }
 
 .quote-btn:not(.secondary):hover {
-    background: #5a67d8;
+    background: var(--secondary-blue);
     transform: translateY(-1px);
 }
 
@@ -657,7 +657,7 @@
 }
 
 .status-content {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: var(--brand-gradient);
     color: white;
     padding: 12px 16px;
     border-radius: 12px;
@@ -731,12 +731,12 @@
 
 .api-key-input:focus {
     outline: none;
-    border-color: #667eea;
+    border-color: var(--secondary-blue);
     box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
 }
 
 .setup-submit-btn {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: var(--brand-gradient);
     color: white;
     border: none;
     padding: 12px 20px;
@@ -756,7 +756,7 @@
     padding: 15px;
     border-radius: 8px;
     margin-top: 15px;
-    border-left: 4px solid #667eea;
+    border-left: 4px solid var(--secondary-blue);
 }
 
 .setup-info ol {
@@ -770,7 +770,7 @@
 }
 
 .setup-info a {
-    color: #667eea;
+    color: var(--secondary-blue);
     text-decoration: none;
     font-weight: 600;
 }

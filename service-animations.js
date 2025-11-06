@@ -1,3 +1,4 @@
+(() => {
 // Service Page Animations and Interactive Effects
 
 // Intersection Observer for scroll animations
@@ -217,3 +218,4 @@ trailStyle.textContent = `
     }
 `;
 document.head.appendChild(trailStyle);
+})();

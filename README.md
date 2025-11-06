@@ -355,7 +355,7 @@ The website is ready for deployment to any static hosting service:
 
 For technical support or questions about the website:
 - Email: support@lugvia.com
-- Phone: 1-800-LUGVIA-1
+- Phone: +16467197124
 
 ## License
 
