@@ -1,69 +1,7 @@
 import Link from "next/link";
 import { Calendar, User, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-
-const blogPosts = [
-  {
-    id: 1,
-    title: "Top 10 Tips for Stress-Free Airport Transfers",
-    excerpt: "Traveling can be stressful, but your airport transfer doesn't have to be. Learn how to ensure a smooth journey from the airport to your hotel.",
-    date: "Jan 15, 2024",
-    author: "Sarah Johnson",
-    category: "Travel Tips",
-    image: "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=80&w=2021&auto=format&fit=crop",
-    slug: "top-10-tips-stress-free-airport-transfers"
-  },
-  {
-    id: 2,
-    title: "Why You Should Choose a Chauffeur Service for Your Next Business Trip",
-    excerpt: "Make a lasting impression and maximize your productivity with a professional chauffeur service. Here are the key benefits for business travelers.",
-    date: "Jan 12, 2024",
-    author: "Michael Chen",
-    category: "Business Travel",
-    image: "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?q=80&w=2070&auto=format&fit=crop",
-    slug: "why-choose-chauffeur-service-business-trip"
-  },
-  {
-    id: 3,
-    title: "Hidden Gems in Istanbul: A Local's Guide",
-    excerpt: "Beyond the Hagia Sophia and Blue Mosque, Istanbul hides countless treasures waiting to be discovered. Explore the city like a local.",
-    date: "Jan 08, 2024",
-    author: "Ahmet Yilmaz",
-    category: "Destinations",
-    image: "https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?q=80&w=2071&auto=format&fit=crop",
-    slug: "hidden-gems-istanbul-guide"
-  },
-  {
-    id: 4,
-    title: "The Ultimate Guide to Luxury Car Classes",
-    excerpt: "From Mercedes E-Class to the S-Class and V-Class, understand the differences between luxury vehicle categories to choose the right one for you.",
-    date: "Jan 05, 2024",
-    author: "David Smith",
-    category: "Fleet Guide",
-    image: "https://images.unsplash.com/photo-1563720223185-11003d516935?q=80&w=2070&auto=format&fit=crop",
-    slug: "ultimate-guide-luxury-car-classes"
-  },
-  {
-    id: 5,
-    title: "Traveling to Dubai? Here's What You Need to Know",
-    excerpt: "Planning a trip to Dubai? From visa requirements to cultural etiquette, here is everything you need to know before you go.",
-    date: "Jan 02, 2024",
-    author: "Sarah Johnson",
-    category: "Destinations",
-    image: "https://images.unsplash.com/photo-1512453979798-5ea932a23518?q=80&w=2074&auto=format&fit=crop",
-    slug: "traveling-to-dubai-guide"
-  },
-  {
-    id: 6,
-    title: "5 Benefits of Booking Your Transfer in Advance",
-    excerpt: "Last-minute bookings can be risky and expensive. Discover why booking your airport transfer in advance is the smartest travel decision.",
-    date: "Dec 28, 2023",
-    author: "Michael Chen",
-    category: "Travel Tips",
-    image: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=2074&auto=format&fit=crop",
-    slug: "5-benefits-booking-transfer-advance"
-  }
-];
+import { blogPosts } from "@/lib/blog-data";
 
 export default function BlogPage() {
   return (
