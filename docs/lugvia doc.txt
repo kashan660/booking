@@ -1,0 +1,111 @@
+Lugvia.com – Airport Transfer & Chauffeur Booking Platform
+
+Project Documentation – API Integration & Website Architecture
+
+Project Overview
+
+Platform Name: Lugvia.com
+
+Domain: www.lugvia.com
+
+Business Model: Commission-based airport transfer & chauffeur booking
+
+Target Markets: Saudi Arabia (Makkah, Madinah, Jeddah), UAE (Dubai, Abu Dhabi), Europe (future)
+
+Revenue Model: Commission per booking (10–25%) + optional service fees
+
+Primary Goal: Enable travelers to search, compare, and book airport and city transfers easily via website and WhatsApp assistance.
+
+Key Features
+
+User-Facing Features: Search Transfers, Select Vehicle, Choose Date & Time, Booking Options (API/manual), Payment Methods, Booking Confirmation, Multi-language Support
+
+Admin Panel Features: Manage Bookings, Manage Providers, Reporting & Analytics, User Management
+
+API Integration Overview
+
+Objective: Enable real-time transfer search, booking, and confirmation using external provider APIs.
+
+Supported Providers: Mozio, Global Airport Taxi, Welcome Pickups, TripCenter, Intui.travel
+
+API Requirements: API Key, Search Endpoint, Booking Endpoint, Payment/Commission Confirmation, Cancellation/Modification, Sandbox for testing
+
+Website Architecture
+
+Frontend: Responsive design, search & booking interface, booking confirmation pages
+
+Backend: Database, Admin panel, API integration middleware, Payment gateway integration
+
+Multi-Language Support: English + Arabic (future expansion: Urdu, Bahasa)
+
+Booking Workflow
+
+User selects city + airport + pickup/drop
+
+Selects vehicle type and date/time
+
+Website queries API
+
+User selects option
+
+Completes payment / confirms via WhatsApp
+
+System sends booking to API provider or local partner
+
+Provider confirms → system sends confirmation to user
+
+Admin panel logs booking and commission
+
+Provider Integration Workflow
+
+Provider signup/API access
+
+API key configuration in Admin panel
+
+Commission settings
+
+Test booking via sandbox
+
+Go Live
+
+Development / Implementation Notes
+
+Frontend: React.js / Next.js
+
+Backend: Node.js / Python / PHP
+
+Database: MySQL / PostgreSQL
+
+Payment Integration: Stripe, PayPal, local gateways
+
+Security: SSL, encryption, GDPR & local compliance
+
+Logging/Analytics: Track API calls, booking conversion, errors
+
+Marketing & Launch Strategy
+
+Phase 1: Launch focused cities (Makkah, Madinah, Jeddah, Dubai)
+
+Phase 2: Regional expansion (Turkey, GCC)
+
+Phase 3: Global launch
+
+Promotion Channels: Google Ads, Facebook groups, WhatsApp groups, SEO city pages
+
+Next Steps / Action Plan
+
+Finalize API providers
+
+Obtain API credentials & docs
+
+Design website pages & booking flow
+
+Develop admin panel + API middleware
+
+Integrate payment gateways
+
+Test sandbox bookings
+
+Launch initial cities
+
+Expand provider coverage & cities

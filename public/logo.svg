@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 80" fill="none">
+  <!-- Icon Group -->
+  <g transform="translate(10, 10)">
+    <!-- Abstract shape representing travel/connection -->
+    <path d="M15 30 L45 30 L60 5 A 5 5 0 0 1 65 10 L50 40 L20 40 Z" fill="#2563EB" opacity="0.9"/>
+    <path d="M15 30 L30 60 L60 60 L45 30 Z" fill="#1D4ED8" opacity="1"/>
+    <path d="M50 40 L65 10 L80 40 Z" fill="#60A5FA" opacity="0.8"/>
+  </g>
+  
+  <!-- Text Group -->
+  <text x="95" y="55" font-family="Arial, Helvetica, sans-serif" font-weight="bold" font-size="48" fill="#0F172A" letter-spacing="-1">Lugvia</text>
+  <circle cx="245" cy="55" r="4" fill="#2563EB" />
+</svg>
