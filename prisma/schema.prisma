@@ -1,0 +1,80 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  password      String?
+  emailVerified DateTime?
+  image         String?
+  role          String    @default("USER") // "USER" or "ADMIN"
+  
+  // Profile fields
+  phone         String?
+  address       String?
+  city          String?
+  country       String?
+  
+  // Relations
+  bookings      Booking[]
+
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model BlogPost {
+  id        String   @id @default(cuid())
+  title     String
+  slug      String   @unique
+  excerpt   String
+  content   String   @db.Text
+  image     String
+  category  String
+  author    String
+  published Boolean  @default(false)
+  keywords  String[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Booking {
+  id          String   @id @default(cuid())
+  pickup      String
+  dropoff     String
+  date        String
+  time        String
+  passengers  Int
+  tripType    String
+  returnDate  String?
+  returnTime  String?
+  status      String   @default("pending") // pending, confirmed, completed, cancelled
+  
+  // Guest details (snapshot)
+  customerName String?
+  customerEmail String?
+  customerPhone String?
+
+  // Relation to User (optional, for registered users)
+  userId      String?
+  user        User?    @relation(fields: [userId], references: [id])
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model SEOSettings {
+  id          String   @id @default(cuid())
+  pagePath    String   @unique
+  title       String
+  description String
+  keywords    String[]
+  ogImage     String?
+  updatedAt   DateTime @updatedAt
+}
