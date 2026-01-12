@@ -10,7 +10,7 @@ export const authConfig = {
       const isOnAdmin = nextUrl.pathname.startsWith('/admin')
       const isOnProfile = nextUrl.pathname.startsWith('/profile')
       const isLoginPage = nextUrl.pathname === '/login'
-      const isAdminLoginPage = nextUrl.pathname === '/admin/login'
+      const isAdminLoginPage = nextUrl.pathname === '/admin/signin'
 
       // Admin Area Protection
       if (isOnAdmin) {
@@ -28,7 +28,7 @@ export const authConfig = {
         
         // Redirect unauthenticated users to admin login
         if (!isLoggedIn) {
-          return Response.redirect(new URL('/admin/login', nextUrl))
+          return Response.redirect(new URL('/admin/signin', nextUrl))
         }
 
         // Check for ADMIN role

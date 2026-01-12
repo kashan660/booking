@@ -18,8 +18,7 @@ const loginSchema = z.object({
   password: z.string().min(1),
 })
 
-export default function LoginPage() {
-  // Force rebuild - 1
+export default function AdminSignInPage() {
   const router = useRouter()
   const [error, setError] = useState("")
   const { register, handleSubmit, formState: { errors } } = useForm<z.infer<typeof loginSchema>>({
@@ -37,7 +36,7 @@ export default function LoginPage() {
       if (result?.error) {
         setError("Invalid credentials")
       } else {
-        router.refresh() // Refresh to update auth state
+        router.refresh()
         router.push("/admin")
       }
     } catch (e) {
