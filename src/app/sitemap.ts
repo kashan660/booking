@@ -1,7 +1,7 @@
-import { Metadata, Route } from 'next';
+import { MetadataRoute } from 'next';
 import { seoPagesData } from '@/lib/seo-data';
 
-export default function sitemap(): Metadata['sitemap'] {
+export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://lugvia.com';
 
   // Static routes
