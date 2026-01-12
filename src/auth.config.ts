@@ -15,12 +15,29 @@ export const authConfig = {
       // Admin Area Protection
       if (isOnAdmin) {
         if (isAdminLoginPage) {
-          if (isLoggedIn) return Response.redirect(new URL('/admin', nextUrl))
+          // If already logged in as ADMIN, redirect to dashboard
+          if (isLoggedIn && auth?.user?.role === 'ADMIN') {
+            return Response.redirect(new URL('/admin', nextUrl))
+          }
+          // If logged in as USER, allow them to see login page (or redirect to profile?)
+          // Better to let them sign in as admin if they have different creds, 
+          // or if it's the same account but wrong role, show error.
+          // For now, let's just allow access to login page.
           return true
         }
-        // Redirect unauthenticated users to admin login specifically
-        if (isLoggedIn) return true
-        return Response.redirect(new URL('/admin/login', nextUrl))
+        
+        // Redirect unauthenticated users to admin login
+        if (!isLoggedIn) {
+          return Response.redirect(new URL('/admin/login', nextUrl))
+        }
+
+        // Check for ADMIN role
+        if (auth?.user?.role !== 'ADMIN') {
+           // Redirect unauthorized users to their profile or home
+           return Response.redirect(new URL('/profile', nextUrl))
+        }
+
+        return true
       }
 
       // User Profile Protection
@@ -36,6 +53,20 @@ export const authConfig = {
       }
 
       return true
+    },
+    // We need to define jwt and session callbacks here as well so middleware can use them
+    // to populate the role in the auth object
+    jwt({ token, user }) {
+      if (user) {
+        token.role = user.role
+      }
+      return token
+    },
+    session({ session, token }) {
+      if (session.user && token.role) {
+        session.user.role = token.role as string
+      }
+      return session
     },
   },
   providers: [], 

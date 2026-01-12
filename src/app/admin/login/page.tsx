@@ -19,6 +19,7 @@ const loginSchema = z.object({
 })
 
 export default function LoginPage() {
+  // Force rebuild - 1
   const router = useRouter()
   const [error, setError] = useState("")
   const { register, handleSubmit, formState: { errors } } = useForm<z.infer<typeof loginSchema>>({
