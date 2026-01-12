@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -25,6 +26,7 @@ const searchSchema = z.object({
 type SearchFormValues = z.infer<typeof searchSchema>;
 
 export function SearchForm() {
+  const router = useRouter();
   const [tripType, setTripType] = useState<"one-way" | "round-trip">("one-way");
   
   const { register, handleSubmit, formState: { errors } } = useForm<SearchFormValues>({
