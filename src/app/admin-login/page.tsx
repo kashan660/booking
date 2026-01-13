@@ -21,11 +21,15 @@ const loginSchema = z.object({
 export default function AdminSignInPage() {
   const router = useRouter()
   const [error, setError] = useState("")
+  const [isLoading, setIsLoading] = useState(false)
   const { register, handleSubmit, formState: { errors } } = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
   })
 
   const onSubmit = async (data: z.infer<typeof loginSchema>) => {
+    setIsLoading(true)
+    setError("")
+    
     try {
       const result = await signIn("credentials", {
         redirect: false,
@@ -33,14 +37,21 @@ export default function AdminSignInPage() {
         password: data.password,
       })
 
+      console.log("Login result:", result)
+
       if (result?.error) {
-        setError("Invalid credentials")
+        setError("Invalid credentials. Please check your email and password.")
+        setIsLoading(false)
       } else {
+        // Successful login
         router.refresh()
-        router.push("/admin")
+        // Force a hard navigation to ensure cookies are recognized by middleware
+        window.location.href = "/admin"
       }
     } catch (e) {
-      setError("An error occurred")
+      console.error("Login error:", e)
+      setError("An unexpected error occurred. Please try again.")
+      setIsLoading(false)
     }
   }
 
@@ -63,15 +74,28 @@ export default function AdminSignInPage() {
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
-              <Input id="email" type="email" placeholder="admin@lugvia.com" {...register("email")} />
+              <Input 
+                id="email" 
+                type="email" 
+                placeholder="admin@lugvia.com" 
+                {...register("email")} 
+                disabled={isLoading}
+              />
               {errors.email && <span className="text-sm text-red-500">{errors.email.message}</span>}
             </div>
             <div className="space-y-2">
               <Label htmlFor="password">Password</Label>
-              <Input id="password" type="password" {...register("password")} />
+              <Input 
+                id="password" 
+                type="password" 
+                {...register("password")} 
+                disabled={isLoading}
+              />
               {errors.password && <span className="text-sm text-red-500">{errors.password.message}</span>}
             </div>
-            <Button type="submit" className="w-full">Sign In</Button>
+            <Button type="submit" className="w-full" disabled={isLoading}>
+              {isLoading ? "Signing in..." : "Sign In"}
+            </Button>
           </form>
         </CardContent>
       </Card>

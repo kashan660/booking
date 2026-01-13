@@ -21,7 +21,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     Credentials({
       async authorize(credentials: any) {
         const parsedCredentials = z
-          .object({ email: z.string().email(), password: z.string().min(6) })
+          .object({ email: z.string().email(), password: z.string().min(1) })
           .safeParse(credentials)
 
         if (parsedCredentials.success) {
@@ -29,7 +29,12 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           const user = await getUser(email)
           if (!user) return null
           
-          const passwordsMatch = await bcrypt.compare(password, user.password)
+          // Check if password matches
+          // Note: In production, ensure all passwords are hashed.
+          // For initial setup/dev, you might have plain text passwords in DB?
+          // If so, handle that, but here we assume bcrypt.
+          const passwordToCheck = user.password || ""
+          const passwordsMatch = await bcrypt.compare(password, passwordToCheck)
           if (passwordsMatch) return user
         }
 
