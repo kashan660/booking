@@ -55,6 +55,26 @@ export default async function FlightSearchResultsPage(props: FlightSearchResults
   
   const aviasalesSearchUrl = `https://aviasales.com/search/${origin}${formattedDate}${destination}${passengerCount}?marker=${MARKER}`;
 
+  const formatDate = (dateStr: string) => {
+    try {
+      const dateObj = new Date(dateStr);
+      if (isNaN(dateObj.getTime())) return dateStr;
+      return format(dateObj, 'MMMM d, yyyy');
+    } catch {
+      return dateStr;
+    }
+  };
+
+  const formatTime = (dateStr: string) => {
+    try {
+      const dateObj = new Date(dateStr);
+      if (isNaN(dateObj.getTime())) return '--:--';
+      return format(dateObj, 'HH:mm');
+    } catch {
+      return '--:--';
+    }
+  };
+
   return (
     <div className="min-h-screen bg-slate-50 pb-20">
       <div className="bg-slate-900 text-white py-12">
@@ -67,7 +87,7 @@ export default async function FlightSearchResultsPage(props: FlightSearchResults
             {date && (
               <>
                 <span className="mx-2">•</span>
-                <span>{format(new Date(date), 'MMMM d, yyyy')}</span>
+                <span>{formatDate(date)}</span>
               </>
             )}
           </div>
@@ -96,7 +116,7 @@ export default async function FlightSearchResultsPage(props: FlightSearchResults
                     
                     <div className="flex items-center gap-8">
                       <div>
-                        <div className="text-xl font-bold">{format(new Date(flight.departure_at), 'HH:mm')}</div>
+                        <div className="text-xl font-bold">{formatTime(flight.departure_at)}</div>
                         <div className="text-sm text-muted-foreground">{flight.origin}</div>
                       </div>
                       
@@ -113,7 +133,7 @@ export default async function FlightSearchResultsPage(props: FlightSearchResults
                       </div>
 
                       <div className="text-right">
-                        <div className="text-xl font-bold">{format(new Date(flight.return_at), 'HH:mm')}</div>
+                        <div className="text-xl font-bold">{formatTime(flight.return_at)}</div>
                         <div className="text-sm text-muted-foreground">{flight.destination}</div>
                       </div>
                     </div>

@@ -83,9 +83,9 @@ export function LocationSearch({ label, placeholder, icon, onSelect, className }
 
       {showDropdown && results.length > 0 && (
         <div className="absolute z-50 w-full mt-1 bg-white border rounded-md shadow-lg max-h-60 overflow-auto">
-          {results.map((loc) => (
+          {results.map((loc, index) => (
             <div 
-              key={loc.code}
+              key={`${loc.code}-${index}`}
               className="p-3 hover:bg-slate-50 cursor-pointer flex items-center justify-between border-b last:border-0"
               onClick={() => handleSelect(loc)}
             >
