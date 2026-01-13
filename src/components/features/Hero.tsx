@@ -26,6 +26,18 @@ export function Hero() {
         <p className="text-lg md:text-xl text-slate-100 mb-8 max-w-2xl drop-shadow-md">
           Reliable, comfortable, and affordable rides worldwide. Book your transfer in seconds and travel with peace of mind.
         </p>
+        <div className="flex gap-4">
+          <Button size="lg" className="text-lg px-8" asChild>
+            <Link href="https://tpo.lu/hZW5cbuI" target="_blank" rel="noopener noreferrer">
+              Book Transfer
+            </Link>
+          </Button>
+          <Button size="lg" variant="outline" className="text-lg px-8 bg-white/10 text-white hover:bg-white/20 border-white/20 backdrop-blur-sm" asChild>
+            <Link href="/hourly-booking">
+              Hourly Service
+            </Link>
+          </Button>
+        </div>
       </div>
     </div>
   );
