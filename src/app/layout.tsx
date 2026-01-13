@@ -5,6 +5,7 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { WhatsAppButton } from "@/components/features/WhatsAppButton";
 import { SchemaMarkup } from "@/components/features/SchemaMarkup";
+import { AffiliateScript } from "@/components/features/AffiliateScript";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

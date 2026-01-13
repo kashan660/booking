@@ -11,6 +11,7 @@ export async function GET() {
     });
     return Response.json(posts);
   } catch (error) {
+    console.error("Failed to fetch posts:", error);
     return Response.json({ error: "Failed to fetch posts" }, { status: 500 });
   }
 }
