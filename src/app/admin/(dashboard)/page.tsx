@@ -1,5 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Calendar, FileText, Users, DollarSign, Globe, Map } from "lucide-react";
+import { AffiliateStats } from "@/components/admin/AffiliateStats";
 
 export default function AdminDashboardPage() {
   return (
@@ -45,6 +46,11 @@ export default function AdminDashboardPage() {
             <p className="text-xs text-muted-foreground">+8% from last month</p>
           </CardContent>
         </Card>
+      </div>
+
+      <div className="mt-8">
+        <h2 className="text-xl font-bold mb-4">Affiliate Performance (TravelPayouts)</h2>
+        <AffiliateStats />
       </div>
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
