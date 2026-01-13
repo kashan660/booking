@@ -388,6 +388,15 @@ export const seoPagesData: Record<string, SEOPageProps> = {
         location: "IST to City Center"
       }
     ],
+    keywords: [
+      "Istanbul Airport Taxi",
+      "IST Airport Transfer",
+      "Sabiha Gokcen Transfer",
+      "Istanbul Chauffeur Service",
+      "VIP Transfer Istanbul",
+      "Istanbul Airport Shuttle",
+      "Luxury Van Istanbul"
+    ],
     faqs: [
       {
         question: "How long is the drive from IST to Sultanahmet?",
@@ -405,11 +414,19 @@ export const seoPagesData: Record<string, SEOPageProps> = {
   },
   "airport-taxi-dubai": {
     title: "Dubai Airport Transfer & Luxury Chauffeur (DXB)",
-    subtitle: "Arrive in style with our premium airport transfer service in Dubai.",
-    description: "Skip the taxi queue at DXB. Our professional chauffeurs provide meet & greet service and comfortable transfers to your hotel or business meeting.",
-    heroImage: "/images/hero/dubai.jpg",
+    subtitle: "Experience premium travel in Dubai with our VIP fleet.",
+    description: "Book reliable airport transfers from DXB and DWC. Professional chauffeurs, luxury cars, and fixed prices for your Dubai journey.",
+    heroImage: "https://images.unsplash.com/photo-1512453979798-5ea904a848bd?auto=format&fit=crop&q=80",
     city: "Dubai",
     type: "transfer",
+    keywords: [
+      "Dubai Airport Taxi",
+      "DXB Transfer",
+      "Dubai Chauffeur",
+      "Luxury Car Rental Dubai",
+      "Dubai Airport Limousine",
+      "Dubai Hotel Transfer"
+    ],
     items: [
       {
         title: "Lexus ES/Toyota Camry",

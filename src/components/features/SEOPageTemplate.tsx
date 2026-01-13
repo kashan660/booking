@@ -27,6 +27,7 @@ export interface SEOPageProps {
   }[];
   city: string;
   type: "hotel" | "transfer";
+  keywords?: string[];
 }
 
 export function SEOPageTemplate({

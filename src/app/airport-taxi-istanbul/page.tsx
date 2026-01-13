@@ -8,6 +8,7 @@ const data = seoPagesData[key];
 export const metadata: Metadata = {
   title: data.title,
   description: data.description,
+  keywords: data.keywords,
 };
 
 export default function Page() {

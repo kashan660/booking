@@ -23,7 +23,23 @@ export const metadata: Metadata = {
     template: "%s | Lugvia Premium Travel",
   },
   description: "Book reliable airport transfers, VIP chauffeur services, and luxury hotels worldwide. Best rates for transfers in Dubai, Istanbul, Paris, London, and Makkah.",
-  keywords: ["Airport Transfer", "Chauffeur Service", "Luxury Travel", "Hotel Booking", "Dubai Transfers", "Istanbul Taxi", "Makkah Umrah Taxi", "VIP Transport", "City to City Transfer"],
+  keywords: [
+    "Airport Transfer", 
+    "Chauffeur Service", 
+    "Luxury Travel", 
+    "Hotel Booking", 
+    "Dubai Transfers", 
+    "Istanbul Taxi", 
+    "Makkah Umrah Taxi", 
+    "VIP Transport", 
+    "City to City Transfer",
+    "Jeddah to Makkah Taxi",
+    "Madinah Airport Transfer",
+    "Paris Private Driver",
+    "London Chauffeur",
+    "Luxury Van Hire",
+    "Airport Pickup Service"
+  ],
   authors: [{ name: "Lugvia Travel" }],
   creator: "Lugvia",
   publisher: "Lugvia",
@@ -93,6 +109,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
       >
         <SchemaMarkup />
+        <AffiliateScript />
         <Header />
         <main className="flex-1">
           {children}
