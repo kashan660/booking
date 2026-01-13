@@ -32,6 +32,7 @@ export async function POST(req: Request) {
     });
     return Response.json(post);
   } catch (error) {
+    console.error("Failed to create post:", error);
     return Response.json({ error: "Failed to create post" }, { status: 500 });
   }
 }
