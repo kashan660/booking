@@ -1,7 +1,7 @@
-import { getFlightPrices, FlightTicket } from "@/lib/travelpayouts";
+import { getCheapestFlights, CheapestTicket } from "@/lib/travelpayouts";
 import Link from "next/link";
 import { format } from "date-fns";
-import { ArrowRight, Plane, AlertCircle } from "lucide-react";
+import { ArrowRight, Plane, AlertCircle, Info } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export const dynamic = 'force-dynamic';
@@ -36,11 +36,11 @@ export default async function FlightSearchResultsPage(props: FlightSearchResults
     );
   }
 
-  let flights: FlightTicket[] = [];
+  let flights: CheapestTicket[] = [];
   let error = "";
 
   try {
-    flights = await getFlightPrices(origin, destination, date);
+    flights = await getCheapestFlights(origin, destination, date);
   } catch (err) {
     console.error(err);
     error = "Failed to fetch flight prices. Please try again later.";
@@ -101,87 +101,84 @@ export default async function FlightSearchResultsPage(props: FlightSearchResults
           </div>
         )}
 
-        <div className="grid gap-4 max-w-4xl mx-auto">
-          {flights.length > 0 ? (
-            flights.map((flight, index) => (
-              <div key={index} className="bg-white p-6 rounded-xl shadow-sm border hover:shadow-md transition-shadow">
-                <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+        {flights.length === 0 ? (
+          <div className="bg-white rounded-xl shadow-sm border p-8 text-center">
+            <div className="max-w-md mx-auto">
+              <Info className="h-12 w-12 text-blue-500 mx-auto mb-4" />
+              <h2 className="text-2xl font-bold mb-2">No Cached Flights Found</h2>
+              <p className="text-muted-foreground mb-6">
+                We couldn't find cached deals for this specific route and date. 
+                However, you can check real-time availability and prices directly on Aviasales.
+              </p>
+              <Link href={aviasalesSearchUrl} target="_blank" rel="nofollow noopener">
+                <Button size="lg" className="w-full sm:w-auto bg-[#ff6d00] hover:bg-[#ff6d00]/90">
+                  Search Live on Aviasales <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+              </Link>
+            </div>
+          </div>
+        ) : (
+          <div className="space-y-4">
+            {flights.map((flight, index) => (
+              <div key={`${flight.airline}-${flight.flight_number}-${index}`} className="bg-white rounded-xl shadow-sm border p-4 md:p-6 hover:shadow-md transition-shadow">
+                <div className="flex flex-col md:flex-row md:items-center gap-6">
+                  {/* Airline Info */}
                   <div className="flex-1">
-                    <div className="flex items-center gap-4 mb-4">
-                      <div className="text-2xl font-bold text-slate-900">{flight.airline}</div>
-                      <div className="px-3 py-1 bg-slate-100 rounded-full text-xs font-medium text-slate-600">
-                        Flight {flight.flight_number}
+                    <div className="flex items-center gap-3 mb-2">
+                      <div className="h-10 w-10 bg-slate-100 rounded-full flex items-center justify-center">
+                        <Plane className="h-5 w-5 text-slate-600" />
                       </div>
-                    </div>
-                    
-                    <div className="flex items-center gap-8">
                       <div>
-                        <div className="text-xl font-bold">{formatTime(flight.departure_at)}</div>
-                        <div className="text-sm text-muted-foreground">{flight.origin}</div>
-                      </div>
-                      
-                      <div className="flex-1 flex flex-col items-center px-4">
-                        <div className="text-xs text-muted-foreground mb-1">
-                          {Math.floor(flight.duration / 60)}h {flight.duration % 60}m
-                        </div>
-                        <div className="w-full h-[2px] bg-slate-200 relative">
-                          <Plane className="h-4 w-4 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-slate-400 transform rotate-90" />
-                        </div>
-                        <div className="text-xs text-green-600 font-medium mt-1">
-                          {flight.transfers === 0 ? 'Direct' : `${flight.transfers} Stop(s)`}
-                        </div>
-                      </div>
-
-                      <div className="text-right">
-                        <div className="text-xl font-bold">{formatTime(flight.return_at)}</div>
-                        <div className="text-sm text-muted-foreground">{flight.destination}</div>
+                        <div className="font-bold text-lg">{flight.airline}</div>
+                        <div className="text-sm text-muted-foreground">Flight {flight.flight_number}</div>
                       </div>
                     </div>
                   </div>
 
-                  <div className="flex md:flex-col items-center justify-between md:justify-center gap-4 border-t md:border-t-0 md:border-l pt-4 md:pt-0 md:pl-6 min-w-[150px]">
+                  {/* Route Info */}
+                  <div className="flex-[2] flex flex-col md:flex-row items-center gap-4 md:gap-8">
                     <div className="text-center">
-                      <div className="text-sm text-muted-foreground">Price</div>
+                      <div className="font-bold text-xl">{formatTime(flight.departure_at)}</div>
+                      <div className="text-sm text-muted-foreground">{flight.origin}</div>
+                    </div>
+                    
+                    <div className="flex-1 flex flex-col items-center w-full md:w-auto">
+                      <div className="text-xs text-muted-foreground mb-1">Direct</div>
+                      <div className="w-full h-[2px] bg-slate-200 relative">
+                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white p-1">
+                          <Plane className="h-3 w-3 text-slate-300 rotate-90" />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="text-center">
+                      <div className="font-bold text-xl">{formatTime(flight.return_at)}</div>
+                      <div className="text-sm text-muted-foreground">{flight.destination}</div>
+                    </div>
+                  </div>
+
+                  {/* Price & Action */}
+                  <div className="flex flex-col items-end gap-3 min-w-[140px] border-t md:border-t-0 pt-4 md:pt-0 mt-4 md:mt-0">
+                    <div>
+                      <div className="text-sm text-muted-foreground text-right">Price from</div>
                       <div className="text-2xl font-bold text-primary">${flight.price}</div>
                     </div>
-                    <Link 
-                      href={`https://aviasales.com${flight.link}${flight.link.includes('?') ? '&' : '?'}marker=${MARKER}`} 
-                      target="_blank"
-                      className="w-full"
-                    >
-                      <Button className="w-full">
-                        Book Now <ArrowRight className="ml-2 h-4 w-4" />
-                      </Button>
+                    <Link href={aviasalesSearchUrl} target="_blank" rel="nofollow noopener" className="w-full">
+                       <Button className="w-full">Select Flight</Button>
                     </Link>
                   </div>
                 </div>
               </div>
-            ))
-          ) : (
-            <div className="bg-white p-8 rounded-xl shadow-sm border text-center">
-              <Plane className="h-12 w-12 mx-auto text-slate-300 mb-4" />
-              <h3 className="text-xl font-bold mb-2">No specific flights found</h3>
-              <p className="text-slate-500 mb-6">
-                We couldn't find exact matches for this date in our cache. 
-                Check live availability on Aviasales.
-              </p>
-              <Link href={aviasalesSearchUrl} target="_blank">
-                <Button size="lg">
-                  Search on Aviasales <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
-              </Link>
+            ))}
+            
+            <div className="mt-8 text-center">
+               <p className="text-muted-foreground mb-4">Not finding what you want?</p>
+               <Link href={aviasalesSearchUrl} target="_blank" rel="nofollow noopener">
+                  <Button variant="outline">View More Flights on Aviasales</Button>
+               </Link>
             </div>
-          )}
-          
-          <div className="mt-8 text-center">
-             <p className="text-sm text-slate-500 mb-4">Not finding what you're looking for?</p>
-             <Link href={aviasalesSearchUrl} target="_blank">
-                <Button variant="outline">
-                  View All Flights on Aviasales <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
-              </Link>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );

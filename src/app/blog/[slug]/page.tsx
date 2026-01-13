@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowLeft, Calendar, User, Share2 } from "lucide-react";
 import { blogPosts } from "@/lib/blog-data";
 import { notFound } from "next/navigation";
@@ -109,10 +110,13 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         </div>
 
         <div className="aspect-video relative rounded-xl overflow-hidden mb-12 bg-slate-100">
-          <img 
+          <Image 
             src={post.image} 
             alt={post.title} 
-            className="w-full h-full object-cover"
+            fill
+            className="object-cover"
+            priority
+            sizes="(max-width: 1200px) 100vw, 896px"
           />
         </div>
 

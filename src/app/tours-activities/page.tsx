@@ -1,6 +1,7 @@
 import { Camera, Map, Clock, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import { ViatorWidget } from "@/components/features/ViatorWidget";
 
 export default function ToursActivitiesPage() {
   return (
@@ -17,6 +18,11 @@ export default function ToursActivitiesPage() {
 
       <div className="container mx-auto px-4 py-12">
         <div className="max-w-6xl mx-auto">
+          
+          <div className="mb-12">
+             <ViatorWidget />
+          </div>
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[1, 2, 3, 4, 5, 6].map((i) => (
               <div key={i} className="bg-white rounded-xl shadow-sm border overflow-hidden group hover:shadow-md transition-all">

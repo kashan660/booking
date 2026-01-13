@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { signIn } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -43,8 +44,20 @@ export default function SignupPage() {
         throw new Error(data.error || "Registration failed");
       }
 
-      // Redirect to login on success
-      router.push("/login?registered=true");
+      // Auto login after registration
+      const result = await signIn("credentials", {
+        redirect: false,
+        email: formData.email,
+        password: formData.password,
+      });
+
+      if (result?.error) {
+        // Fallback to login page if auto-login fails
+        router.push("/login?registered=true");
+      } else {
+        router.push("/");
+        router.refresh();
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : "Something went wrong");
     } finally {

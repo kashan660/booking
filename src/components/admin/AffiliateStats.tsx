@@ -24,7 +24,7 @@ export function AffiliateStats() {
   useEffect(() => {
     async function fetchStats() {
       try {
-        const res = await fetch("/api/admin/affiliate-stats");
+        const res = await fetch("/api/admin/stats");
         if (!res.ok) {
           throw new Error("Failed to fetch statistics");
         }

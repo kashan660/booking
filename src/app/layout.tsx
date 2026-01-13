@@ -6,6 +6,7 @@ import { Footer } from "@/components/layout/Footer";
 import { WhatsAppButton } from "@/components/features/WhatsAppButton";
 import { SchemaMarkup } from "@/components/features/SchemaMarkup";
 import { AffiliateScript } from "@/components/features/AffiliateScript";
+import { auth } from "@/auth";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -99,19 +100,22 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await auth();
+
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
+        suppressHydrationWarning
       >
         <SchemaMarkup />
         <AffiliateScript />
-        <Header />
+        <Header session={session} />
         <main className="flex-1">
           {children}
         </main>

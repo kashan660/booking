@@ -10,6 +10,10 @@ interface Location {
   name: string;
   country_name: string;
   type: string;
+  coordinates?: {
+    lat: number;
+    lon: number;
+  };
 }
 
 interface LocationSearchProps {

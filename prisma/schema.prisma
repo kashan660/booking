@@ -78,3 +78,14 @@ model SEOSettings {
   ogImage     String?
   updatedAt   DateTime @updatedAt
 }
+
+model SmtpSettings {
+  id        String   @id @default(cuid())
+  host      String
+  port      Int
+  user      String
+  password  String
+  fromEmail String
+  secure    Boolean  @default(true)
+  updatedAt DateTime @updatedAt
+}

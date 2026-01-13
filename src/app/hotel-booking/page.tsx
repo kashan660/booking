@@ -1,7 +1,8 @@
-import { Hotel, MapPin, Star, Wifi, Coffee, ArrowRight } from "lucide-react";
+import { Hotel, MapPin, Star, Wifi, Coffee, ArrowRight, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
+import { HotelSearch } from "@/components/features/HotelSearch";
 
 const destinations = [
   { name: "Paris", image: "/images/destinations/paris.jpg", count: "1,200+ Hotels", href: "/best-hotels-paris" },
@@ -31,6 +32,10 @@ export default function HotelBookingPage() {
       <div className="container mx-auto px-4 py-12">
         <div className="max-w-6xl mx-auto">
           
+          <div className="mb-16 -mt-24 relative z-20">
+            <HotelSearch />
+          </div>
+
           {/* Top Destinations Section */}
           <div className="mb-16">
             <h2 className="text-2xl font-bold mb-8">Top Hotel Destinations</h2>

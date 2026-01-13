@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
-import { getBookingStatistics } from "@/lib/travelpayouts";
+import { getAffiliateStatistics } from "@/lib/stats-api";
 import { auth } from "@/auth";
 
+// Get booking stats
 export async function GET(req: Request) {
   const session = await auth();
 
@@ -16,7 +17,7 @@ export async function GET(req: Request) {
     const lastMonth = new Date(today.setMonth(today.getMonth() - 1));
     const startDate = lastMonth.toISOString().split('T')[0];
 
-    const data = await getBookingStatistics(startDate);
+    const data = await getAffiliateStatistics(startDate);
     return NextResponse.json(data);
   } catch (error) {
     console.error("TravelPayouts API Error:", error);
