@@ -8,14 +8,14 @@ export function Hero() {
       {/* Background Image */}
       <div className="absolute inset-0 bg-slate-900">
         <Image 
-          src="/images/hero/home-hero.jpg"
+          src="https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?q=80&w=2070&auto=format&fit=crop"
           alt="Luxury Airport Transfer and Chauffeur Service"
           fill
           priority
           className="object-cover opacity-60"
           sizes="100vw"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/50 to-transparent" />
       </div>
 
       <div className="relative container mx-auto px-4 py-24 md:py-32 lg:py-40 flex flex-col items-center text-center">
@@ -28,7 +28,7 @@ export function Hero() {
         </p>
         <div className="flex gap-4">
           <Button size="lg" className="text-lg px-8" asChild>
-            <Link href="https://tpo.lu/hZW5cbuI" target="_blank" rel="noopener noreferrer">
+            <Link href="/book-transfer">
               Book Transfer
             </Link>
           </Button>
