@@ -1,5 +1,6 @@
 import { Hero } from "@/components/features/Hero";
 import { SearchForm } from "@/components/features/SearchForm";
+import { FlightWidget } from "@/components/features/FlightWidget";
 import { CheckCircle, Clock, Globe, Shield, ArrowRightLeft, Hotel, Plane, MapPin } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -11,6 +12,12 @@ export default function Home() {
       
       <div className="container mx-auto px-4">
         <SearchForm />
+
+        {/* Flight Widget */}
+        <section className="mt-12">
+          <h2 className="text-2xl font-bold mb-4 text-center">Book Your Flights</h2>
+          <FlightWidget />
+        </section>
         
         {/* Value Propositions */}
         <section className="mt-20">
