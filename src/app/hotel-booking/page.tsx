@@ -36,6 +36,41 @@ export default function HotelBookingPage() {
             <HotelSearch />
           </div>
 
+          {/* Featured Partner Deal */}
+          <div className="mb-16 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-6 md:p-8 border border-blue-100">
+            <div className="flex flex-col md:flex-row items-center gap-8">
+              <div className="relative w-full md:w-1/3 aspect-video rounded-xl overflow-hidden shadow-lg">
+                <Image 
+                  src="https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?q=80&w=2070&auto=format&fit=crop" 
+                  alt="New York Hotels"
+                  fill
+                  className="object-cover"
+                />
+                <div className="absolute top-4 left-4 bg-primary text-white text-xs font-bold px-3 py-1 rounded-full">
+                  Partner Deal
+                </div>
+              </div>
+              <div className="flex-1 text-center md:text-left">
+                <h3 className="text-2xl font-bold mb-3 text-slate-900">Explore New York Hotels with Trip.com</h3>
+                <p className="text-slate-600 mb-6 text-lg">
+                  Get exclusive deals on top-rated hotels in New York. Best price guarantee and 24/7 customer support.
+                </p>
+                <div className="flex flex-wrap gap-4 justify-center md:justify-start">
+                  <Button asChild size="lg" className="bg-[#2e63e7] hover:bg-[#1b4cc2]">
+                    <a 
+                      href="https://www.trip.com/hotels/list?city=633&display=New%20York&optionId=633&optionType=City&optionName=New%20York&Allianceid=7712503&SID=289350125&trip_sub1=&trip_sub3=D10326871" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2"
+                    >
+                      View Deals <ArrowRight className="h-4 w-4" />
+                    </a>
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+
           {/* Top Destinations Section */}
           <div className="mb-16">
             <h2 className="text-2xl font-bold mb-8">Top Hotel Destinations</h2>
@@ -110,6 +145,16 @@ export default function HotelBookingPage() {
             </div>
 
             <div className="space-y-8">
+              {/* Partner Ad */}
+              <div className="flex justify-center lg:justify-start">
+                <iframe 
+                  src="https://www.trip.com/partners/ad/DB10327207?Allianceid=7712503&SID=289350125&trip_sub1=" 
+                  style={{ width: "300px", height: "250px", border: "none" }} 
+                  id="DB10327207"
+                  title="Trip.com Hotel Deals"
+                />
+              </div>
+
               <div className="bg-slate-50 p-6 rounded-xl border">
                 <h3 className="font-bold text-lg mb-4">Why Book with Us?</h3>
                 <ul className="space-y-4">

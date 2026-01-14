@@ -45,6 +45,9 @@ export function Header({ session }: { session: Session | null }) {
                 <Link href="/hotel-booking" className="px-4 py-2 text-sm hover:bg-slate-50 hover:text-primary">Hotel Booking</Link>
                 <Link href="/flights-booking" className="px-4 py-2 text-sm hover:bg-slate-50 hover:text-primary">Flights Booking</Link>
                 <Link href="/tours-activities" className="px-4 py-2 text-sm hover:bg-slate-50 hover:text-primary">Tours & Activities</Link>
+                <Link href="/flash-deals" className="px-4 py-2 text-sm hover:bg-red-50 hover:text-red-600 font-semibold text-red-600 flex items-center gap-2">
+                  <Zap className="h-3 w-3" /> Flash Deals
+                </Link>
               </div>
             </div>
           </div>
@@ -142,6 +145,9 @@ export function Header({ session }: { session: Session | null }) {
                   <Link href="/hotel-booking" className="text-sm py-1" onClick={() => setIsMenuOpen(false)}>Hotel Booking</Link>
                   <Link href="/flights-booking" className="text-sm py-1" onClick={() => setIsMenuOpen(false)}>Flights Booking</Link>
                   <Link href="/tours-activities" className="text-sm py-1" onClick={() => setIsMenuOpen(false)}>Tours & Activities</Link>
+                  <Link href="/flash-deals" className="text-sm py-1 text-red-600 font-semibold flex items-center gap-2" onClick={() => setIsMenuOpen(false)}>
+                    <Zap className="h-3 w-3" /> Flash Deals
+                  </Link>
                 </div>
               )}
             </div>

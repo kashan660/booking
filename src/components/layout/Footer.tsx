@@ -77,6 +77,9 @@ export function Footer() {
               <li>
                 <Link href="/tours-activities" className="hover:text-white transition-colors">Tours & Activities</Link>
               </li>
+              <li>
+                <Link href="/flash-deals" className="hover:text-red-400 transition-colors font-semibold">Flash Deals</Link>
+              </li>
             </ul>
           </div>
 
