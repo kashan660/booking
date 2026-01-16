@@ -31,3 +31,5 @@ export interface BookingRequest {
   returnDate?: Date;
   returnTime?: string;
 }
+
+export type Market = 'uk' | 'us' | 'canada' | 'europe' | 'australia';
