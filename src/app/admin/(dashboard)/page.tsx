@@ -1,6 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Calendar, FileText, Users, DollarSign, Globe, Map } from "lucide-react";
 import { AffiliateStats } from "@/components/admin/AffiliateStats";
+import { TravelpayoutsAnalytics } from "@/components/features/TravelpayoutsAnalytics";
 
 export default function AdminDashboardPage() {
   return (
@@ -50,7 +51,7 @@ export default function AdminDashboardPage() {
 
       <div className="mt-8">
         <h2 className="text-xl font-bold mb-4">Affiliate Performance (TravelPayouts)</h2>
-        <AffiliateStats />
+        <TravelpayoutsAnalytics />
       </div>
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">

@@ -27,6 +27,74 @@ export default function Home() {
           <CheapestFlights />
         </section>
         
+        {/* Services Overview */}
+        <section className="mt-20">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold mb-4">Complete Travel Solutions Worldwide</h2>
+            <p className="text-muted-foreground max-w-3xl mx-auto">
+              From airport transfers to luxury hotels, flights to guided tours - Lugvia offers premium travel services 
+              in 150+ countries. Book with confidence and experience seamless travel planning with our trusted partners.
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+            <Link href="/flights-booking" className="group">
+              <div className="bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-xl text-center hover:shadow-lg transition-all group-hover:scale-105">
+                <div className="bg-blue-500 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 shadow-sm">
+                  <Plane className="h-6 w-6 text-white" />
+                </div>
+                <h3 className="font-semibold mb-2 text-blue-900">Flight Booking</h3>
+                <p className="text-sm text-blue-700">Compare 1000+ airlines worldwide. Best price guarantee on international and domestic flights.</p>
+                <span className="text-xs text-blue-600 font-medium mt-2 inline-block">Book Now →</span>
+              </div>
+            </Link>
+            
+            <Link href="/hotel-booking" className="group">
+              <div className="bg-gradient-to-br from-purple-50 to-purple-100 p-6 rounded-xl text-center hover:shadow-lg transition-all group-hover:scale-105">
+                <div className="bg-purple-500 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 shadow-sm">
+                  <Hotel className="h-6 w-6 text-white" />
+                </div>
+                <h3 className="font-semibold mb-2 text-purple-900">Hotel Reservations</h3>
+                <p className="text-sm text-purple-700">2M+ properties worldwide. From budget to luxury hotels, resorts and apartments.</p>
+                <span className="text-xs text-purple-600 font-medium mt-2 inline-block">Find Hotels →</span>
+              </div>
+            </Link>
+            
+            <Link href="/airport-transfers" className="group">
+              <div className="bg-gradient-to-br from-green-50 to-green-100 p-6 rounded-xl text-center hover:shadow-lg transition-all group-hover:scale-105">
+                <div className="bg-green-500 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 shadow-sm">
+                  <ArrowRightLeft className="h-6 w-6 text-white" />
+                </div>
+                <h3 className="font-semibold mb-2 text-green-900">Airport Transfers</h3>
+                <p className="text-sm text-green-700">Professional chauffeur service. Fixed prices, meet & greet, flight monitoring included.</p>
+                <span className="text-xs text-green-600 font-medium mt-2 inline-block">Reserve Transfer →</span>
+              </div>
+            </Link>
+            
+            <Link href="/tours-activities" className="group">
+              <div className="bg-gradient-to-br from-orange-50 to-orange-100 p-6 rounded-xl text-center hover:shadow-lg transition-all group-hover:scale-105">
+                <div className="bg-orange-500 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 shadow-sm">
+                  <MapPin className="h-6 w-6 text-white" />
+                </div>
+                <h3 className="font-semibold mb-2 text-orange-900">Tours & Activities</h3>
+                <p className="text-sm text-orange-700">50,000+ experiences worldwide. Skip-the-line tickets, guided tours, day trips.</p>
+                <span className="text-xs text-orange-600 font-medium mt-2 inline-block">Explore Tours →</span>
+              </div>
+            </Link>
+            
+            <Link href="/travel-packages" className="group">
+              <div className="bg-gradient-to-br from-pink-50 to-pink-100 p-6 rounded-xl text-center hover:shadow-lg transition-all group-hover:scale-105">
+                <div className="bg-pink-500 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 shadow-sm">
+                  <Package className="h-6 w-6 text-white" />
+                </div>
+                <h3 className="font-semibold mb-2 text-pink-900">Travel Packages</h3>
+                <p className="text-sm text-pink-700">All-in-one packages: flights + hotels + transfers + tours. Save up to 40%!</p>
+                <span className="text-xs text-pink-600 font-medium mt-2 inline-block">View Packages →</span>
+              </div>
+            </Link>
+          </div>
+        </section>
+
         {/* Value Propositions */}
         <section className="mt-20">
           <div className="text-center mb-12">
