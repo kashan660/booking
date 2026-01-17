@@ -229,7 +229,19 @@ export default function TravelPackagesPage() {
                     <span className="text-sm text-muted-foreground">per person</span>
                   </div>
                   
-                  <Button className="w-full mb-2">View Details</Button>
+                  <Link href={`/travel-packages/${pkg.title.toLowerCase().replace(/\s+/g, '-').replace(/dubai|turkey|europe|umrah|asian|honeymoon/g, (match) => {
+                    switch(match) {
+                      case 'dubai': return 'luxury-dubai';
+                      case 'turkey': return 'turkey-cultural';
+                      case 'europe': return 'europe-multi-city';
+                      case 'umrah': return 'umrah-plus';
+                      case 'asian': return 'asian-adventures';
+                      case 'honeymoon': return 'honeymoon-specials';
+                      default: return match;
+                    }
+                  })}`} className="w-full mb-2">
+                    <Button className="w-full">View Details</Button>
+                  </Link>
                   <Button variant="outline" className="w-full">Customize</Button>
                 </div>
               </div>

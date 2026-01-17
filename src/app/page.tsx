@@ -3,7 +3,7 @@ import { TransferWidget } from "@/components/features/TransferWidget";
 import { SearchForm } from "@/components/features/SearchForm";
 import { FlightWidget } from "@/components/features/FlightWidget";
 import { CheapestFlights } from "@/components/features/CheapestFlights";
-import { CheckCircle, Clock, Globe, Shield, ArrowRightLeft, Hotel, Plane, MapPin } from "lucide-react";
+import { CheckCircle, Clock, Globe, Shield, ArrowRightLeft, Hotel, Plane, MapPin, Package } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 

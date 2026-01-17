@@ -18,6 +18,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/hotel-booking',
     '/flights-booking',
     '/tours-activities',
+    '/travel-packages',
     '/blog',
   ].map((route) => ({
     url: `${baseUrl}${route}`,
@@ -42,5 +43,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
-  return [...routes, ...seoRoutes, ...blogRoutes];
+  // Travel package routes
+  const travelPackages = [
+    'luxury-dubai',
+    'turkey-cultural',
+    'europe-multi-city',
+    'umrah-plus',
+    'asian-adventures',
+    'honeymoon-specials'
+  ].map((slug) => ({
+    url: `${baseUrl}/travel-packages/${slug}`,
+    lastModified: new Date().toISOString().split('T')[0],
+    changeFrequency: 'weekly' as const,
+    priority: 0.8,
+  }));
+
+  return [...routes, ...seoRoutes, ...blogRoutes, ...travelPackages];
 }
