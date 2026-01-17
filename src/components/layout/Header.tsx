@@ -19,7 +19,7 @@ export function Header({ session }: { session: Session | null }) {
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
         <div className="flex items-center gap-2">
           <Link href="/" className="flex items-center gap-2">
-            <Image src="/favicon.svg" alt="Lugvia" width={32} height={32} className="h-8 w-8" priority />
+            <Image src="/logo.svg" alt="Lugvia" width={32} height={32} className="h-8 w-8" priority />
             <span className="text-xl font-bold text-slate-900">Lugvia</span>
           </Link>
         </div>

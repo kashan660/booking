@@ -9,7 +9,7 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           <div>
             <Link href="/" className="mb-6 flex items-center gap-2">
-              <Image src="/icon-white.svg" alt="Lugvia" width={32} height={32} className="h-8 w-8" />
+              <Image src="/logo-white.svg" alt="Lugvia" width={32} height={32} className="h-8 w-8" />
               <span className="text-xl font-bold text-white">Lugvia.com</span>
             </Link>
             <p className="text-sm text-slate-400 mb-4">
