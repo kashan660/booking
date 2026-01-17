@@ -1,8 +1,7 @@
 import { MetadataRoute } from 'next';
-import { seoPagesData } from '@/lib/seo-data';
-import { blogPosts } from '@/lib/blog-data';
+import { prisma } from '@/lib/prisma';
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://lugvia.com';
 
   // Static routes
@@ -27,36 +26,44 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: route === '' ? 1.0 : 0.8,
   }));
 
-  // Dynamic routes from SEO data
-  const seoRoutes = Object.keys(seoPagesData).map((slug) => ({
-    url: `${baseUrl}/${slug}`,
-    lastModified: new Date().toISOString().split('T')[0],
-    changeFrequency: 'weekly' as const,
-    priority: 0.9,
-  }));
+  // Dynamic routes from database
+  try {
+    // Check if prisma is available
+    if (!prisma || !prisma.page) {
+      console.warn('Prisma not available during build, using static routes only');
+      return routes;
+    }
 
-  // Dynamic blog routes
-  const blogRoutes = blogPosts.map((post) => ({
-    url: `${baseUrl}/blog/${post.slug}`,
-    lastModified: new Date(post.date).toISOString().split('T')[0],
-    changeFrequency: 'monthly' as const,
-    priority: 0.7,
-  }));
+    // Get dynamic pages from database
+    const dynamicPages = await prisma.page.findMany({
+      where: { published: true },
+      select: { slug: true, updatedAt: true }
+    });
 
-  // Travel package routes
-  const travelPackages = [
-    'luxury-dubai',
-    'turkey-cultural',
-    'europe-multi-city',
-    'umrah-plus',
-    'asian-adventures',
-    'honeymoon-specials'
-  ].map((slug) => ({
-    url: `${baseUrl}/travel-packages/${slug}`,
-    lastModified: new Date().toISOString().split('T')[0],
-    changeFrequency: 'weekly' as const,
-    priority: 0.8,
-  }));
+    const dynamicRoutes = dynamicPages.map((page) => ({
+      url: `${baseUrl}/${page.slug}`,
+      lastModified: page.updatedAt.toISOString().split('T')[0],
+      changeFrequency: 'weekly' as const,
+      priority: 0.9,
+    }));
 
-  return [...routes, ...seoRoutes, ...blogRoutes, ...travelPackages];
+    // Get blog posts
+    const blogPosts = await prisma.blogPost.findMany({
+      where: { published: true },
+      select: { slug: true, updatedAt: true }
+    });
+
+    const blogRoutes = blogPosts.map((post) => ({
+      url: `${baseUrl}/blog/${post.slug}`,
+      lastModified: post.updatedAt.toISOString().split('T')[0],
+      changeFrequency: 'monthly' as const,
+      priority: 0.7,
+    }));
+
+    return [...routes, ...dynamicRoutes, ...blogRoutes];
+  } catch (error) {
+    console.error('Error generating sitemap:', error);
+    // Fallback to static routes if database is not available
+    return routes;
+  }
 }

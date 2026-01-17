@@ -24,24 +24,26 @@ model User {
   
   // Relations
   bookings      Booking[]
+  blogPosts     BlogPost[]
 
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 }
 
 model BlogPost {
-  id        String   @id @default(cuid())
-  title     String
-  slug      String   @unique
-  excerpt   String
-  content   String   @db.Text
-  image     String
-  category  String
-  author    String
-  published Boolean  @default(false)
-  keywords  String[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id            String   @id @default(cuid())
+  title         String
+  slug          String   @unique
+  excerpt       String?
+  content       String   @db.Text
+  featuredImage String?
+  category      String   @default("travel")
+  tags          String[]
+  published     Boolean  @default(false)
+  authorId      String
+  author        User     @relation(fields: [authorId], references: [id])
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 }
 
 model Booking {
@@ -87,5 +89,34 @@ model SmtpSettings {
   password  String
   fromEmail String
   secure    Boolean  @default(true)
+  updatedAt DateTime @updatedAt
+}
+
+model Page {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  content     String   @db.Text
+  description String?
+  keywords    String[]
+  ogImage     String?
+  published   Boolean  @default(false)
+  template    String   @default("default") // default, blog, landing, etc.
+  sections    PageSection[]
+  seoSettings SEOSettings?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model PageSection {
+  id        String   @id @default(cuid())
+  pageId    String
+  page      Page     @relation(fields: [pageId], references: [id], onDelete: Cascade)
+  name      String
+  content   String   @db.Text
+  order     Int      @default(0)
+  type      String   @default("text") // text, image, gallery, form, etc.
+  settings  Json?    // JSON for section-specific settings
+  createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

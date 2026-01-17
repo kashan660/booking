@@ -10,7 +10,8 @@ import {
   Calendar, 
   LogOut, 
   Globe,
-  Map
+  Map,
+  FileEdit
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { signOut } from "next-auth/react";
@@ -22,14 +23,19 @@ const sidebarItems = [
     icon: LayoutDashboard,
   },
   {
-    title: "Bookings",
-    href: "/admin/bookings",
-    icon: Calendar,
+    title: "Pages",
+    href: "/admin/pages",
+    icon: FileEdit,
   },
   {
     title: "Blog Posts",
     href: "/admin/blog",
     icon: FileText,
+  },
+  {
+    title: "Bookings",
+    href: "/admin/bookings",
+    icon: Calendar,
   },
   {
     title: "Destinations",

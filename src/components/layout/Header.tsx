@@ -7,6 +7,7 @@ import { Menu, Phone, X, ChevronDown, User, LogOut, LayoutDashboard, Zap } from 
 import { useState } from "react";
 import { signOut } from "next-auth/react";
 import type { Session } from "next-auth";
+import { LanguageCurrencySelector } from "@/components/features/LanguageCurrencySelector";
 
 export function Header({ session }: { session: Session | null }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -60,6 +61,9 @@ export function Header({ session }: { session: Session | null }) {
         </nav>
 
         <div className="flex items-center gap-4">
+          <div className="hidden md:flex items-center gap-2">
+            <LanguageCurrencySelector variant="dropdown" showLocation={false} />
+          </div>
           <div className="hidden md:flex items-center gap-2 text-sm font-medium">
             <Phone className="h-4 w-4" />
             <span>+44 7466 779542</span>
@@ -84,8 +88,13 @@ export function Header({ session }: { session: Session | null }) {
                     <p className="text-sm font-medium">{session.user.name}</p>
                     <p className="text-xs text-muted-foreground truncate">{session.user.email}</p>
                   </div>
+                  {session.user.role === "ADMIN" && (
+                    <Link href="/admin" className="px-4 py-2 text-sm hover:bg-slate-50 hover:text-primary flex items-center gap-2">
+                      <LayoutDashboard className="h-4 w-4" /> Admin Dashboard
+                    </Link>
+                  )}
                   <Link href="/profile" className="px-4 py-2 text-sm hover:bg-slate-50 hover:text-primary flex items-center gap-2">
-                    <LayoutDashboard className="h-4 w-4" /> Dashboard
+                    <LayoutDashboard className="h-4 w-4" /> User Dashboard
                   </Link>
                   <Link href="/profile/bookings" className="px-4 py-2 text-sm hover:bg-slate-50 hover:text-primary flex items-center gap-2">
                     <User className="h-4 w-4" /> My Bookings
@@ -196,9 +205,12 @@ export function Header({ session }: { session: Session | null }) {
               </div>
             )}
             
-            <div className="flex items-center gap-2 text-sm font-medium py-2 mt-2">
+            <div className="flex items-center gap-2 text-sm font-medium py-2 border-b border-border/50">
               <Phone className="h-4 w-4" />
               <span>+44 7466 779542</span>
+            </div>
+            <div className="py-2">
+              <LanguageCurrencySelector variant="card" showLocation={false} />
             </div>
           </div>
         </div>

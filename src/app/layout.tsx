@@ -7,6 +7,7 @@ import { WhatsAppButton } from "@/components/features/WhatsAppButton";
 import { SchemaMarkup } from "@/components/features/SchemaMarkup";
 import { AffiliateScript } from "@/components/features/AffiliateScript";
 import { auth } from "@/auth";
+import { LanguageCurrencyProvider } from "@/contexts/LanguageCurrencyContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -113,14 +114,16 @@ export default async function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
         suppressHydrationWarning
       >
-        <SchemaMarkup />
-        <AffiliateScript />
-        <Header session={session} />
-        <main className="flex-1">
-          {children}
-        </main>
-        <Footer />
-        <WhatsAppButton />
+        <LanguageCurrencyProvider>
+          <SchemaMarkup />
+          <AffiliateScript />
+          <Header session={session} />
+          <main className="flex-1">
+            {children}
+          </main>
+          <Footer />
+          <WhatsAppButton />
+        </LanguageCurrencyProvider>
       </body>
     </html>
   );

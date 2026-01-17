@@ -1,39 +1,76 @@
-export const runtime = "nodejs";
-
+import { NextRequest, NextResponse } from "next/server";
+import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 
-export const dynamic = 'force-dynamic';
-
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
+    const session = await auth();
+    
+    if (!session?.user || session.user.role !== "ADMIN") {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
     const posts = await prisma.blogPost.findMany({
-      orderBy: { createdAt: 'desc' }
+      orderBy: { createdAt: "desc" },
+      include: {
+        author: {
+          select: {
+            name: true,
+            email: true,
+          },
+        },
+      },
     });
-    return Response.json(posts);
+
+    return NextResponse.json(posts);
   } catch (error) {
-    console.error("Failed to fetch posts:", error);
-    return Response.json({ error: "Failed to fetch posts" }, { status: 500 });
+    console.error("Error fetching blog posts:", error);
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 }
 
-export async function POST(req: Request) {
+export async function POST(request: NextRequest) {
   try {
-    const body = await req.json();
-    const post = await prisma.blogPost.create({
+    const session = await auth();
+    
+    if (!session?.user || session.user.role !== "ADMIN") {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    const body = await request.json();
+    const { title, slug, excerpt, content, category, tags, featuredImage, published } = body;
+
+    // Validate required fields
+    if (!title || !slug || !content) {
+      return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
+    }
+
+    // Check if slug already exists
+    const existingPost = await prisma.blogPost.findUnique({
+      where: { slug },
+    });
+
+    if (existingPost) {
+      return NextResponse.json({ error: "Slug already exists" }, { status: 400 });
+    }
+
+    const blogPost = await prisma.blogPost.create({
       data: {
-        title: body.title,
-        slug: body.slug,
-        excerpt: body.excerpt,
-        content: body.content,
-        image: body.image,
-        category: body.category,
-        author: body.author,
-        keywords: body.keywords || [],
+        title,
+        slug,
+        excerpt,
+        content,
+        category,
+        tags: tags ? (typeof tags === 'string' ? tags.split(",").map((tag: string) => tag.trim()) : tags) : [],
+        featuredImage,
+        published: published || false,
+        authorId: session.user.id,
       },
     });
-    return Response.json(post);
+
+    return NextResponse.json(blogPost, { status: 201 });
   } catch (error) {
-    console.error("Failed to create post:", error);
-    return Response.json({ error: "Failed to create post" }, { status: 500 });
+    console.error("Error creating blog post:", error);
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 }

@@ -1,7 +1,10 @@
+"use client";
+
 import { Package, Calendar, Users, MapPin, Star, CheckCircle, Globe, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
+import { useLanguageCurrency } from "@/contexts/LanguageCurrencyContext";
 
 // Structured data for SEO
 const travelPackageSchema = {
@@ -58,26 +61,123 @@ const travelPackageSchema = {
   ]
 };
 
-export const metadata = {
-  title: "Complete Travel Packages Worldwide | All-Inclusive Deals | Lugvia",
-  description: "Book complete travel packages with flights, hotels, transfers & tours. All-inclusive vacation deals to Dubai, Turkey, Europe, Saudi Arabia & more. Save up to 40%!",
-  keywords: "travel packages, all inclusive deals, vacation packages, flight hotel packages, complete travel deals, " +
-    "Dubai packages, Turkey tours, Europe travel, Saudi Arabia packages, Umrah packages, holiday bundles",
-  openGraph: {
-    title: "Complete Travel Packages - Save Up to 40% on All-Inclusive Deals",
-    description: "Flight + Hotel + Transfer + Tours in one package. Customizable worldwide travel deals with 24/7 support.",
-    images: ["/images/travel-packages-og.jpg"],
-  }
-};
-
 export default function TravelPackagesPage() {
+  const { convertAndFormatPrice, currentCurrency, currencyCode } = useLanguageCurrency();
+
+  // Convert prices to user's currency
+  const basePrices = {
+    dubai: 1299,
+    turkey: 899,
+    europe: 1599,
+    umrah: 1199,
+    asian: 1099,
+    honeymoon: 1499
+  };
+
+  // Generate dynamic schema data
+  const dynamicSchema = {
+    ...travelPackageSchema,
+    offers: [
+      {
+        "@type": "Offer",
+        "name": "Luxury Dubai Package",
+        "description": "5-star hotels, business class flights, desert safaris, Burj Khalifa tickets",
+        "priceRange": convertAndFormatPrice(basePrices.dubai) + "+",
+        "availability": "InStock",
+        "validFrom": "2024-01-01",
+        "validThrough": "2024-12-31"
+      },
+      {
+        "@type": "Offer",
+        "name": "Turkey Cultural Tour",
+        "description": "Istanbul, Cappadocia, Pamukkale with historical sites and hot air balloons",
+        "priceRange": convertAndFormatPrice(basePrices.turkey) + "+",
+        "availability": "InStock",
+        "validFrom": "2024-01-01",
+        "validThrough": "2024-12-31"
+      },
+      {
+        "@type": "Offer",
+        "name": "Europe Multi-City Package",
+        "description": "Paris, Rome, Barcelona, Amsterdam with city tours and museums",
+        "priceRange": convertAndFormatPrice(basePrices.europe) + "+",
+        "availability": "InStock",
+        "validFrom": "2024-01-01",
+        "validThrough": "2024-12-31"
+      }
+    ]
+  };
+
+  const packageData = [
+    {
+      title: "Luxury Dubai Packages",
+      description: "5-star hotels, business class flights, desert safaris, Burj Khalifa tickets, private transfers.",
+      duration: "5-7 days",
+      price: convertAndFormatPrice(basePrices.dubai),
+      savings: `Save ${convertAndFormatPrice(500)}`,
+      highlights: ["Burj Khalifa VIP", "Desert Safari", "Luxury Hotels", "Private Transfers"],
+      image: "/images/dubai-luxury.jpg",
+      slug: "luxury-dubai"
+    },
+    {
+      title: "Turkey Cultural Tours",
+      description: "Istanbul, Cappadocia, Pamukkale. Historical sites, hot air balloons, Turkish cuisine.",
+      duration: "8-10 days", 
+      price: convertAndFormatPrice(basePrices.turkey),
+      savings: `Save ${convertAndFormatPrice(350)}`,
+      highlights: ["Hot Air Balloon", "Historical Sites", "Turkish Bath", "Local Cuisine"],
+      image: "/images/turkey-cultural.jpg",
+      slug: "turkey-cultural"
+    },
+    {
+      title: "Europe Multi-City",
+      description: "Paris, Rome, Barcelona, Amsterdam. City tours, museums, local experiences.",
+      duration: "10-14 days",
+      price: convertAndFormatPrice(basePrices.europe),
+      savings: `Save ${convertAndFormatPrice(700)}`,
+      highlights: ["Eiffel Tower", "Colosseum", "Sagrada Familia", "Canal Cruise"],
+      image: "/images/europe-multi.jpg",
+      slug: "europe-multi-city"
+    },
+    {
+      title: "Umrah Plus Packages",
+      description: "Makkah & Madina pilgrimage with Istanbul/Dubai stopover. Spiritual + leisure.",
+      duration: "7-10 days",
+      price: convertAndFormatPrice(basePrices.umrah),
+      savings: `Save ${convertAndFormatPrice(400)}`,
+      highlights: ["Near Haram Hotels", "Guided Pilgrimage", "Ziyarat Tours", "Shopping Time"],
+      image: "/images/umrah-plus.jpg",
+      slug: "umrah-plus"
+    },
+    {
+      title: "Asian Adventures",
+      description: "Tokyo, Bangkok, Singapore. Temples, street food, modern cities, cultural shows.",
+      duration: "8-12 days",
+      price: convertAndFormatPrice(basePrices.asian),
+      savings: `Save ${convertAndFormatPrice(450)}`,
+      highlights: ["Temple Tours", "Street Food", "Cultural Shows", "Modern Cities"],
+      image: "/images/asian-adventure.jpg",
+      slug: "asian-adventures"
+    },
+    {
+      title: "Honeymoon Specials",
+      description: "Romantic destinations, couple activities, private tours, special amenities.",
+      duration: "6-10 days",
+      price: convertAndFormatPrice(basePrices.honeymoon),
+      savings: `Save ${convertAndFormatPrice(600)}`,
+      highlights: ["Romantic Dinners", "Couple Spa", "Private Tours", "Special Amenities"],
+      image: "/images/honeymoon-special.jpg",
+      slug: "honeymoon-specials"
+    }
+  ];
+
   return (
     <div className="pb-20">
       {/* Structured Data Script */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(travelPackageSchema)
+          __html: JSON.stringify(dynamicSchema)
         }}
       />
       
@@ -91,6 +191,11 @@ export default function TravelPackagesPage() {
             Everything in one booking: Flights ✈️ + Hotels 🏨 + Transfers 🚗 + Tours 🎯 
             Save up to 40% with our all-inclusive travel packages. Customizable worldwide travel deals with 24/7 support.
           </p>
+          <div className="flex items-center justify-center gap-2 mb-8">
+            <span className="bg-white/20 px-3 py-1 rounded-full text-sm">
+              Prices shown in {currentCurrency} ({currencyCode})
+            </span>
+          </div>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button size="lg" className="bg-white text-purple-900 hover:bg-purple-50">
               View All Packages
@@ -142,62 +247,7 @@ export default function TravelPackagesPage() {
         <div className="mb-20">
           <h2 className="text-3xl font-bold text-center mb-12">Popular Package Types</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[
-              {
-                title: "Luxury Dubai Packages",
-                description: "5-star hotels, business class flights, desert safaris, Burj Khalifa tickets, private transfers.",
-                duration: "5-7 days",
-                price: "From $1,299",
-                savings: "Save $500",
-                highlights: ["Burj Khalifa VIP", "Desert Safari", "Luxury Hotels", "Private Transfers"],
-                image: "/images/dubai-luxury.jpg"
-              },
-              {
-                title: "Turkey Cultural Tours",
-                description: "Istanbul, Cappadocia, Pamukkale. Historical sites, hot air balloons, Turkish cuisine.",
-                duration: "8-10 days", 
-                price: "From $899",
-                savings: "Save $350",
-                highlights: ["Hot Air Balloon", "Historical Sites", "Turkish Bath", "Local Cuisine"],
-                image: "/images/turkey-cultural.jpg"
-              },
-              {
-                title: "Europe Multi-City",
-                description: "Paris, Rome, Barcelona, Amsterdam. City tours, museums, local experiences.",
-                duration: "10-14 days",
-                price: "From $1,599", 
-                savings: "Save $700",
-                highlights: ["Eiffel Tower", "Colosseum", "Sagrada Familia", "Canal Cruise"],
-                image: "/images/europe-multi.jpg"
-              },
-              {
-                title: "Umrah Plus Packages",
-                description: "Makkah & Madina pilgrimage with Istanbul/Dubai stopover. Spiritual + leisure.",
-                duration: "7-10 days",
-                price: "From $1,199",
-                savings: "Save $400",
-                highlights: ["Near Haram Hotels", "Guided Pilgrimage", "Ziyarat Tours", "Shopping Time"],
-                image: "/images/umrah-plus.jpg"
-              },
-              {
-                title: "Asian Adventures",
-                description: "Tokyo, Bangkok, Singapore. Temples, street food, modern cities, cultural shows.",
-                duration: "8-12 days",
-                price: "From $1,099",
-                savings: "Save $450",
-                highlights: ["Temple Tours", "Street Food", "Cultural Shows", "Modern Cities"],
-                image: "/images/asian-adventure.jpg"
-              },
-              {
-                title: "Honeymoon Specials",
-                description: "Romantic destinations, couple activities, private tours, special amenities.",
-                duration: "6-10 days",
-                price: "From $1,499",
-                savings: "Save $600",
-                highlights: ["Romantic Dinners", "Couple Spa", "Private Tours", "Special Amenities"],
-                image: "/images/honeymoon-special.jpg"
-              }
-            ].map((pkg, index) => (
+            {packageData.map((pkg, index) => (
               <div key={index} className="bg-white rounded-xl shadow-sm border overflow-hidden hover:shadow-lg transition-all group">
                 <div className="relative h-48 bg-slate-200">
                   <div className="absolute top-4 right-4 bg-green-500 text-white px-2 py-1 rounded text-xs font-bold z-10">
@@ -229,17 +279,7 @@ export default function TravelPackagesPage() {
                     <span className="text-sm text-muted-foreground">per person</span>
                   </div>
                   
-                  <Link href={`/travel-packages/${pkg.title.toLowerCase().replace(/\s+/g, '-').replace(/dubai|turkey|europe|umrah|asian|honeymoon/g, (match) => {
-                    switch(match) {
-                      case 'dubai': return 'luxury-dubai';
-                      case 'turkey': return 'turkey-cultural';
-                      case 'europe': return 'europe-multi-city';
-                      case 'umrah': return 'umrah-plus';
-                      case 'asian': return 'asian-adventures';
-                      case 'honeymoon': return 'honeymoon-specials';
-                      default: return match;
-                    }
-                  })}`} className="w-full mb-2">
+                  <Link href={`/travel-packages/${pkg.slug}`} className="w-full mb-2">
                     <Button className="w-full">View Details</Button>
                   </Link>
                   <Button variant="outline" className="w-full">Customize</Button>
