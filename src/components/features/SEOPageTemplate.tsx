@@ -82,8 +82,10 @@ export function SEOPageTemplate({
             {subtitle}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Button size="lg" className="h-14 px-8 text-lg font-bold rounded-full shadow-[0_0_20px_rgba(var(--primary),0.3)] hover:shadow-[0_0_30px_rgba(var(--primary),0.5)] transition-all duration-300 transform hover:-translate-y-1">
-              Book Now
+            <Button size="lg" className="h-14 px-8 text-lg font-bold rounded-full shadow-[0_0_20px_rgba(var(--primary),0.3)] hover:shadow-[0_0_30px_rgba(var(--primary),0.5)] transition-all duration-300 transform hover:-translate-y-1" asChild>
+              <Link href={type === 'hotel' ? '/hotel-booking' : '/#booking-widget'}>
+                Book Now
+              </Link>
             </Button>
             <div className="flex items-center gap-2 text-sm font-medium bg-black/30 px-4 py-2 rounded-full backdrop-blur-sm border border-white/10">
               <div className="flex -space-x-2">
@@ -183,8 +185,10 @@ export function SEOPageTemplate({
                     ))}
                   </div>
 
-                  <Button className="w-full mt-auto rounded-xl py-6 font-semibold shadow-md group-hover:shadow-lg transition-all">
-                    View Details <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                  <Button className="w-full mt-auto rounded-xl py-6 font-semibold shadow-md group-hover:shadow-lg transition-all" asChild>
+                    <Link href={type === 'hotel' ? '/hotel-booking' : '/#booking-widget'}>
+                      {type === 'hotel' ? 'View Rates' : 'Book This Ride'} <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                    </Link>
                   </Button>
                 </div>
               </div>
@@ -217,8 +221,10 @@ export function SEOPageTemplate({
             Best price guaranteed.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" variant="secondary" className="text-primary font-bold px-8">
-              Book Now
+            <Button size="lg" variant="secondary" className="text-primary font-bold px-8" asChild>
+              <Link href={type === 'hotel' ? '/hotel-booking' : '/#booking-widget'}>
+                Book Now
+              </Link>
             </Button>
             <Button size="lg" variant="outline" className="bg-transparent border-white text-white hover:bg-white/10 px-8">
               <Phone className="w-4 h-4 mr-2" /> Contact Support

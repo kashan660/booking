@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -10,10 +10,30 @@ import { LocationSearch } from "./LocationSearch";
 
 export function HotelSearch() {
   const router = useRouter();
+  // Initialize with values from URL if available, otherwise default
   const [location, setLocation] = useState<any>(null);
-  const [checkIn, setCheckIn] = useState(format(new Date(), "yyyy-MM-dd"));
-  const [checkOut, setCheckOut] = useState(format(addDays(new Date(), 1), "yyyy-MM-dd"));
+  const [checkIn, setCheckIn] = useState("");
+  const [checkOut, setCheckOut] = useState("");
   const [guests, setGuests] = useState(2);
+  const [mounted, setMounted] = useState(false);
+
+  // Initialize state on client-side only to match hydration
+  useEffect(() => {
+    setMounted(true);
+    // Get params from URL to pre-fill form
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      const locName = params.get("location");
+      if (locName) {
+        // We simulate a location object since we only have the name
+        setLocation({ name: locName, code: "", country: "" });
+      }
+      setCheckIn(params.get("checkIn") || format(new Date(), "yyyy-MM-dd"));
+      setCheckOut(params.get("checkOut") || format(addDays(new Date(), 1), "yyyy-MM-dd"));
+      const guestsParam = params.get("guests");
+      if (guestsParam) setGuests(parseInt(guestsParam));
+    }
+  }, []);
 
   const handleSearch = () => {
     if (!location) {
@@ -31,6 +51,8 @@ export function HotelSearch() {
     router.push(`/hotel-booking/results?${params.toString()}`);
   };
 
+  if (!mounted) return null; // Avoid hydration mismatch
+
   return (
     <div className="bg-white p-6 rounded-xl shadow-lg border">
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
@@ -40,6 +62,7 @@ export function HotelSearch() {
             placeholder="Where are you going?" 
             icon={<MapPin className="h-4 w-4" />}
             onSelect={setLocation}
+            defaultValue={location?.name}
           />
         </div>
         

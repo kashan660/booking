@@ -1,129 +1,88 @@
-import { NextRequest, NextResponse } from "next/server";
-import { auth } from "@/auth";
-import { prisma } from "@/lib/prisma";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
+import prisma from "@/lib/prisma";
+import { NextResponse } from "next/server";
+import { z } from "zod";
+
+const blogSchema = z.object({
+  title: z.string().min(1, "Title is required"),
+  slug: z.string().min(1, "Slug is required"),
+  excerpt: z.string().optional(),
+  content: z.string().min(1, "Content is required"),
+  featuredImage: z.string().url().optional().or(z.literal("")),
+  category: z.string().default("travel"),
+  tags: z.string().transform((val) => val.split(",").map((t) => t.trim())),
+  seoTitle: z.string().optional(),
+  published: z.boolean().default(false),
+});
 
 export async function GET(
-  request: NextRequest,
-  { params }: { params: { id: string } }
+  req: Request,
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const session = await auth();
-    
-    if (!session?.user || session.user.role !== "ADMIN") {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-
+    const { id } = await params;
     const post = await prisma.blogPost.findUnique({
-      where: { id: params.id },
-      include: {
-        author: {
-          select: {
-            name: true,
-            email: true,
-          },
-        },
-      },
+      where: { id },
     });
 
     if (!post) {
-      return NextResponse.json({ error: "Post not found" }, { status: 404 });
+      return new NextResponse("Not Found", { status: 404 });
     }
 
     return NextResponse.json(post);
   } catch (error) {
-    console.error("Error fetching blog post:", error);
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
-  }
-}
-
-export async function PUT(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
-  try {
-    const session = await getServerSession(authOptions);
-    
-    if (!session?.user || session.user.role !== "ADMIN") {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-
-    const body = await request.json();
-    const { title, slug, excerpt, content, category, tags, featuredImage, published } = body;
-
-    // Validate required fields
-    if (!title || !slug || !content) {
-      return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
-    }
-
-    // Check if slug already exists (excluding current post)
-    const existingPost = await prisma.blogPost.findFirst({
-      where: {
-        slug,
-        id: { not: params.id },
-      },
-    });
-
-    if (existingPost) {
-      return NextResponse.json({ error: "Slug already exists" }, { status: 400 });
-    }
-
-    const updatedPost = await prisma.blogPost.update({
-      where: { id: params.id },
-      data: {
-        title,
-        slug,
-        excerpt,
-        content,
-        category,
-        tags,
-        featuredImage,
-        published: Boolean(published),
-        updatedAt: new Date(),
-      },
-      include: {
-        author: {
-          select: {
-            name: true,
-            email: true,
-          },
-        },
-      },
-    });
-
-    return NextResponse.json(updatedPost);
-  } catch (error) {
-    console.error("Error updating blog post:", error);
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+    return new NextResponse(null, { status: 500 });
   }
 }
 
 export async function DELETE(
-  request: NextRequest,
-  { params }: { params: { id: string } }
+  req: Request,
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await getServerSession(authOptions);
-    
-    if (!session?.user || session.user.role !== "ADMIN") {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
+    const { id } = await params;
 
-    // Check if post exists
-    const existingPost = await prisma.blogPost.findUnique({
-      where: { id: params.id },
-    });
-
-    if (!existingPost) {
-      return NextResponse.json({ error: "Post not found" }, { status: 404 });
+    if (!session || session.user.role !== "ADMIN") {
+      return new NextResponse("Unauthorized", { status: 401 });
     }
 
     await prisma.blogPost.delete({
-      where: { id: params.id },
+      where: { id },
     });
 
-    return NextResponse.json({ message: "Post deleted successfully" });
+    return new NextResponse(null, { status: 204 });
   } catch (error) {
-    console.error("Error deleting blog post:", error);
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+    return new NextResponse(null, { status: 500 });
+  }
+}
+
+export async function PUT(
+  req: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  try {
+    const session = await getServerSession(authOptions);
+    const { id } = await params;
+
+    if (!session || session.user.role !== "ADMIN") {
+      return new NextResponse("Unauthorized", { status: 401 });
+    }
+
+    const json = await req.json();
+    const body = blogSchema.parse(json);
+
+    const post = await prisma.blogPost.update({
+      where: { id },
+      data: body,
+    });
+
+    return NextResponse.json(post);
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      return new NextResponse(JSON.stringify(error.issues), { status: 422 });
+    }
+    return new NextResponse(null, { status: 500 });
   }
 }

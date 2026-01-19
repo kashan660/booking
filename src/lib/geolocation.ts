@@ -99,30 +99,44 @@ export const CURRENCY_MAPPINGS: Record<string, {
  */
 export async function detectUserLocation(): Promise<GeoLocation | null> {
   try {
-    // Using a free geolocation API (you can replace with your preferred service)
-    const response = await fetch('https://ipapi.co/json/');
-    const data = await response.json();
+    // Try multiple free geolocation APIs with fallback
+    // 1. ipwho.is (Free, CORS friendly, no rate limit issues usually)
+    // 2. ipapi.co (often rate limited or CORS blocked)
     
-    if (data.error) {
-      throw new Error(data.reason);
+    // Attempt 1: ipwho.is (Free, CORS friendly)
+    try {
+      const response = await fetch('https://ipwho.is/');
+      if (response.ok) {
+        const data = await response.json();
+        if (data.success) {
+          return mapToGeoLocation({
+            country_name: data.country,
+            country_code: data.country_code,
+            region: data.region,
+            city: data.city,
+            timezone: data.timezone.id
+          });
+        }
+      }
+    } catch (e) {
+      console.warn("ipwho.is failed, trying fallback...");
     }
 
-    const countryCode = data.country_code;
-    const language = LANGUAGE_MAPPINGS[countryCode] || LANGUAGE_MAPPINGS['US'];
-    const currency = CURRENCY_MAPPINGS[countryCode] || CURRENCY_MAPPINGS['US'];
+    // Attempt 2: ipapi.co (with CORS mode) - Fallback
+    try {
+      const response = await fetch('https://ipapi.co/json/', { 
+        method: 'GET',
+        headers: { 'Accept': 'application/json' }
+      });
+      if (response.ok) {
+        const data = await response.json();
+        if (!data.error) return mapToGeoLocation(data);
+      }
+    } catch (e) {
+      console.warn("ipapi.co failed, using default.");
+    }
 
-    return {
-      country: data.country_name,
-      countryCode: countryCode,
-      region: data.region,
-      city: data.city,
-      timezone: data.timezone,
-      currency: currency.currency,
-      currencySymbol: currency.currencySymbol,
-      currencyCode: currency.currencyCode,
-      language: language.language,
-      languageCode: language.languageCode,
-    };
+    throw new Error("All geolocation services failed");
   } catch (error) {
     console.error('Error detecting user location:', error);
     // Return default US settings if detection fails
@@ -139,6 +153,25 @@ export async function detectUserLocation(): Promise<GeoLocation | null> {
       languageCode: 'en-US',
     };
   }
+}
+
+function mapToGeoLocation(data: any): GeoLocation {
+  const countryCode = data.country_code;
+  const language = LANGUAGE_MAPPINGS[countryCode] || LANGUAGE_MAPPINGS['US'];
+  const currency = CURRENCY_MAPPINGS[countryCode] || CURRENCY_MAPPINGS['US'];
+
+  return {
+    country: data.country_name,
+    countryCode: countryCode,
+    region: data.region,
+    city: data.city,
+    timezone: data.timezone,
+    currency: currency.currency,
+    currencySymbol: currency.currencySymbol,
+    currencyCode: currency.currencyCode,
+    language: language.language,
+    languageCode: language.languageCode,
+  };
 }
 
 /**

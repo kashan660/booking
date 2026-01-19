@@ -5,91 +5,60 @@ import { Loader2, AlertCircle } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 
-export function TravelPayoutsWhiteLabel() {
-  const scriptLoaded = useRef(false);
+export function TravelPayoutsWhiteLabel({ 
+  onResultsShow,
+  searchParams
+}: { 
+  onResultsShow?: () => void;
+  searchParams?: string;
+}) {
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [height, setHeight] = useState(500);
 
   useEffect(() => {
-    if (scriptLoaded.current) {
-      setIsLoading(false);
-      return;
-    }
-
-    // Check if script already exists to avoid duplicates
-    if (document.querySelector('script[src*="tpwgts.com/wl_web/main.js"]')) {
-      scriptLoaded.current = true;
-      setIsLoading(false);
-      return;
-    }
-
-    const loadScript = () => {
-      setError(null);
-      setIsLoading(true);
-
-      const script = document.createElement("script");
-      script.async = true;
-      script.type = "module";
-      script.src = "https://tpwgts.com/wl_web/main.js?wl_id=3677";
+    const handleMessage = (event: MessageEvent) => {
+      // Handle flight widget resize
+      if (event.data.type === 'tpwl-resize' && typeof event.data.height === 'number') {
+        setHeight(event.data.height + 50); 
+      }
+      // Handle hotel widget resize (if reused here or globally)
+      if (event.data.type === 'hotel-widget-resize' && typeof event.data.height === 'number') {
+        // We can add logic here if this component is used for hotels too, 
+        // but currently hotels use a separate iframe in the page.tsx
+      }
       
-      const timeoutId = setTimeout(() => {
-        if (isLoading) {
-          setError("The search widget is taking longer than expected to load.");
-          setIsLoading(false);
-        }
-      }, 10000); // 10 second timeout
-
-      script.onload = () => {
-        clearTimeout(timeoutId);
+      if (event.data.type === 'tpwl-loaded') {
         setIsLoading(false);
-        scriptLoaded.current = true;
-      };
-
-      script.onerror = () => {
-        clearTimeout(timeoutId);
-        setError("Failed to load the search widget. Please check your connection and try again.");
-        setIsLoading(false);
-      };
-
-      document.head.appendChild(script);
+      }
+      if (event.data.type === 'tpwl-results' && onResultsShow) {
+        onResultsShow();
+      }
     };
 
-    loadScript();
+    window.addEventListener('message', handleMessage);
+    return () => window.removeEventListener('message', handleMessage);
+  }, [onResultsShow]);
 
-    return () => {
-      // Cleanup if necessary
-    };
-  }, []);
-
-  if (error) {
-    return (
-      <Alert variant="destructive" className="max-w-2xl mx-auto my-8">
-        <AlertCircle className="h-4 w-4" />
-        <AlertTitle>Widget Error</AlertTitle>
-        <AlertDescription className="flex flex-col gap-4">
-          <p>{error}</p>
-          <Button variant="outline" size="sm" onClick={() => window.location.reload()} className="w-fit">
-            Reload Page
-          </Button>
-        </AlertDescription>
-      </Alert>
-    );
-  }
+  // Construct src with search params if provided
+  // Note: searchParams should be the query string (e.g. "flightSearch=...")
+  const src = "/flight-widget.html" + (searchParams ? `?${searchParams}` : "");
 
   return (
-    <div className="travelpayouts-wrapper space-y-8 min-h-[400px]">
+    <div className="travelpayouts-wrapper w-full relative isolate transition-all duration-300" style={{ height: `${height}px`, minHeight: '500px' }}>
        {isLoading && (
-         <div className="flex flex-col items-center justify-center py-20 text-slate-500">
+         <div className="absolute inset-0 flex flex-col items-center justify-center bg-white/80 backdrop-blur-sm z-50 rounded-xl">
            <Loader2 className="h-10 w-10 animate-spin mb-4 text-primary" />
-           <p>Loading flight search...</p>
+           <p className="text-sm font-medium text-slate-600">Loading flight search engine...</p>
          </div>
        )}
        
-       {/* Search Form Container */}
-       <div id="tpwl-search" className={isLoading ? "hidden" : ""}></div>
-       
-       {/* Search Results Container */}
-       <div id="tpwl-tickets" className={isLoading ? "hidden" : ""}></div>
+       <iframe
+        src={src}
+        title="Flight Search"
+        className="w-full h-full border-0"
+        scrolling="no"
+        sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
+       />
     </div>
   );
 }

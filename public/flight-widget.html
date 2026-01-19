@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flight Search Widget</title>
+    <style>
+        body { 
+            margin: 0; 
+            padding: 0; 
+            font-family: system-ui, -apple-system, sans-serif; 
+            overflow-x: hidden; 
+            background: transparent;
+        }
+        /* Force widget to respect container width */
+        #tpwl-search, #tpwl-tickets { 
+            width: 100% !important; 
+            max-width: 100% !important; 
+        }
+    </style>
+    <script>
+        // REDIRECT LOGIC:
+        // If the widget has search parameters (meaning a search is active),
+        // and we are NOT on the dedicated results page, redirect the parent window.
+        try {
+            if (window.location.search.includes('flightSearch')) {
+                const parentPath = window.parent.location.pathname;
+                // If the parent page is NOT the flight-search page, redirect it
+                if (!parentPath.includes('/flight-search')) {
+                    window.parent.location.href = '/flight-search' + window.location.search;
+                    // Hide body to prevent flash of content before redirect
+                    document.write('<style>body { display: none !important; }</style>');
+                    throw new Error('Redirecting to results page...');
+                }
+            }
+        } catch (e) {
+            // Ignore errors from cross-origin blocking or the throw above
+        }
+    </script>
+</head>
+<body>
+    <div id="tpwl-search" style="
+         --font-color: #1e293b;
+         --main-accent: #2563eb;
+         --main-accent-opacified: rgba(37, 99, 235, 0.1);
+         --main-accent-darken: #1d4ed8;
+         --search-form-icon-color: #2563eb;
+         --search-form-link-color: #2563eb;
+         --main-accent-contrast-color: #FFFFFF;
+         --link-color: #2563eb;
+         --link-color-darken: #1d4ed8;
+         --main-accent-contrast-opacified: rgba(255,255,255,0.3);
+         --font-main: inherit;
+         --border-radius: 0.75rem;
+         --ticket-cards-background: #FFFFFF;
+         --border-color: #e2e8f0;
+    "></div>
+    <div id="tpwl-tickets"></div>
+    
+    <script>
+        // Configure the widget to stay on this page (the iframe)
+        window.TPWL_CONFIGURATION = {
+            resultsURL: window.location.href.split('?')[0], 
+        };
+    </script>
+
+    <script type="module" src="https://tpwgts.com/wl_web/main.js?wl_id=3677"></script>
+    
+    <script>
+        // Resize observer to send height to parent
+        const sendHeight = () => {
+            const height = document.body.scrollHeight;
+            window.parent.postMessage({ type: 'tpwl-resize', height }, '*');
+        };
+        
+        // Check for results
+        const checkResults = () => {
+            const tickets = document.getElementById('tpwl-tickets');
+            if (tickets && tickets.children.length > 0) {
+                window.parent.postMessage({ type: 'tpwl-results' }, '*');
+            }
+        };
+
+        const observer = new ResizeObserver(sendHeight);
+        observer.observe(document.body);
+        
+        const mutationObserver = new MutationObserver((mutations) => {
+            sendHeight();
+            checkResults();
+        });
+        mutationObserver.observe(document.body, { childList: true, subtree: true });
+        
+        // Notify when loaded
+        window.addEventListener('load', () => {
+            window.parent.postMessage({ type: 'tpwl-loaded' }, '*');
+            sendHeight();
+        });
+
+        // Also check periodically in case of slow rendering
+        setInterval(sendHeight, 1000);
+    </script>
+</body>
+</html>

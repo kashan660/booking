@@ -4,133 +4,65 @@ import { Facebook, Instagram, Twitter, Linkedin, Mail, Phone, MapPin } from "luc
 
 export function Footer() {
   return (
-    <footer className="bg-slate-900 text-slate-200">
-      <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          <div>
-            <Link href="/" className="mb-6 flex items-center gap-2">
-              <Image src="/logo-white.svg" alt="Lugvia" width={32} height={32} className="h-8 w-8" />
-              <span className="text-xl font-bold text-white">Lugvia.com</span>
+    <footer className="bg-slate-900 text-slate-300">
+      <div className="container mx-auto px-4 py-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="text-center md:text-left">
+            <Link href="/" className="mb-3 flex items-center justify-center md:justify-start gap-2">
+              <Image src="/logo-white.svg" alt="Lugvia" width={24} height={24} className="h-6 w-6" />
+              <span className="text-lg font-bold text-white">Lugvia.com</span>
             </Link>
-            <p className="text-sm text-slate-400 mb-4">
-              Your trusted partner for airport transfers and chauffeur services. 
-              Comfortable, reliable, and affordable rides worldwide.
+            <p className="text-sm mb-4 leading-relaxed max-w-xs mx-auto md:mx-0">
+              Your trusted partner for worldwide airport transfers.
             </p>
-            <div className="flex space-x-4">
-              <Link href="#" className="hover:text-white transition-colors">
-                <Facebook className="h-5 w-5" />
+            <div className="flex justify-center md:justify-start space-x-4">
+              <Link href="https://facebook.com/lugvia" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors" aria-label="Lugvia on Facebook">
+                <Facebook className="h-4 w-4" />
               </Link>
-              <Link href="#" className="hover:text-white transition-colors">
-                <Twitter className="h-5 w-5" />
+              <Link href="https://twitter.com/lugvia" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors" aria-label="Lugvia on Twitter">
+                <Twitter className="h-4 w-4" />
               </Link>
-              <Link href="#" className="hover:text-white transition-colors">
-                <Instagram className="h-5 w-5" />
+              <Link href="https://instagram.com/lugvia" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors" aria-label="Lugvia on Instagram">
+                <Instagram className="h-4 w-4" />
               </Link>
-              <Link href="#" className="hover:text-white transition-colors">
-                <Linkedin className="h-5 w-5" />
+              <Link href="https://linkedin.com/company/lugvia" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors" aria-label="Lugvia on LinkedIn">
+                <Linkedin className="h-4 w-4" />
               </Link>
             </div>
           </div>
 
-          <div>
-            <h4 className="text-lg font-semibold mb-4 text-white">Quick Links</h4>
-            <ul className="space-y-2 text-sm">
-              <li>
-                <Link href="/" className="hover:text-white transition-colors">Home</Link>
-              </li>
-              <li>
-                <Link href="/about" className="hover:text-white transition-colors">About Us</Link>
-              </li>
-              <li>
-                <Link href="/destinations" className="hover:text-white transition-colors">Destinations</Link>
-              </li>
-              <li>
-                <Link href="/blog" className="hover:text-white transition-colors">Blog</Link>
-              </li>
-              <li>
-                <Link href="/contact" className="hover:text-white transition-colors">Contact Us</Link>
-              </li>
-            </ul>
+          <div className="text-center md:text-left md:pl-8">
+            <h4 className="text-base font-semibold mb-3 text-white">Quick Links</h4>
+            <div className="grid grid-cols-2 gap-x-8 gap-y-2 text-sm">
+              <Link href="/" className="hover:text-white transition-colors">Home</Link>
+              <Link href="/blog" className="hover:text-white transition-colors">Blog</Link>
+              <Link href="/about" className="hover:text-white transition-colors">About Us</Link>
+              <Link href="/contact" className="hover:text-white transition-colors">Contact Us</Link>
+              <Link href="/destinations" className="hover:text-white transition-colors">Destinations</Link>
+            </div>
           </div>
 
-          <div>
-            <h4 className="text-lg font-semibold mb-4 text-white">Services</h4>
-            <ul className="space-y-2 text-sm">
-              <li>
-                <Link href="/airport-transfers" className="hover:text-white transition-colors">Airport Transfers</Link>
+          <div className="text-center md:text-left">
+            <h4 className="text-base font-semibold mb-3 text-white">Contact Info</h4>
+            <ul className="space-y-2 text-sm mb-4">
+              <li className="flex items-center justify-center md:justify-start space-x-2">
+                <MapPin className="h-4 w-4 text-primary" />
+                <span>123 Business Street, Tech City</span>
               </li>
-              <li>
-                <Link href="/city-to-city" className="hover:text-white transition-colors">City to City</Link>
-              </li>
-              <li>
-                <Link href="/hourly-booking" className="hover:text-white transition-colors">Hourly Booking</Link>
-              </li>
-              <li>
-                <Link href="/chauffeur-service" className="hover:text-white transition-colors">Chauffeur Service</Link>
-              </li>
-              <li>
-                <Link href="/hotel-booking" className="hover:text-white transition-colors">Hotel Booking</Link>
-              </li>
-              <li>
-                <Link href="/flights-booking" className="hover:text-white transition-colors">Flights Booking</Link>
-              </li>
-              <li>
-                <Link href="/tours-activities" className="hover:text-white transition-colors">Tours & Activities</Link>
-              </li>
-              <li>
-                <Link href="/flash-deals" className="hover:text-red-400 transition-colors font-semibold">Flash Deals</Link>
-              </li>
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="text-lg font-semibold mb-4 text-white">Contact Info</h4>
-            <ul className="space-y-4 text-sm">
-              <li className="flex items-start space-x-3">
-                <MapPin className="h-5 w-5 mt-0.5 text-primary" />
-                <span>123 Business Street, Tech City, TC 90210</span>
-              </li>
-              <li className="flex items-center space-x-3">
-                <Phone className="h-5 w-5 text-primary" />
+              <li className="flex items-center justify-center md:justify-start space-x-2">
+                <Phone className="h-4 w-4 text-primary" />
                 <span>+44 7466 779542</span>
               </li>
-              <li className="flex items-center space-x-3">
-                <Mail className="h-5 w-5 text-primary" />
+              <li className="flex items-center justify-center md:justify-start space-x-2">
+                <Mail className="h-4 w-4 text-primary" />
                 <span>support@lugvia.com</span>
               </li>
             </ul>
           </div>
         </div>
-
-        <div className="border-t border-slate-800 mt-12 pt-8 pb-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div>
-              <h4 className="text-lg font-semibold mb-4 text-white">Top Hotel Destinations</h4>
-              <ul className="grid grid-cols-2 gap-2 text-sm text-slate-400">
-                 <li><Link href="/best-hotels-paris" className="hover:text-white transition-colors">Paris Hotels</Link></li>
-                 <li><Link href="/best-hotels-istanbul" className="hover:text-white transition-colors">Istanbul Hotels</Link></li>
-                 <li><Link href="/best-hotels-dubai" className="hover:text-white transition-colors">Dubai Hotels</Link></li>
-                 <li><Link href="/best-hotels-antalya" className="hover:text-white transition-colors">Antalya Hotels</Link></li>
-                 <li><Link href="/best-hotels-makkah" className="hover:text-white transition-colors">Makkah Hotels</Link></li>
-                 <li><Link href="/best-hotels-madina" className="hover:text-white transition-colors">Madina Hotels</Link></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="text-lg font-semibold mb-4 text-white">Popular Transfers</h4>
-              <ul className="grid grid-cols-2 gap-2 text-sm text-slate-400">
-                 <li><Link href="/airport-taxi-paris" className="hover:text-white transition-colors">Paris Airport Taxi</Link></li>
-                 <li><Link href="/airport-taxi-istanbul" className="hover:text-white transition-colors">Istanbul Airport Taxi</Link></li>
-                 <li><Link href="/airport-taxi-dubai" className="hover:text-white transition-colors">Dubai Airport Taxi</Link></li>
-                 <li><Link href="/airport-taxi-antalya" className="hover:text-white transition-colors">Antalya Airport Taxi</Link></li>
-                 <li><Link href="/jeddah-to-makkah-taxi" className="hover:text-white transition-colors">Jeddah to Makkah</Link></li>
-                 <li><Link href="/city-transfers-makkah-madina" className="hover:text-white transition-colors">Makkah to Madina</Link></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <div className="border-t border-slate-800 mt-8 pt-8 text-center text-sm text-slate-400">
-          <p>&copy; {new Date().getFullYear()} Lugvia.com. All rights reserved.</p>
+        
+        <div className="mt-8 pt-4 border-t border-slate-800/50 text-center">
+          <p className="text-xs text-slate-500">&copy; {new Date().getFullYear()} Lugvia.com. All rights reserved.</p>
         </div>
       </div>
     </footer>

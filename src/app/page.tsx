@@ -1,25 +1,77 @@
 import { Hero } from "@/components/features/Hero";
-import { TransferWidget } from "@/components/features/TransferWidget";
+// import { TransferWidget } from "@/components/features/TransferWidget";
 import { SearchForm } from "@/components/features/SearchForm";
 import { FlightWidget } from "@/components/features/FlightWidget";
 import { CheapestFlights } from "@/components/features/CheapestFlights";
-import { CheckCircle, Clock, Globe, Shield, ArrowRightLeft, Hotel, Plane, MapPin, Package } from "lucide-react";
+import { CheckCircle, Clock, Globe, Shield, ArrowRightLeft, Hotel, Plane, MapPin, Package, ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function Home() {
+export default async function Home() {
+  // Static trip.com section data (replaced Prisma query)
+  const tripSettings: any = {};
+  const tripBgImage = tripSettings.backgroundImage || "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=2074&auto=format&fit=crop";
+  const tripHeading = tripSettings.heading || "Unbeatable Flight Deals";
+  const tripSubheading = tripSettings.subheading || "Starting from $99";
+  const tripDesc = tripSettings.description || "Discover limited-time offers to top destinations. Book now and save up to 40% on your next journey.";
+  const tripIframeSrc = tripSettings.iframeSrc || "https://www.trip.com/partners/ad/DB10327655?Allianceid=7712503&SID=289350125&trip_sub1=";
+
+  // Transfer Widget Data
+  const transferSettings: any = {};
+  const transferBgImage = transferSettings.backgroundImage;
+
   return (
     <div className="pb-20">
       <Hero />
       
       <div className="container mx-auto px-4">
-        {/* <SearchForm /> */}
-        <TransferWidget />
+        <SearchForm />
+        {/* <div id="booking-widget" className="scroll-mt-24">
+          <TransferWidget backgroundImage={transferBgImage} />
+        </div> */}
 
-        {/* Flight Widget */}
-        <section className="mt-12">
-          <h2 className="text-2xl font-bold mb-4 text-center">Book Your Flights</h2>
-          <FlightWidget />
+        {/* Trip.com Flight Deals */}
+        <section className="mt-16">
+          <div className="w-full flex justify-center px-4">
+            <div className="w-full max-w-6xl mx-auto bg-white rounded-3xl shadow-xl overflow-hidden relative group">
+               {/* Background Image */}
+               <div className="absolute inset-0 z-0">
+                 <Image 
+                   src={tripBgImage} 
+                   alt="Flight deals background" 
+                   fill
+                   className="object-cover opacity-15 transition-transform duration-700 group-hover:scale-105"
+                   unoptimized
+                 />
+                 <div className="absolute inset-0 bg-gradient-to-r from-blue-50/80 to-white/80" />
+               </div>
+
+               <div className="relative z-10 p-8 md:p-12 flex flex-col md:flex-row items-center gap-8 md:gap-12">
+                 <div className="flex-1 text-center md:text-left space-y-4">
+                   <div className="inline-flex items-center gap-2 bg-blue-100 text-blue-700 px-4 py-1.5 rounded-full text-sm font-semibold mb-2">
+                     <Plane className="h-4 w-4" /> Exclusive Offers
+                   </div>
+                   <h2 className="text-3xl md:text-4xl font-bold text-slate-900 leading-tight">
+                     {tripHeading} <br/>
+                     <span className="text-blue-600">{tripSubheading}</span>
+                   </h2>
+                   <p className="text-lg text-slate-600 max-w-md mx-auto md:mx-0">
+                     {tripDesc}
+                   </p>
+                 </div>
+
+                 <div className="w-full md:w-[500px] bg-white rounded-xl shadow-lg border border-slate-100 overflow-hidden transform transition-all hover:shadow-xl">
+                   <iframe 
+                     src={tripIframeSrc}
+                     style={{ width: "100%", height: "250px", border: "none" }} 
+                     id="DB10327655"
+                     title="Trip.com Flight Deals"
+                     className="w-full block"
+                   />
+                 </div>
+               </div>
+            </div>
+          </div>
         </section>
 
         {/* Cheapest Flights */}
@@ -28,68 +80,100 @@ export default function Home() {
         </section>
         
         {/* Services Overview */}
-        <section className="mt-20">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">Complete Travel Solutions Worldwide</h2>
-            <p className="text-muted-foreground max-w-3xl mx-auto">
-              From airport transfers to luxury hotels, flights to guided tours - Lugvia offers premium travel services 
-              in 150+ countries. Book with confidence and experience seamless travel planning with our trusted partners.
+        <section className="mt-24 mb-20" aria-labelledby="services-heading" itemScope itemType="https://schema.org/Service">
+          <div className="text-center mb-16">
+            <h2 id="services-heading" className="text-4xl font-extrabold mb-6 tracking-tight text-slate-900">
+              Complete Travel Solutions Worldwide
+            </h2>
+            <p className="text-lg text-slate-600 max-w-3xl mx-auto leading-relaxed">
+              From <span className="font-semibold text-blue-600">airport transfers</span> to luxury hotels, flights to guided tours — 
+              Lugvia offers premium travel services in 150+ countries. Book with confidence and experience seamless travel planning.
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
-            <Link href="/flights-booking" className="group">
-              <div className="bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-xl text-center hover:shadow-lg transition-all group-hover:scale-105">
-                <div className="bg-blue-500 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 shadow-sm">
-                  <Plane className="h-6 w-6 text-white" />
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
+            {/* Flight Booking */}
+            <Link href="/flights-booking" className="group relative overflow-hidden rounded-2xl transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-600 to-blue-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <div className="relative bg-white p-8 h-full border border-slate-100 rounded-2xl group-hover:border-transparent">
+                <div className="bg-blue-50 w-14 h-14 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-white/20 transition-colors">
+                  <Plane className="h-7 w-7 text-blue-600 group-hover:text-white transition-colors" />
                 </div>
-                <h3 className="font-semibold mb-2 text-blue-900">Flight Booking</h3>
-                <p className="text-sm text-blue-700">Compare 1000+ airlines worldwide. Best price guarantee on international and domestic flights.</p>
-                <span className="text-xs text-blue-600 font-medium mt-2 inline-block">Book Now →</span>
+                <h3 className="text-xl font-bold mb-3 text-slate-900 group-hover:text-white" itemProp="name">Flight Booking</h3>
+                <p className="text-slate-600 text-sm mb-6 leading-relaxed group-hover:text-blue-50" itemProp="description">
+                  Compare 1000+ airlines worldwide. Best price guarantee on international and domestic flights.
+                </p>
+                <div className="flex items-center text-blue-600 text-sm font-semibold group-hover:text-white">
+                  Book Now <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                </div>
               </div>
             </Link>
             
-            <Link href="/hotel-booking" className="group">
-              <div className="bg-gradient-to-br from-purple-50 to-purple-100 p-6 rounded-xl text-center hover:shadow-lg transition-all group-hover:scale-105">
-                <div className="bg-purple-500 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 shadow-sm">
-                  <Hotel className="h-6 w-6 text-white" />
+            {/* Hotel Reservations */}
+            <Link href="/hotel-booking" className="group relative overflow-hidden rounded-2xl transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
+              <div className="absolute inset-0 bg-gradient-to-br from-purple-600 to-purple-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <div className="relative bg-white p-8 h-full border border-slate-100 rounded-2xl group-hover:border-transparent">
+                <div className="bg-purple-50 w-14 h-14 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-white/20 transition-colors">
+                  <Hotel className="h-7 w-7 text-purple-600 group-hover:text-white transition-colors" />
                 </div>
-                <h3 className="font-semibold mb-2 text-purple-900">Hotel Reservations</h3>
-                <p className="text-sm text-purple-700">2M+ properties worldwide. From budget to luxury hotels, resorts and apartments.</p>
-                <span className="text-xs text-purple-600 font-medium mt-2 inline-block">Find Hotels →</span>
+                <h3 className="text-xl font-bold mb-3 text-slate-900 group-hover:text-white" itemProp="name">Hotel Stays</h3>
+                <p className="text-slate-600 text-sm mb-6 leading-relaxed group-hover:text-purple-50" itemProp="description">
+                  2M+ properties worldwide. From budget to luxury hotels, resorts and apartments.
+                </p>
+                <div className="flex items-center text-purple-600 text-sm font-semibold group-hover:text-white">
+                  Find Hotels <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                </div>
               </div>
             </Link>
             
-            <Link href="/airport-transfers" className="group">
-              <div className="bg-gradient-to-br from-green-50 to-green-100 p-6 rounded-xl text-center hover:shadow-lg transition-all group-hover:scale-105">
-                <div className="bg-green-500 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 shadow-sm">
-                  <ArrowRightLeft className="h-6 w-6 text-white" />
+            {/* Airport Transfers */}
+            <Link href="/airport-transfers" className="group relative overflow-hidden rounded-2xl transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
+              <div className="absolute inset-0 bg-gradient-to-br from-green-600 to-green-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <div className="relative bg-white p-8 h-full border border-slate-100 rounded-2xl group-hover:border-transparent">
+                <div className="bg-green-50 w-14 h-14 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-white/20 transition-colors">
+                  <ArrowRightLeft className="h-7 w-7 text-green-600 group-hover:text-white transition-colors" />
                 </div>
-                <h3 className="font-semibold mb-2 text-green-900">Airport Transfers</h3>
-                <p className="text-sm text-green-700">Professional chauffeur service. Fixed prices, meet & greet, flight monitoring included.</p>
-                <span className="text-xs text-green-600 font-medium mt-2 inline-block">Reserve Transfer →</span>
+                <h3 className="text-xl font-bold mb-3 text-slate-900 group-hover:text-white" itemProp="name">Transfers</h3>
+                <p className="text-slate-600 text-sm mb-6 leading-relaxed group-hover:text-green-50" itemProp="description">
+                  Professional chauffeur service. Fixed prices, meet & greet, flight monitoring included.
+                </p>
+                <div className="flex items-center text-green-600 text-sm font-semibold group-hover:text-white">
+                  Reserve Ride <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                </div>
               </div>
             </Link>
             
-            <Link href="/tours-activities" className="group">
-              <div className="bg-gradient-to-br from-orange-50 to-orange-100 p-6 rounded-xl text-center hover:shadow-lg transition-all group-hover:scale-105">
-                <div className="bg-orange-500 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 shadow-sm">
-                  <MapPin className="h-6 w-6 text-white" />
+            {/* Tours & Activities */}
+            <Link href="/tours-activities" className="group relative overflow-hidden rounded-2xl transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
+              <div className="absolute inset-0 bg-gradient-to-br from-orange-600 to-orange-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <div className="relative bg-white p-8 h-full border border-slate-100 rounded-2xl group-hover:border-transparent">
+                <div className="bg-orange-50 w-14 h-14 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-white/20 transition-colors">
+                  <MapPin className="h-7 w-7 text-orange-600 group-hover:text-white transition-colors" />
                 </div>
-                <h3 className="font-semibold mb-2 text-orange-900">Tours & Activities</h3>
-                <p className="text-sm text-orange-700">50,000+ experiences worldwide. Skip-the-line tickets, guided tours, day trips.</p>
-                <span className="text-xs text-orange-600 font-medium mt-2 inline-block">Explore Tours →</span>
+                <h3 className="text-xl font-bold mb-3 text-slate-900 group-hover:text-white" itemProp="name">Tours</h3>
+                <p className="text-slate-600 text-sm mb-6 leading-relaxed group-hover:text-orange-50" itemProp="description">
+                  50,000+ experiences worldwide. Skip-the-line tickets, guided tours, day trips.
+                </p>
+                <div className="flex items-center text-orange-600 text-sm font-semibold group-hover:text-white">
+                  Explore <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                </div>
               </div>
             </Link>
             
-            <Link href="/travel-packages" className="group">
-              <div className="bg-gradient-to-br from-pink-50 to-pink-100 p-6 rounded-xl text-center hover:shadow-lg transition-all group-hover:scale-105">
-                <div className="bg-pink-500 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 shadow-sm">
-                  <Package className="h-6 w-6 text-white" />
+            {/* Travel Packages */}
+            <Link href="/travel-packages" className="group relative overflow-hidden rounded-2xl transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
+              <div className="absolute inset-0 bg-gradient-to-br from-pink-600 to-pink-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <div className="relative bg-white p-8 h-full border border-slate-100 rounded-2xl group-hover:border-transparent">
+                <div className="bg-pink-50 w-14 h-14 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-white/20 transition-colors">
+                  <Package className="h-7 w-7 text-pink-600 group-hover:text-white transition-colors" />
                 </div>
-                <h3 className="font-semibold mb-2 text-pink-900">Travel Packages</h3>
-                <p className="text-sm text-pink-700">All-in-one packages: flights + hotels + transfers + tours. Save up to 40%!</p>
-                <span className="text-xs text-pink-600 font-medium mt-2 inline-block">View Packages →</span>
+                <h3 className="text-xl font-bold mb-3 text-slate-900 group-hover:text-white" itemProp="name">Packages</h3>
+                <p className="text-slate-600 text-sm mb-6 leading-relaxed group-hover:text-pink-50" itemProp="description">
+                  All-in-one packages: flights + hotels + transfers + tours. Save up to 40% on trips!
+                </p>
+                <div className="flex items-center text-pink-600 text-sm font-semibold group-hover:text-white">
+                  View Deals <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                </div>
               </div>
             </Link>
           </div>
@@ -172,67 +256,7 @@ export default function Home() {
         </section>
 
         {/* Travel Guides & Tips */}
-        <section className="mt-20">
-          <h2 className="text-3xl font-bold mb-8">Travel Guides & Tips</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-            {/* Hotel Guides */}
-            <div className="bg-white rounded-2xl shadow-sm border p-6">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="bg-blue-100 p-3 rounded-full text-blue-600">
-                  <Hotel className="h-6 w-6" />
-                </div>
-                <h3 className="text-xl font-bold">Top Hotel Collections</h3>
-              </div>
-              <ul className="space-y-4">
-                {[
-                  { title: "Best Hotels in Paris", href: "/best-hotels-paris", count: "Top 10" },
-                  { title: "Best Hotels in Istanbul", href: "/best-hotels-istanbul", count: "Top 15" },
-                  { title: "Best Hotels in Makkah", href: "/best-hotels-makkah", count: "Near Haram" },
-                  { title: "Best Hotels in Madina", href: "/best-hotels-madina", count: "Near Masjid Nabawi" },
-                  { title: "Best Hotels in Dubai", href: "/best-hotels-dubai", count: "Luxury Stays" },
-                  { title: "Best Hotels in Antalya", href: "/best-hotels-antalya", count: "Resorts" },
-                ].map((item) => (
-                  <li key={item.title}>
-                    <Link href={item.href} className="flex items-center justify-between group p-3 rounded-lg hover:bg-slate-50 transition-colors">
-                      <span className="font-medium text-slate-700 group-hover:text-primary transition-colors">{item.title}</span>
-                      <span className="text-xs font-semibold bg-slate-100 text-slate-600 px-2 py-1 rounded-full">{item.count}</span>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Transport Guides */}
-            <div className="bg-white rounded-2xl shadow-sm border p-6">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="bg-green-100 p-3 rounded-full text-green-600">
-                  <Plane className="h-6 w-6" />
-                </div>
-                <h3 className="text-xl font-bold">Airport & City Transfers</h3>
-              </div>
-              <ul className="space-y-4">
-                {[
-                  { title: "Airport Taxi Paris (CDG/Orly)", href: "/airport-taxi-paris", type: "Airport Transfer" },
-                  { title: "Istanbul Airport Transfers", href: "/airport-taxi-istanbul", type: "VIP Transfer" },
-                  { title: "Dubai Airport Chauffeur", href: "/airport-taxi-dubai", type: "Luxury Ride" },
-                  { title: "Antalya Airport Shuttle", href: "/airport-taxi-antalya", type: "Resort Transfer" },
-                  { title: "Jeddah to Makkah Taxi", href: "/jeddah-to-makkah-taxi", type: "Umrah Taxi" },
-                  { title: "Makkah to Madina Transfer", href: "/city-transfers-makkah-madina", type: "City to City" },
-                ].map((item) => (
-                  <li key={item.title}>
-                    <Link href={item.href} className="flex items-center justify-between group p-3 rounded-lg hover:bg-slate-50 transition-colors">
-                      <span className="font-medium text-slate-700 group-hover:text-primary transition-colors">{item.title}</span>
-                      <div className="flex items-center text-xs text-muted-foreground">
-                        <MapPin className="h-3 w-3 mr-1" />
-                        {item.type}
-                      </div>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </section>
+        {/* Removed Travel Guides & Tips section as requested */}
       </div>
     </div>
   );

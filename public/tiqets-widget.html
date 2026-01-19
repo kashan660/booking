@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tiqets Widget</title>
+    <style>
+        body { 
+            margin: 0; 
+            padding: 0; 
+            font-family: system-ui, -apple-system, sans-serif; 
+            overflow-x: hidden; 
+            background: transparent;
+        }
+    </style>
+</head>
+<body>
+    <div id="widget-container"></div>
+    
+    <script>
+        // Resize observer to send height to parent
+        const sendHeight = () => {
+            const height = document.body.scrollHeight;
+            window.parent.postMessage({ type: 'tiqets-widget-resize', height }, '*');
+        };
+
+        const observer = new ResizeObserver(sendHeight);
+        observer.observe(document.body);
+        
+        // Notify when loaded
+        window.addEventListener('load', () => {
+            sendHeight();
+        });
+        
+        // Check periodically
+        setInterval(sendHeight, 1000);
+    </script>
+
+    <script src="https://tpwgts.com/content?currency=USD&trs=488444&shmarker=696229&language=en&locale=260932&layout=horizontal&cards=4&powered_by=true&campaign_id=89&promo_id=3947" charset="utf-8"></script>
+</body>
+</html>

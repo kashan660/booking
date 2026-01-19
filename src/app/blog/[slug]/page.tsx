@@ -1,142 +1,170 @@
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
-import Image from "next/image";
-import { ArrowLeft, Calendar, User, Share2 } from "lucide-react";
-import { blogPosts } from "@/lib/blog-data";
-import { notFound } from "next/navigation";
 import { Metadata } from "next";
+import Image from "next/image";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import prisma from "@/lib/prisma";
+import { format } from "date-fns";
+import { Calendar, User, ArrowLeft, Tag } from "lucide-react";
 
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+interface PageProps {
+  params: Promise<{ slug: string }>;
+}
+
+export async function generateStaticParams() {
+  const posts = await prisma.blogPost.findMany({
+    where: { published: true },
+    select: { slug: true },
+  });
+
+  return posts.map((post) => ({
+    slug: post.slug,
+  }));
+}
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  const post = blogPosts.find((p) => p.slug === slug);
+  const post = await prisma.blogPost.findUnique({
+    where: { slug },
+  });
 
   if (!post) {
     return {
-      title: "Post Not Found | Lugvia",
-      description: "The requested blog post could not be found.",
+      title: "Post Not Found",
     };
   }
 
   return {
     title: `${post.title} | Lugvia Blog`,
     description: post.excerpt,
-    keywords: post.keywords,
     openGraph: {
       title: post.title,
-      description: post.excerpt,
+      description: post.excerpt || "",
       type: "article",
-      publishedTime: post.date,
-      authors: [post.author],
-      images: [
-        {
-          url: post.image,
-          width: 1200,
-          height: 630,
-          alt: post.title,
-        },
-      ],
+      publishedTime: post.createdAt.toISOString(),
+      images: post.featuredImage ? [post.featuredImage] : [],
     },
     twitter: {
       card: "summary_large_image",
-      title: post.title,
-      description: post.excerpt,
-      images: [post.image],
+      title: post.seoTitle || post.title,
+      description: post.excerpt || "",
+      images: post.featuredImage ? [post.featuredImage] : [],
     },
   };
 }
 
-export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = await params;
-  const post = blogPosts.find((p) => p.slug === slug);
+// Revalidate every hour
+export const revalidate = 3600;
 
-  if (!post) {
+export default async function BlogPostPage({ params }: PageProps) {
+  const { slug } = await params;
+  const post = await prisma.blogPost.findUnique({
+    where: { slug },
+    include: {
+      author: {
+        select: { name: true },
+      },
+    },
+  });
+
+  if (!post || (!post.published && process.env.NODE_ENV === "production")) {
     notFound();
   }
 
+  // Schema.org JSON-LD
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    headline: post.title,
-    image: post.image,
-    datePublished: post.date,
-    author: {
-      "@type": "Person",
-      name: post.author,
-    },
-    publisher: {
-      "@type": "Organization",
-      name: "Lugvia",
-      logo: {
-        "@type": "ImageObject",
-        url: "https://lugvia.com/logo.svg",
+    "@graph": [
+      {
+        "@type": "BlogPosting",
+        "headline": post.title,
+        "image": post.featuredImage,
+        "datePublished": post.createdAt.toISOString(),
+        "dateModified": post.updatedAt.toISOString(),
+        "author": {
+          "@type": "Person",
+          "name": post.author.name || "Lugvia Team",
+        },
+        "description": post.excerpt,
       },
-    },
-    description: post.excerpt,
+    ],
   };
 
   return (
-    <div className="container mx-auto px-4 py-12">
+    <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <Button variant="ghost" asChild className="mb-8">
-        <Link href="/blog">
-          <ArrowLeft className="mr-2 h-4 w-4" /> Back to Blog
-        </Link>
-      </Button>
+      
+      <div className="bg-slate-50 min-h-screen pb-20">
+        {/* Header Image */}
+        <div className="relative h-[60vh] w-full">
+           <Image
+             src={post.featuredImage || "/images/hero/dubai.jpg"}
+             alt={post.title}
+             fill
+             className="object-cover"
+             priority
+           />
+           <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/50 to-transparent" />
+           
+           <div className="absolute bottom-0 left-0 w-full p-8 md:p-12 text-white">
+             <div className="container mx-auto max-w-4xl">
+               <Link 
+                 href="/blog" 
+                 className="inline-flex items-center text-slate-300 hover:text-white mb-6 transition-colors"
+               >
+                 <ArrowLeft className="h-4 w-4 mr-2" /> Back to Blog
+               </Link>
+               
+               <div className="flex items-center gap-4 text-sm md:text-base text-slate-300 mb-4">
+                 <span className="bg-primary/20 text-primary-foreground px-3 py-1 rounded-full text-xs font-semibold backdrop-blur-sm border border-primary/30">
+                   {post.category}
+                 </span>
+                 <span className="flex items-center gap-1">
+                   <Calendar className="h-4 w-4" />
+                   {format(new Date(post.createdAt), 'MMMM d, yyyy')}
+                 </span>
+                 <span className="flex items-center gap-1">
+                   <User className="h-4 w-4" />
+                   {post.author.name || "Lugvia Team"}
+                 </span>
+               </div>
+               
+               <h1 className="text-3xl md:text-5xl font-bold leading-tight">
+                 {post.title}
+               </h1>
+             </div>
+           </div>
+        </div>
 
-      <article className="max-w-4xl mx-auto">
-        <div className="mb-8">
-          <div className="flex items-center gap-4 text-sm text-muted-foreground mb-4">
-            <span className="bg-primary/10 text-primary px-3 py-1 rounded-full font-medium">{post.category}</span>
-            <div className="flex items-center gap-1">
-              <Calendar className="h-4 w-4" />
-              <span>{post.date}</span>
-            </div>
-            <div className="flex items-center gap-1">
-              <User className="h-4 w-4" />
-              <span>{post.author}</span>
-            </div>
+        <div className="container mx-auto px-4 max-w-4xl -mt-5 relative z-10">
+          <div className="bg-white rounded-xl shadow-xl p-8 md:p-12">
+            
+            {/* Main Content */}
+            <article 
+              className="prose prose-slate lg:prose-lg max-w-none mb-12"
+              dangerouslySetInnerHTML={{ __html: post.content }}
+            />
+
+            {/* Keywords/Tags */}
+            {post.tags.length > 0 && (
+              <div className="flex flex-wrap gap-2 mb-12 pt-8 border-t">
+                {post.tags.map((tag) => (
+                  <span 
+                    key={tag}
+                    className="inline-flex items-center px-3 py-1 rounded-full bg-slate-100 text-slate-600 text-sm"
+                  >
+                    <Tag className="h-3 w-3 mr-2" />
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            )}
+            
           </div>
-          
-          <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
-            {post.title}
-          </h1>
-          
-          <p className="text-xl text-muted-foreground leading-relaxed">
-            {post.excerpt}
-          </p>
         </div>
-
-        <div className="aspect-video relative rounded-xl overflow-hidden mb-12 bg-slate-100">
-          <Image 
-            src={post.image} 
-            alt={post.title} 
-            fill
-            className="object-cover"
-            priority
-            sizes="(max-width: 1200px) 100vw, 896px"
-          />
-        </div>
-
-        <div 
-          className="prose prose-lg dark:prose-invert max-w-none"
-          dangerouslySetInnerHTML={{ __html: post.content }}
-        />
-          
-        <hr className="my-8" />
-        
-        <div className="bg-slate-50 p-6 rounded-xl border flex items-center justify-between">
-          <div>
-            <h3 className="font-bold mb-1">Share this article</h3>
-            <p className="text-sm text-muted-foreground">Found this helpful? Share it with your friends.</p>
-          </div>
-          <Button variant="outline" size="sm">
-            <Share2 className="mr-2 h-4 w-4" /> Share
-          </Button>
-        </div>
-      </article>
-    </div>
+      </div>
+    </>
   );
 }

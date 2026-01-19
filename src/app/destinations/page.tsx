@@ -4,14 +4,14 @@ import { ArrowRightLeft } from "lucide-react";
 
 const destinations = [
   { name: "Dubai", image: "/images/destinations/dubai.jpg", country: "UAE", href: "/best-hotels-dubai" },
-  { name: "London", image: "/images/destinations/london.jpg", country: "UK", href: "#" },
+  { name: "London", image: "/images/destinations/london.jpg", country: "UK", href: "/airport-taxi-london" },
   { name: "Makkah", image: "/images/destinations/makkah.jpg", country: "Saudi Arabia", href: "/jeddah-to-makkah-taxi" },
   { name: "Istanbul", image: "/images/destinations/istanbul.jpg", country: "Turkey", href: "/best-hotels-istanbul" },
   { name: "Antalya", image: "/images/destinations/antalya.jpg", country: "Turkey", href: "/best-hotels-antalya" },
   { name: "Paris", image: "/images/destinations/paris.jpg", country: "France", href: "/best-hotels-paris" },
-  { name: "New York", image: "https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?q=80&w=2070&auto=format&fit=crop", country: "USA", href: "#" },
-  { name: "Tokyo", image: "https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?q=80&w=1988&auto=format&fit=crop", country: "Japan", href: "#" },
-  { name: "Singapore", image: "https://images.unsplash.com/photo-1525625293386-3f8f99389edd?q=80&w=2052&auto=format&fit=crop", country: "Singapore", href: "#" },
+  { name: "New York", image: "https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?q=80&w=2070&auto=format&fit=crop", country: "USA", href: "/airport-taxi-newyork" },
+  { name: "Tokyo", image: "https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?q=80&w=1988&auto=format&fit=crop", country: "Japan", href: "/airport-taxi-tokyo" },
+  { name: "Singapore", image: "https://images.unsplash.com/photo-1525625293386-3f8f99389edd?q=80&w=2052&auto=format&fit=crop", country: "Singapore", href: "/airport-taxi-singapore" },
 ];
 
 export default function DestinationsPage() {

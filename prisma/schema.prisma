@@ -15,19 +15,19 @@ model User {
   emailVerified DateTime?
   image         String?
   role          String    @default("USER") // "USER" or "ADMIN"
-  
-  // Profile fields
-  phone         String?
-  address       String?
-  city          String?
-  country       String?
-  
-  // Relations
-  bookings      Booking[]
-  blogPosts     BlogPost[]
 
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  // Profile fields
+  phone   String?
+  address String?
+  city    String?
+  country String?
+
+  // Relations
+  bookings  Booking[]
+  blogPosts BlogPost[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model BlogPost {
@@ -42,33 +42,37 @@ model BlogPost {
   published     Boolean  @default(false)
   authorId      String
   author        User     @relation(fields: [authorId], references: [id])
+  
+  // SEO Fields
+  seoTitle      String?  // New field for Meta Title
+  
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 }
 
 model Booking {
-  id          String   @id @default(cuid())
-  pickup      String
-  dropoff     String
-  date        String
-  time        String
-  passengers  Int
-  tripType    String
-  returnDate  String?
-  returnTime  String?
-  status      String   @default("pending") // pending, confirmed, completed, cancelled
-  
+  id         String  @id @default(cuid())
+  pickup     String
+  dropoff    String
+  date       String
+  time       String
+  passengers Int
+  tripType   String
+  returnDate String?
+  returnTime String?
+  status     String  @default("pending") // pending, confirmed, completed, cancelled
+
   // Guest details (snapshot)
-  customerName String?
+  customerName  String?
   customerEmail String?
   customerPhone String?
 
   // Relation to User (optional, for registered users)
-  userId      String?
-  user        User?    @relation(fields: [userId], references: [id])
+  userId String?
+  user   User?   @relation(fields: [userId], references: [id])
 
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model SEOSettings {
@@ -78,6 +82,8 @@ model SEOSettings {
   description String
   keywords    String[]
   ogImage     String?
+  page        Page?    @relation(fields: [pageId], references: [id])
+  pageId      String?  @unique
   updatedAt   DateTime @updatedAt
 }
 
@@ -93,19 +99,27 @@ model SmtpSettings {
 }
 
 model Page {
-  id          String   @id @default(cuid())
+  id          String        @id @default(cuid())
   title       String
-  slug        String   @unique
-  content     String   @db.Text
+  slug        String        @unique
+  content     String        @db.Text
   description String?
   keywords    String[]
   ogImage     String?
-  published   Boolean  @default(false)
-  template    String   @default("default") // default, blog, landing, etc.
+  published   Boolean       @default(false)
+  template    String        @default("default") // default, blog, landing, etc.
+  
+  // SEO Fields
+  seoTitle      String?  // New field for Meta Title
+  
+  // Featured Image
+  featuredImage String?
+  imagePosition String   @default("center") // top, center, bottom
+
   sections    PageSection[]
   seoSettings SEOSettings?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
 }
 
 model PageSection {
@@ -116,7 +130,7 @@ model PageSection {
   content   String   @db.Text
   order     Int      @default(0)
   type      String   @default("text") // text, image, gallery, form, etc.
-  settings  Json?    // JSON for section-specific settings
+  settings  Json? // JSON for section-specific settings
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

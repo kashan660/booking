@@ -1,140 +1,89 @@
-import { NextRequest, NextResponse } from "next/server";
-import { auth } from "@/auth";
-import { prisma } from "@/lib/prisma";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
+import prisma from "@/lib/prisma";
+import { NextResponse } from "next/server";
+import { z } from "zod";
 
-// GET /api/pages/[id] - Get single page
+const pageSchema = z.object({
+  title: z.string().min(1, "Title is required"),
+  slug: z.string().min(1, "Slug is required"),
+  content: z.string().min(1, "Content is required"),
+  description: z.string().optional(),
+  keywords: z.string().transform((val) => val ? val.split(",").map((t) => t.trim()) : []).optional(),
+  seoTitle: z.string().optional(),
+  featuredImage: z.string().url().optional().or(z.literal("")),
+  imagePosition: z.string().default("center"),
+  published: z.boolean().default(false),
+  template: z.string().default("default"),
+});
+
 export async function GET(
-  request: NextRequest,
-  { params }: { params: { id: string } }
+  req: Request,
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const session = await auth();
-    
-    if (!session || session.user.role !== "ADMIN") {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-
+    const { id } = await params;
     const page = await prisma.page.findUnique({
-      where: { id: params.id },
-      include: {
-        sections: {
-          orderBy: { order: 'asc' }
-        },
-        seoSettings: true
-      }
+      where: { id },
     });
 
     if (!page) {
-      return NextResponse.json({ error: "Page not found" }, { status: 404 });
+      return new NextResponse("Not Found", { status: 404 });
     }
 
     return NextResponse.json(page);
   } catch (error) {
-    console.error("Error fetching page:", error);
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+    return new NextResponse(null, { status: 500 });
   }
 }
 
-// PUT /api/pages/[id] - Update page
-export async function PUT(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
-  try {
-    const session = await getServerSession(authOptions);
-    
-    if (!session || session.user.role !== "ADMIN") {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-
-    const body = await request.json();
-    const { title, slug, content, description, keywords, ogImage, published, template, sections } = body;
-
-    // Check if page exists
-    const existingPage = await prisma.page.findUnique({
-      where: { id: params.id }
-    });
-
-    if (!existingPage) {
-      return NextResponse.json({ error: "Page not found" }, { status: 404 });
-    }
-
-    // Check if slug is being changed and if it already exists
-    if (slug && slug !== existingPage.slug) {
-      const slugExists = await prisma.page.findUnique({
-        where: { slug }
-      });
-      
-      if (slugExists) {
-        return NextResponse.json({ error: "Page with this slug already exists" }, { status: 400 });
-      }
-    }
-
-    // Update page
-    const page = await prisma.page.update({
-      where: { id: params.id },
-      data: {
-        title: title || existingPage.title,
-        slug: slug || existingPage.slug,
-        content: content !== undefined ? content : existingPage.content,
-        description: description !== undefined ? description : existingPage.description,
-        keywords: keywords !== undefined ? keywords : existingPage.keywords,
-        ogImage: ogImage !== undefined ? ogImage : existingPage.ogImage,
-        published: published !== undefined ? published : existingPage.published,
-        template: template || existingPage.template,
-        sections: sections ? {
-          deleteMany: {}, // Delete existing sections
-          create: sections.map((section: any, index: number) => ({
-            name: section.name,
-            content: section.content,
-            order: section.order || index,
-            type: section.type || "text",
-            settings: section.settings || {}
-          }))
-        } : undefined
-      },
-      include: {
-        sections: true,
-        seoSettings: true
-      }
-    });
-
-    return NextResponse.json(page);
-  } catch (error) {
-    console.error("Error updating page:", error);
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
-  }
-}
-
-// DELETE /api/pages/[id] - Delete page
 export async function DELETE(
-  request: NextRequest,
-  { params }: { params: { id: string } }
+  req: Request,
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await getServerSession(authOptions);
-    
+    const { id } = await params;
+
     if (!session || session.user.role !== "ADMIN") {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      return new NextResponse("Unauthorized", { status: 401 });
     }
 
-    // Check if page exists
-    const existingPage = await prisma.page.findUnique({
-      where: { id: params.id }
-    });
-
-    if (!existingPage) {
-      return NextResponse.json({ error: "Page not found" }, { status: 404 });
-    }
-
-    // Delete page (sections will be deleted due to cascade)
     await prisma.page.delete({
-      where: { id: params.id }
+      where: { id },
     });
 
-    return NextResponse.json({ message: "Page deleted successfully" });
+    return new NextResponse(null, { status: 204 });
   } catch (error) {
-    console.error("Error deleting page:", error);
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+    return new NextResponse(null, { status: 500 });
+  }
+}
+
+export async function PUT(
+  req: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  try {
+    const session = await getServerSession(authOptions);
+    const { id } = await params;
+
+    if (!session || session.user.role !== "ADMIN") {
+      return new NextResponse("Unauthorized", { status: 401 });
+    }
+
+    const json = await req.json();
+    const body = pageSchema.parse(json);
+
+    const page = await prisma.page.update({
+      where: { id },
+      data: body,
+    });
+
+    return NextResponse.json(page);
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      return new NextResponse(JSON.stringify(error.issues), { status: 422 });
+    }
+    return new NextResponse(null, { status: 500 });
   }
 }

@@ -308,34 +308,34 @@ export const seoPagesData: Record<string, SEOPageProps> = {
     ]
   },
   "airport-taxi-paris": {
-    title: "Best Airport Taxi & Transfers in Paris (CDG/Orly)",
-    subtitle: "Reliable, comfortable, and fixed-price transfers to/from Paris airports.",
-    description: "Navigate Paris airports with ease. Whether arriving at Charles de Gaulle (CDG), Orly (ORY), or Beauvais (BVA), our private transfer service ensures a stress-free journey to your hotel or destination.",
-    heroImage: "https://images.unsplash.com/photo-1499856871940-a09627c6dcf6?auto=format&fit=crop&q=80",
+    title: "Paris Airport Transfer: CDG, Orly & Beauvais Private Taxi",
+    subtitle: "Skip the metro hassle. Direct, fixed-price private transfers from Charles de Gaulle (CDG) and Orly (ORY) to your Paris hotel.",
+    description: "Welcome to the City of Light. Start your Parisian journey with zero stress. Our professional drivers track your flight and greet you at the arrival terminal with a name sign. Whether you're heading to a hotel near the Eiffel Tower, Disneyland Paris, or a business meeting in La Défense, our fleet of comfortable sedans and vans ensures a smooth ride through Paris traffic.",
+    heroImage: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?q=80&w=2070&auto=format&fit=crop",
     city: "Paris",
     type: "transfer",
     items: [
       {
-        title: "Private Sedan Transfer",
-        description: "Comfortable ride for up to 3 passengers. Perfect for couples or small families.",
+        title: "Economy Sedan (Peugeot 508 / Toyota)",
+        description: "Efficient and comfortable transport for up to 3 passengers. Perfect for couples or solo travelers looking for a reliable airport pickup without the premium price tag.",
         image: "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&q=80",
-        features: ["Meet & Greet", "Flight Tracking", "Fixed Price", "Free Waiting Time"],
+        features: ["Meet & Greet Included", "Fixed Price (No Meter)", "Flight Tracking", "1 Hour Free Waiting"],
         price: "From €65",
         location: "CDG to City Center"
       },
       {
-        title: "Luxury Mercedes E-Class",
-        description: "Travel in style with our business class vehicles. Ideal for corporate travelers.",
+        title: "Business Class (Mercedes E-Class)",
+        description: "Travel in sophistication. Our business class service offers leather interiors, bottled water, and a highly professional chauffeur. Ideal for corporate travelers.",
         image: "https://images.unsplash.com/photo-1563720223185-11003d516935?auto=format&fit=crop&q=80",
-        features: ["Professional Chauffeur", "Leather Interior", "Bottled Water", "Priority Service"],
+        features: ["Priority Pickup", "Leather Interior", "English Speaking Driver", "Business Amenities"],
         price: "From €95",
         location: "CDG to City Center"
       },
       {
-        title: "Minivan Group Transfer",
-        description: "Spacious van for up to 7 passengers with luggage. Great for groups and large families.",
+        title: "Family Van (Mercedes V-Class)",
+        description: "Space for the whole family and all your luggage. Our luxury vans comfortably seat 7 passengers, making them perfect for groups or trips to Disneyland Paris.",
         image: "https://images.unsplash.com/photo-1566008885218-90abf9200ddb?auto=format&fit=crop&q=80",
-        features: ["Ample Luggage Space", "Child Seats Available", "Group Discounts", "Door-to-Door"],
+        features: ["7 Seats + Luggage", "Child Seats Available", "Group Travel", "Disneyland Transfers"],
         price: "From €110",
         location: "CDG to City Center"
       }
@@ -343,11 +343,11 @@ export const seoPagesData: Record<string, SEOPageProps> = {
     faqs: [
       {
         question: "How do I find my driver at CDG airport?",
-        answer: "Your driver will be waiting in the arrival hall with a name sign after you collect your luggage and pass customs."
+        answer: "Your driver will be waiting in the arrival hall immediately after you exit customs, holding a sign with your name on it."
       },
       {
         question: "Is the price fixed or metered?",
-        answer: "All our transfer prices are fixed and confirmed at the time of booking. No hidden fees or meter surprises."
+        answer: "All our transfer prices are fixed and confirmed at the time of booking. There are no hidden fees for traffic or luggage."
       }
     ],
     relatedLinks: [
@@ -356,32 +356,32 @@ export const seoPagesData: Record<string, SEOPageProps> = {
     ]
   },
   "airport-taxi-istanbul": {
-    title: "Istanbul Airport Taxi & VIP Transfers (IST/SAW)",
-    subtitle: "Seamless transfers from New Istanbul Airport and Sabiha Gokcen.",
-    description: "Avoid the chaos of public transport. Book a private, sanitized, and comfortable transfer from Istanbul's airports directly to your hotel in Sultanahmet, Taksim, or anywhere in the city.",
-    heroImage: "/images/hero/istanbul.jpg",
+    title: "Istanbul Airport Transfer: IST & Sabiha Gokcen VIP Taxi",
+    subtitle: "Avoid the chaos. Premium private transfers from New Istanbul Airport (IST) and Sabiha Gokcen (SAW) directly to your hotel.",
+    description: "Istanbul is a sprawling metropolis, and navigating public transport with luggage can be daunting. Our VIP transfer service offers a sanctuary of calm. Enjoy a sanitized, private ride in a luxury Mercedes Vito directly to Sultanahmet, Taksim, or Beşiktaş. We monitor your flight for delays and ensure a seamless handover from arrival gate to hotel lobby.",
+    heroImage: "https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?q=80&w=2070&auto=format&fit=crop",
     city: "Istanbul",
     type: "transfer",
     items: [
       {
-        title: "Standard Private Transfer",
-        description: "Reliable transfer in a comfortable sedan or hatchback.",
+        title: "Private Sedan (Fiat Egea / Renault)",
+        description: "A cost-effective private transfer solution. Clean, air-conditioned, and strictly private vehicles for up to 3 passengers.",
         image: "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&q=80",
         features: ["24/7 Service", "English Speaking Support", "Tolls Included", "Free Cancellation"],
         price: "From €40",
-        location: "IST to City Center"
+        location: "IST to Sultanahmet"
       },
       {
         title: "VIP Mercedes Vito",
-        description: "The most popular choice in Istanbul. Luxury van with leather seats and privacy.",
+        description: "The gold standard for Istanbul transfers. These custom-designed luxury vans feature leather reclining seats, privacy glass, ambient lighting, and often Wi-Fi.",
         image: "https://images.unsplash.com/photo-1617788138017-80ad40651399?auto=format&fit=crop&q=80",
         features: ["Luxury Interior", "WiFi Onboard", "Fridge/Drinks", "Up to 6 Pax"],
         price: "From €50",
-        location: "IST to City Center"
+        location: "IST to Taksim/Sultanahmet"
       },
       {
         title: "Large Group Sprinter",
-        description: "Minibus for larger groups up to 13-16 passengers.",
+        description: "Ideal for tour groups or large families. Our Mercedes Sprinters accommodate up to 16 passengers with ample space for luggage.",
         image: "https://images.unsplash.com/photo-1552168324-d612d77725e3?auto=format&fit=crop&q=80",
         features: ["High Capacity", "AC Climate Control", "Ample Luggage", "Professional Driver"],
         price: "From €70",
@@ -399,12 +399,12 @@ export const seoPagesData: Record<string, SEOPageProps> = {
     ],
     faqs: [
       {
-        question: "How long is the drive from IST to Sultanahmet?",
-        answer: "It usually takes 45-60 minutes depending on traffic."
+        question: "How long is the drive from New Istanbul Airport (IST) to Sultanahmet?",
+        answer: "The journey typically takes 45 to 60 minutes, depending on traffic conditions. Our drivers use real-time navigation to find the fastest route."
       },
       {
         question: "Can I pay in Euros or Dollars?",
-        answer: "Yes, you can pay online in your preferred currency or cash to the driver (though online booking is recommended)."
+        answer: "Yes, while online payment is preferred, you can pay the driver in EUR, USD, or Turkish Lira."
       }
     ],
     relatedLinks: [
@@ -413,10 +413,10 @@ export const seoPagesData: Record<string, SEOPageProps> = {
     ]
   },
   "airport-taxi-dubai": {
-    title: "Dubai Airport Transfer & Luxury Chauffeur (DXB)",
-    subtitle: "Experience premium travel in Dubai with our VIP fleet.",
-    description: "Book reliable airport transfers from DXB and DWC. Professional chauffeurs, luxury cars, and fixed prices for your Dubai journey.",
-    heroImage: "https://images.unsplash.com/photo-1512453979798-5ea904a848bd?auto=format&fit=crop&q=80",
+    title: "Dubai Airport Transfer: VIP & Luxury Chauffeur Service",
+    subtitle: "Arrive in style with Dubai's #1 rated private transfer service. From DXB to your hotel door in pure comfort.",
+    description: "Experience the epitome of luxury travel in Dubai. Whether you need a seamless pickup from Dubai International Airport (DXB), a VIP chauffeur for business meetings, or a family-friendly transfer to Palm Jumeirah, our fleet of premium vehicles ensures a stress-free start to your journey. Skip the taxi queues and step into a world of comfort, punctuality, and fixed-price reliability.",
+    heroImage: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=2070&auto=format&fit=crop",
     city: "Dubai",
     type: "transfer",
     keywords: [
@@ -425,76 +425,78 @@ export const seoPagesData: Record<string, SEOPageProps> = {
       "Dubai Chauffeur",
       "Luxury Car Rental Dubai",
       "Dubai Airport Limousine",
-      "Dubai Hotel Transfer"
+      "Dubai Hotel Transfer",
+      "Palm Jumeirah Taxi",
+      "Burj Khalifa Transfer"
     ],
     items: [
       {
-        title: "Lexus ES/Toyota Camry",
-        description: "Standard luxury taxis commonly used in Dubai, clean and efficient.",
+        title: "Standard Luxury Sedan (Lexus ES)",
+        description: "The perfect balance of comfort and affordability. Our immaculately clean Lexus ES sedans offer a smooth ride for up to 3 passengers, ideal for couples and business travelers.",
         image: "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&q=80",
-        features: ["Metered/Fixed Rates", "RTA Regulated", "Clean Vehicles", "Professional Drivers"],
-        price: "From AED 100",
-        location: "DXB to Downtown"
+        features: ["All-Inclusive Fixed Rates", "Free Waiting Time (60 mins)", "Professional Uniformed Driver", "Flight Monitoring"],
+        price: "From AED 120",
+        location: "DXB to Downtown / Marina"
       },
       {
-        title: "BMW 7 Series / Mercedes S-Class",
-        description: "Top-tier luxury sedans for VIP arrivals.",
+        title: "VIP First Class (Mercedes S-Class)",
+        description: "Make a statement upon arrival. Sink into the leather seats of a pristine Mercedes S-Class or BMW 7 Series. Includes meet & greet service inside the terminal.",
         image: "https://images.unsplash.com/photo-1563720223185-11003d516935?auto=format&fit=crop&q=80",
-        features: ["First Class Comfort", "Uniformed Chauffeur", "Airport Meet & Assist", "Luxury Amenities"],
+        features: ["VIP Meet & Greet", "Bottled Water & Wi-Fi", "Executive Chauffeur", "Ultimate Privacy"],
         price: "From AED 350",
-        location: "DXB to Downtown"
+        location: "DXB to Palm Jumeirah"
       },
       {
-        title: "GMC Yukon / Chevrolet Tahoe",
-        description: "Large SUVs perfect for families with plenty of luggage.",
+        title: "Family SUV (GMC Yukon XL)",
+        description: "Traveling with family or extra luggage? Our spacious American SUVs provide ample room for 6 passengers and 6 suitcases without compromising on luxury.",
         image: "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&q=80",
-        features: ["Spacious", "Leather Seats", "Safe & Secure", "Family Friendly"],
+        features: ["Spacious Interior", "Child Seats Available", "Extra Luggage Capacity", "Safe & Secure"],
         price: "From AED 250",
-        location: "DXB to Downtown"
+        location: "DXB to JBR / Marina"
       }
     ],
     faqs: [
       {
-        question: "Is Uber available at Dubai Airport?",
-        answer: "Yes, Uber and Careem are available, but booking a private transfer ensures a fixed price and meet & greet service."
+        question: "Why book a private transfer instead of a regular taxi?",
+        answer: "Regular airport taxis often have long queues and variable metered rates. Our private transfers offer fixed prices, no waiting time, and a professional meet & greet service in the arrival hall."
       },
       {
-        question: "How much is a taxi from Dubai Airport to Marina?",
-        answer: "It typically costs between AED 100-150 depending on the vehicle type and time of day."
+        question: "Can I book a transfer to Abu Dhabi?",
+        answer: "Absolutely. We provide seamless inter-city transfers from Dubai Airport to Abu Dhabi hotels, Yas Island, and more."
       }
     ],
     relatedLinks: [
       { title: "Best Hotels Dubai", href: "/best-hotels-dubai" },
-      { title: "Dubai City Tour", href: "/tours-activities" }
+      { title: "Dubai City Tours", href: "/tours-activities" }
     ]
   },
   "airport-taxi-antalya": {
-    title: "Antalya Airport Transfers & Shuttle (AYT)",
-    subtitle: "Fast and affordable transfers to Belek, Lara, Kemer, and Side.",
-    description: "Start your holiday right. We offer private transfers from Antalya Airport to all major resort areas. No waiting for buses, direct to your hotel door.",
-    heroImage: "/images/hero/antalya.jpg",
+    title: "Antalya Airport Transfers: Direct to Belek, Lara & Side",
+    subtitle: "Start your Turkish Riviera holiday in comfort. Private shuttles from AYT Airport to all resorts.",
+    description: "Don't wait for the tour bus to fill up. Our private Antalya Airport transfers get you to the beach faster. Whether you're heading to a golf resort in Belek, a family hotel in Lara Beach, or the historic ruins of Side, our fleet of modern vehicles ensures a cool, comfortable, and direct journey.",
+    heroImage: "https://images.unsplash.com/photo-1542051841857-5f90071e7989?q=80&w=2070&auto=format&fit=crop",
     city: "Antalya",
     type: "transfer",
     items: [
       {
         title: "Economy Sedan",
-        description: "Budget-friendly private transfer for couples.",
+        description: "Perfect for couples. A private, air-conditioned sedan that takes you directly to your hotel without any stops.",
         image: "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&q=80",
         features: ["AC", "Direct to Hotel", "Best Price", "2 Pax"],
         price: "From €35",
-        location: "AYT to Belek"
+        location: "AYT to Lara/Belek"
       },
       {
-        title: "Private Minivan",
-        description: "Comfortable van for families going to resorts.",
+        title: "Private Minivan (Mercedes Vito)",
+        description: "The most comfortable choice for families. Plenty of space for strollers, golf bags, and suitcases.",
         image: "https://images.unsplash.com/photo-1617788138017-80ad40651399?auto=format&fit=crop&q=80",
-        features: ["Child Seats", "Spacious", "Fixed Price", "Up to 6 Pax"],
+        features: ["Child Seats Free", "Spacious", "Fixed Price", "Up to 6 Pax"],
         price: "From €45",
         location: "AYT to Belek"
       },
       {
         title: "VIP Sprinter Bus",
-        description: "For large groups and golf bags.",
+        description: "Organizing a golf trip? Our Sprinter buses have huge trunks specifically designed to carry multiple golf bags and large groups.",
         image: "https://images.unsplash.com/photo-1552168324-d612d77725e3?auto=format&fit=crop&q=80",
         features: ["Golf Equipment Space", "Luxury Interior", "Group Travel", "13+ Pax"],
         price: "From €60",
@@ -504,11 +506,11 @@ export const seoPagesData: Record<string, SEOPageProps> = {
     faqs: [
       {
         question: "Do you provide child seats?",
-        answer: "Yes, we provide child seats free of charge upon request."
+        answer: "Yes, child seats are available free of charge. Please request them when booking."
       },
       {
         question: "How long is the transfer to Alanya?",
-        answer: "Alanya is quite far, taking about 2 hours from Antalya Airport."
+        answer: "Alanya is approximately 125km from Antalya Airport, taking about 1 hour and 45 minutes to 2 hours."
       }
     ],
     relatedLinks: [
@@ -517,16 +519,16 @@ export const seoPagesData: Record<string, SEOPageProps> = {
     ]
   },
   "jeddah-to-makkah-taxi": {
-    title: "Jeddah Airport to Makkah Taxi & Umrah Transfers",
-    subtitle: "Reliable and spiritual journey from Jeddah Airport to your hotel in Makkah.",
-    description: "Perform your Umrah with peace of mind. Our specialized Jeddah to Makkah transfer service offers GMCs, Camrys, and Hiace buses for pilgrims.",
-    heroImage: "/images/hero/makkah.jpg",
+    title: "Jeddah Airport to Makkah: Umrah Taxi & VIP Transfers",
+    subtitle: "Perform your Umrah with peace of mind. Reliable, spiritual journeys from Jeddah Airport (JED) to Makkah hotels.",
+    description: "Your spiritual journey begins the moment you land. We specialize in transporting pilgrims from King Abdulaziz International Airport to the Holy City of Makkah. Our drivers are respectful, experienced with pilgrim needs, and knowledgeable about Makkah's hotels. Choose from spacious GMCs for families or comfortable sedans for quick trips.",
+    heroImage: "https://images.unsplash.com/photo-1565552629477-0df6019181f5?q=80&w=2070&auto=format&fit=crop",
     city: "Makkah",
     type: "transfer",
     items: [
       {
         title: "GMC Yukon / Chevy Tahoe",
-        description: "The preferred choice for families and pilgrims with luggage.",
+        description: "The preferred choice for families performing Umrah. These large American SUVs offer immense space, powerful air conditioning, and a smooth ride for up to 7 passengers.",
         image: "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&q=80",
         features: ["Spacious", "Powerful AC", "7 Seats", "Luggage Space"],
         price: "From SAR 350",
@@ -534,7 +536,7 @@ export const seoPagesData: Record<string, SEOPageProps> = {
       },
       {
         title: "Toyota Camry",
-        description: "Economical and comfortable sedan for small groups.",
+        description: "Reliable, clean, and economical. The Toyota Camry is the standard for comfortable sedan travel in Saudi Arabia.",
         image: "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&q=80",
         features: ["Budget Friendly", "AC", "Comfortable", "4 Pax"],
         price: "From SAR 200",
@@ -542,7 +544,7 @@ export const seoPagesData: Record<string, SEOPageProps> = {
       },
       {
         title: "Toyota Hiace",
-        description: "Standard bus for groups of pilgrims.",
+        description: "Traveling with a larger group? Our Hiace buses are perfect for groups of 10-14 pilgrims with luggage.",
         image: "https://images.unsplash.com/photo-1552168324-d612d77725e3?auto=format&fit=crop&q=80",
         features: ["10-14 Seats", "Group Travel", "Economical", "AC"],
         price: "From SAR 400",
@@ -552,11 +554,11 @@ export const seoPagesData: Record<string, SEOPageProps> = {
     faqs: [
       {
         question: "Can the driver pick me up in Ihram?",
-        answer: "Yes, our drivers are accustomed to picking up pilgrims in Ihram from the airport."
+        answer: "Yes, absolutely. Our drivers are accustomed to serving pilgrims and will assist with your luggage."
       },
       {
         question: "How long does it take to reach Makkah?",
-        answer: "The journey takes about 60 to 90 minutes depending on traffic and checkpoints."
+        answer: "The journey from Jeddah Airport to the Haram area typically takes 60 to 90 minutes."
       }
     ],
     relatedLinks: [
@@ -610,6 +612,198 @@ export const seoPagesData: Record<string, SEOPageProps> = {
     relatedLinks: [
       { title: "Best Hotels Madina", href: "/best-hotels-madina" },
       { title: "Jeddah to Makkah Taxi", href: "/jeddah-to-makkah-taxi" }
+    ]
+  },
+  "airport-taxi-london": {
+    title: "London Airport Transfer: Heathrow, Gatwick & Stansted Taxi",
+    subtitle: "Reliable, fixed-price transfers from all London airports to the city center.",
+    description: "Navigate London's busy streets with ease. Whether you're landing at Heathrow, Gatwick, Stansted, or Luton, our professional drivers provide a seamless connection to your hotel or business meeting. Avoid the stress of the Tube with luggage and enjoy a private ride in comfort.",
+    heroImage: "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?q=80&w=2070&auto=format&fit=crop",
+    city: "London",
+    type: "transfer",
+    items: [
+      {
+        title: "Standard Sedan (Toyota Prius / Ford Mondeo)",
+        description: "Efficient and eco-friendly transport for up to 3 passengers. Ideal for quick trips to the city.",
+        image: "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&q=80",
+        features: ["Meet & Greet", "Fixed Price", "Flight Tracking", "ULEZ Compliant"],
+        price: "From £60",
+        location: "LHR to Central London"
+      },
+      {
+        title: "Business Class (Mercedes E-Class)",
+        description: "Travel in executive comfort. Perfect for business travelers requiring a quiet and professional environment.",
+        image: "https://images.unsplash.com/photo-1563720223185-11003d516935?auto=format&fit=crop&q=80",
+        features: ["Leather Seats", "Bottled Water", "Priority Pickup", "Professional Chauffeur"],
+        price: "From £90",
+        location: "LHR to Central London"
+      },
+      {
+        title: "MPV (VW Transporter / Mercedes V-Class)",
+        description: "Spacious transport for groups and families. Accommodates up to 7 passengers with luggage comfortably.",
+        image: "https://images.unsplash.com/photo-1566008885218-90abf9200ddb?auto=format&fit=crop&q=80",
+        features: ["7 Seats", "Large Luggage Capacity", "Group Travel", "Family Friendly"],
+        price: "From £110",
+        location: "LHR to Central London"
+      }
+    ],
+    faqs: [
+      {
+        question: "Does the price include congestion charges?",
+        answer: "Yes, all our fixed prices include the Congestion Charge and ULEZ fees where applicable."
+      },
+      {
+        question: "Where will the driver meet me at Heathrow?",
+        answer: "Your driver will be waiting in the arrival hall with a name board, typically near the information desk or Costa Coffee."
+      }
+    ],
+    relatedLinks: [
+      { title: "Best Hotels London", href: "#" },
+      { title: "London City Tours", href: "/tours-activities" }
+    ]
+  },
+  "airport-taxi-newyork": {
+    title: "New York Airport Transfer: JFK, Newark & LaGuardia Limo",
+    subtitle: "Arrive in the Big Apple in style. VIP transfers to Manhattan.",
+    description: "Skip the long taxi lines and confusing subway system. Our private car service ensures a smooth ride from JFK, Newark (EWR), or LaGuardia (LGA) directly to your Manhattan hotel. From yellow cabs to luxury black cars, we have the perfect ride for your New York adventure.",
+    heroImage: "https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?q=80&w=2070&auto=format&fit=crop",
+    city: "New York",
+    type: "transfer",
+    items: [
+      {
+        title: "Luxury Sedan (Lincoln Continental)",
+        description: "Classic American luxury. A smooth and quiet ride into the city, perfect for couples or solo travelers.",
+        image: "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&q=80",
+        features: ["Meet & Greet", "All Tolls Included", "Professional Driver", "Comfortable Seating"],
+        price: "From $100",
+        location: "JFK to Manhattan"
+      },
+      {
+        title: "SUV (Cadillac Escalade)",
+        description: "The ultimate VIP experience. Spacious, powerful, and imposing, the Escalade is the choice for celebrities and executives.",
+        image: "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&q=80",
+        features: ["VIP Service", "6 Passengers", "Huge Luggage Space", "Privacy Glass"],
+        price: "From $180",
+        location: "JFK to Manhattan"
+      },
+      {
+        title: "Sprinter Van",
+        description: "Ideal for large groups or bands. High-roof comfort with plenty of room for everyone.",
+        image: "https://images.unsplash.com/photo-1552168324-d612d77725e3?auto=format&fit=crop&q=80",
+        features: ["14 Passengers", "High Ceiling", "Group Transfer", " ample storage"],
+        price: "From $250",
+        location: "JFK to Manhattan"
+      }
+    ],
+    faqs: [
+      {
+        question: "Are tolls included in the price?",
+        answer: "Yes, our fixed rates include all bridge and tunnel tolls."
+      },
+      {
+        question: "How long does it take to get to Times Square?",
+        answer: "From JFK, it typically takes 45-60 minutes, but can take longer during rush hour."
+      }
+    ],
+    relatedLinks: [
+      { title: "Best Hotels New York", href: "#" },
+      { title: "NYC Helicopter Tour", href: "/tours-activities" }
+    ]
+  },
+  "airport-taxi-tokyo": {
+    title: "Tokyo Airport Transfer: Narita & Haneda Private Taxi",
+    subtitle: "Seamless transfers from Narita and Haneda to Tokyo hotels.",
+    description: "Tokyo's transport system is efficient but can be overwhelming with luggage. Our private airport transfer service offers a stress-free door-to-door solution. Whether arriving at Narita (NRT) or Haneda (HND), our drivers will greet you and transport you safely to your accommodation in Shinjuku, Shibuya, or Ginza.",
+    heroImage: "https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?q=80&w=1988&auto=format&fit=crop",
+    city: "Tokyo",
+    type: "transfer",
+    items: [
+      {
+        title: "Standard Sedan (Toyota Crown)",
+        description: "Experience Japanese hospitality in a clean and comfortable sedan. The standard for reliability.",
+        image: "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&q=80",
+        features: ["Immaculately Clean", "White Glove Service", "Fixed Rate", "3 Pax"],
+        price: "From ¥25,000",
+        location: "NRT to Tokyo"
+      },
+      {
+        title: "Minivan (Toyota Alphard)",
+        description: "The epitome of luxury MPV travel. Known as the 'Executive Lounge', it offers incredible comfort and space.",
+        image: "https://images.unsplash.com/photo-1566008885218-90abf9200ddb?auto=format&fit=crop&q=80",
+        features: ["Executive Seats", "Quiet Cabin", "Privacy Curtains", "5 Pax"],
+        price: "From ¥35,000",
+        location: "NRT to Tokyo"
+      },
+      {
+        title: "Luxury Van (Toyota Hiace Grand Cabin)",
+        description: "Perfect for larger groups with many suitcases. Spacious and practical.",
+        image: "https://images.unsplash.com/photo-1552168324-d612d77725e3?auto=format&fit=crop&q=80",
+        features: ["9 Pax", "Large Luggage Area", "Group Travel", "AC"],
+        price: "From ¥40,000",
+        location: "NRT to Tokyo"
+      }
+    ],
+    faqs: [
+      {
+        question: "Do drivers speak English?",
+        answer: "Yes, we assign English-speaking drivers for international arrivals to ensure smooth communication."
+      },
+      {
+        question: "Is it expensive compared to the Narita Express?",
+        answer: "For solo travelers, the train is cheaper. However, for groups of 3 or more, a private transfer offers competitive value with door-to-door convenience."
+      }
+    ],
+    relatedLinks: [
+      { title: "Best Hotels Tokyo", href: "#" },
+      { title: "Mt Fuji Tour", href: "/tours-activities" }
+    ]
+  },
+  "airport-taxi-singapore": {
+    title: "Singapore Airport Transfer: Changi Airport VIP Taxi",
+    subtitle: "Premium transfers from the world's best airport to Marina Bay and beyond.",
+    description: "Arrive in the Lion City with ease. Our private transfer service from Changi Airport (SIN) ensures a smooth transition to your hotel. Enjoy the lush greenery of the East Coast Parkway in the comfort of a premium vehicle.",
+    heroImage: "https://images.unsplash.com/photo-1525625293386-3f8f99389edd?q=80&w=2052&auto=format&fit=crop",
+    city: "Singapore",
+    type: "transfer",
+    items: [
+      {
+        title: "Executive Sedan (Mercedes E-Class)",
+        description: "Stylish and comfortable transport for business or leisure. Enjoy the ride in one of Singapore's most popular luxury cars.",
+        image: "https://images.unsplash.com/photo-1563720223185-11003d516935?auto=format&fit=crop&q=80",
+        features: ["Meet & Greet", "ERP Included", "Professional Driver", "3 Pax"],
+        price: "From SGD 80",
+        location: "Changi to City"
+      },
+      {
+        title: "Luxury MPV (Toyota Alphard)",
+        description: "Spacious and luxurious, perfect for families or executives who value extra legroom and comfort.",
+        image: "https://images.unsplash.com/photo-1566008885218-90abf9200ddb?auto=format&fit=crop&q=80",
+        features: ["Luxury Seating", "Dual AC", "6 Pax", "VIP Experience"],
+        price: "From SGD 100",
+        location: "Changi to City"
+      },
+      {
+        title: "Large Van (Toyota Combi)",
+        description: "The practical choice for larger groups with luggage. Reliable and spacious.",
+        image: "https://images.unsplash.com/photo-1552168324-d612d77725e3?auto=format&fit=crop&q=80",
+        features: ["13 Pax", "Group Transfer", "Luggage Space", "Economical"],
+        price: "From SGD 120",
+        location: "Changi to City"
+      }
+    ],
+    faqs: [
+      {
+        question: "Are there late-night surcharges?",
+        answer: "Our fixed prices include all surcharges, so you don't have to worry about late-night fees."
+      },
+      {
+        question: "How long does the transfer take?",
+        answer: "The journey from Changi Airport to the city center typically takes about 20-30 minutes."
+      }
+    ],
+    relatedLinks: [
+      { title: "Best Hotels Singapore", href: "#" },
+      { title: "Singapore City Tour", href: "/tours-activities" }
     ]
   }
 };

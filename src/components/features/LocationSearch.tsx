@@ -22,13 +22,21 @@ interface LocationSearchProps {
   icon?: React.ReactNode;
   onSelect: (location: Location) => void;
   className?: string;
+  defaultValue?: string;
 }
 
-export function LocationSearch({ label, placeholder, icon, onSelect, className }: LocationSearchProps) {
-  const [query, setQuery] = useState("");
+export function LocationSearch({ label, placeholder, icon, onSelect, className, defaultValue }: LocationSearchProps) {
+  const [query, setQuery] = useState(defaultValue || "");
   const [results, setResults] = useState<Location[]>([]);
   const [loading, setLoading] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
+
+  // Update query when defaultValue changes (e.g. on page load from URL)
+  useEffect(() => {
+    if (defaultValue) {
+      setQuery(defaultValue);
+    }
+  }, [defaultValue]);
   
   // Simple debounce implementation inside component to avoid external dependency issues if hook doesn't exist
   useEffect(() => {
@@ -55,7 +63,9 @@ export function LocationSearch({ label, placeholder, icon, onSelect, className }
   }, [query]);
 
   const handleSelect = (location: Location) => {
-    setQuery(`${location.name} (${location.code})`);
+    // Only use the city name to ensure better compatibility with hotel search APIs
+    // e.g. "Dubai" instead of "Dubai Airport" or "Dubai (DXB)"
+    setQuery(location.name);
     setShowDropdown(false);
     onSelect(location);
   };

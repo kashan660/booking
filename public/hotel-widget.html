@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Search Widget</title>
+    <style>
+        body { 
+            margin: 0; 
+            padding: 0; 
+            font-family: system-ui, -apple-system, sans-serif; 
+            overflow-x: hidden; 
+            background: transparent;
+        }
+        /* Force widget to respect container width */
+        #tpwl-hotel-widget { 
+            width: 100% !important; 
+            max-width: 100% !important; 
+        }
+    </style>
+</head>
+<body>
+    <div id="tpwl-hotel-widget"></div>
+    
+    <script>
+        // Parse URL parameters to configure the widget
+        const urlParams = new URLSearchParams(window.location.search);
+        const destination = urlParams.get('destination');
+        
+        // Resize observer to send height to parent
+        const sendHeight = () => {
+            const height = document.body.scrollHeight;
+            window.parent.postMessage({ type: 'hotel-widget-resize', height }, '*');
+        };
+
+        const observer = new ResizeObserver(sendHeight);
+        observer.observe(document.body);
+        
+        window.addEventListener('load', sendHeight);
+        setInterval(sendHeight, 1000);
+    </script>
+    
+    <script>
+        (function() {
+             var script = document.createElement('script');
+             script.async = true;
+             script.charset = "UTF-8";
+             // We use the 'blissey' widget which is the official "Hotel Selections" widget.
+             // It doesn't support real-time search (that requires a white label or a specific widget ID), 
+             // but it shows "Top Hotels" which is a good fallback.
+             var src = "//www.travelpayouts.com/blissey/scripts_en.js?categories=5stars%2Csea_view%2Cpool&id=3677&type=compact&currency=usd&host=search.hotellook.com&marker=696229.hotelwidget&limit=10&powered_by=true";
+             script.src = src;
+             document.body.appendChild(script);
+        })();
+    </script>
+</body>
+</html>

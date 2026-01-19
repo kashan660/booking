@@ -6,7 +6,7 @@ import { Footer } from "@/components/layout/Footer";
 import { WhatsAppButton } from "@/components/features/WhatsAppButton";
 import { SchemaMarkup } from "@/components/features/SchemaMarkup";
 import { AffiliateScript } from "@/components/features/AffiliateScript";
-import { auth } from "@/auth";
+import { GoogleAdSense } from "@/components/features/GoogleAdSense";
 import { LanguageCurrencyProvider } from "@/contexts/LanguageCurrencyContext";
 
 const geistSans = Geist({
@@ -101,13 +101,11 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const session = await auth();
-
   return (
     <html lang="en">
       <body
@@ -117,7 +115,8 @@ export default async function RootLayout({
         <LanguageCurrencyProvider>
           <SchemaMarkup />
           <AffiliateScript />
-          <Header session={session} />
+          <GoogleAdSense />
+          <Header />
           <main className="flex-1">
             {children}
           </main>

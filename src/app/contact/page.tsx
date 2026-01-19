@@ -1,6 +1,55 @@
+"use client";
+
 import { Mail, Phone, MapPin, Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
+
+function ContactForm() {
+  const searchParams = useSearchParams();
+  const subject = searchParams.get("subject") || "";
+
+  return (
+    <div className="bg-slate-50 p-8 rounded-xl">
+      <h2 className="text-2xl font-bold mb-6">Send us a message</h2>
+      <form className="space-y-4">
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <label className="block text-sm font-medium mb-2">First Name</label>
+            <Input placeholder="John" />
+          </div>
+          <div>
+            <label className="block text-sm font-medium mb-2">Last Name</label>
+            <Input placeholder="Doe" />
+          </div>
+        </div>
+        
+        <div>
+          <label className="block text-sm font-medium mb-2">Email</label>
+          <Input type="email" placeholder="john@example.com" />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium mb-2">Subject</label>
+          <Input placeholder="Booking inquiry" defaultValue={subject} />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium mb-2">Message</label>
+          <textarea 
+            className="w-full min-h-[150px] p-3 rounded-md border border-input bg-background ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+            placeholder="How can we help you?"
+          ></textarea>
+        </div>
+
+        <Button className="w-full">
+          Send Message <Send className="ml-2 h-4 w-4" />
+        </Button>
+      </form>
+    </div>
+  );
+}
 
 export default function ContactPage() {
   return (
@@ -51,43 +100,9 @@ export default function ContactPage() {
           </div>
         </div>
 
-        <div className="bg-slate-50 p-8 rounded-xl">
-          <h2 className="text-2xl font-bold mb-6">Send us a message</h2>
-          <form className="space-y-4">
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-medium mb-2">First Name</label>
-                <Input placeholder="John" />
-              </div>
-              <div>
-                <label className="block text-sm font-medium mb-2">Last Name</label>
-                <Input placeholder="Doe" />
-              </div>
-            </div>
-            
-            <div>
-              <label className="block text-sm font-medium mb-2">Email</label>
-              <Input type="email" placeholder="john@example.com" />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium mb-2">Subject</label>
-              <Input placeholder="Booking inquiry" />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium mb-2">Message</label>
-              <textarea 
-                className="w-full min-h-[150px] p-3 rounded-md border border-input bg-background ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-                placeholder="How can we help you?"
-              ></textarea>
-            </div>
-
-            <Button className="w-full">
-              Send Message <Send className="ml-2 h-4 w-4" />
-            </Button>
-          </form>
-        </div>
+        <Suspense fallback={<div className="bg-slate-50 p-8 rounded-xl h-[600px] animate-pulse"></div>}>
+          <ContactForm />
+        </Suspense>
       </div>
     </div>
   );

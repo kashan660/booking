@@ -19,21 +19,59 @@ export interface LocationData {
 }
 
 export async function searchLocations(term: string): Promise<LocationData[]> {
-  const url = `${AUTOCOMPLETE_URL}?term=${encodeURIComponent(term)}&locale=en&types[]=city&types[]=airport`;
+  // Parallel fetch from Travelpayouts (Airports/Cities) and Nominatim (Specific Places/Hotels)
   
-  const response = await fetch(url, {
-    method: 'GET',
-    headers: {
-      'Accept': 'application/json',
-    },
-    next: { revalidate: 3600 } // Cache for 1 hour
-  });
+  // 1. Travelpayouts (Best for Airports & Major Cities)
+  const tpPromise = (async () => {
+    try {
+      const url = `${AUTOCOMPLETE_URL}?term=${encodeURIComponent(term)}&locale=en&types[]=city&types[]=airport`;
+      const res = await fetch(url, { 
+        headers: { 'Accept': 'application/json' }, 
+        next: { revalidate: 3600 } 
+      });
+      if (!res.ok) return [];
+      return await res.json() as LocationData[];
+    } catch (e) {
+      console.error("Travelpayouts search error", e);
+      return [];
+    }
+  })();
 
-  if (!response.ok) {
-    throw new Error('Failed to fetch locations');
-  }
+  // 2. Nominatim / OpenStreetMap (Best for Hotels, Streets, Landmarks)
+  const nmPromise = (async () => {
+    try {
+      // Limit to 5 results, English
+      const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(term)}&format=json&addressdetails=1&limit=5&accept-language=en`;
+      const res = await fetch(url, { 
+        headers: { 'User-Agent': 'LugviaWeb/1.0' } // Required by Nominatim policy
+      });
+      
+      if (!res.ok) return [];
+      
+      const data = await res.json();
+      
+      // Map Nominatim structure to LocationData
+      return data.map((item: any) => ({
+        code: item.place_id.toString(), // Use place_id as ID
+        name: item.name || item.display_name.split(',')[0], // Use specific name
+        country_name: item.address?.country || '',
+        type: item.type === 'aerodrome' ? 'airport' : 'location', // Simplify types
+        coordinates: {
+          lat: parseFloat(item.lat),
+          lon: parseFloat(item.lon)
+        }
+      })) as LocationData[];
+    } catch (e) {
+      console.error("Nominatim search error", e);
+      return [];
+    }
+  })();
 
-  return await response.json();
+  const [tpResults, nmResults] = await Promise.all([tpPromise, nmPromise]);
+  
+  // Combine results: Travelpayouts first (reliable airports), then Nominatim (granular places)
+  // We can add simple deduplication if needed, but usually IDs differ.
+  return [...tpResults, ...nmResults];
 }
 
 export interface HotelPrice {
@@ -63,13 +101,19 @@ export async function getHotelPrices(
   // Use Hotellook Cache API
   // https://engine.hotellook.com/api/v2/cache.json?location=Paris&currency=usd&checkIn=2024-12-01&checkOut=2024-12-07&limit=10
   
+  // Clean location name: "Dubai Airport" -> "Dubai"
+  // The API often fails with specific landmarks, better to use the city name
+  const cleanLocation = location.split(' Airport')[0].split(',')[0];
+  const marker = process.env.NEXT_PUBLIC_TRAVELPAYOUTS_MARKER || '696229';
+
   const queryParams = new URLSearchParams({
-    location,
+    location: cleanLocation,
     checkIn,
     checkOut,
     currency: 'usd',
     limit: limit.toString(),
-    token: TRAVELPAYOUTS_TOKEN || ''
+    marker,
+    // The Cache API does NOT require a token for public access, but we can pass marker
   });
 
   const url = `https://engine.hotellook.com/api/v2/cache.json?${queryParams.toString()}`;
@@ -77,7 +121,7 @@ export async function getHotelPrices(
   try {
     const response = await fetch(url, {
       method: 'GET',
-      next: { revalidate: 3600 }
+      next: { revalidate: 3600 } // Cache for 1 hour
     });
 
     if (!response.ok) {

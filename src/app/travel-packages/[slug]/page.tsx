@@ -200,7 +200,14 @@ const packages = {
 
 export default async function PackageDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const resolvedParams = await params;
-  const pkg = packages[resolvedParams.slug as keyof typeof packages];
+  let { slug } = resolvedParams;
+
+  // Handle incorrect slug redirection (fix for turkey-cultural-cultural-tours)
+  if (slug === 'turkey-cultural-cultural-tours') {
+    slug = 'turkey-cultural';
+  }
+
+  const pkg = packages[slug as keyof typeof packages];
   
   if (!pkg) {
     notFound();
@@ -430,17 +437,23 @@ export default async function PackageDetailPage({ params }: { params: Promise<{ 
               </div>
 
               <div className="space-y-4 mb-8">
-                <Button className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold py-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 relative overflow-hidden group" size="lg">
-                  <span className="absolute inset-0 bg-white/20 shimmer-bg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
-                  <span className="text-lg relative z-10">Book Now</span>
-                </Button>
-                <Button variant="outline" className="w-full border-2 border-purple-200 text-purple-700 hover:bg-purple-50 hover:border-purple-400 font-semibold py-4 rounded-xl transition-all duration-300 relative overflow-hidden group">
-                  <span className="absolute inset-0 bg-gradient-to-r from-purple-100 to-pink-100 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
-                  <span className="relative z-10">Customize Package</span>
-                </Button>
-                <Button variant="ghost" className="w-full text-gray-600 hover:text-purple-700 hover:bg-purple-50 font-semibold py-4 rounded-xl transition-all duration-300">
-                  Get Quote
-                </Button>
+                <Link href={`/contact?subject=Booking Inquiry: ${pkg.title}`} className="w-full block">
+                  <Button className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold py-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 relative overflow-hidden group" size="lg">
+                    <span className="absolute inset-0 bg-white/20 shimmer-bg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                    <span className="text-lg relative z-10">Book Now</span>
+                  </Button>
+                </Link>
+                <Link href={`/contact?subject=Customize Inquiry: ${pkg.title}`} className="w-full block">
+                  <Button variant="outline" className="w-full border-2 border-purple-200 text-purple-700 hover:bg-purple-50 hover:border-purple-400 font-semibold py-4 rounded-xl transition-all duration-300 relative overflow-hidden group">
+                    <span className="absolute inset-0 bg-gradient-to-r from-purple-100 to-pink-100 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                    <span className="relative z-10">Customize Package</span>
+                  </Button>
+                </Link>
+                <Link href={`/contact?subject=Quote Inquiry: ${pkg.title}`} className="w-full block">
+                  <Button variant="ghost" className="w-full text-gray-600 hover:text-purple-700 hover:bg-purple-50 font-semibold py-4 rounded-xl transition-all duration-300">
+                    Get Quote
+                  </Button>
+                </Link>
               </div>
 
               <div className="mt-8 pt-6 border-t border-gray-100">

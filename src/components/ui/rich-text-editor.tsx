@@ -1,144 +1,169 @@
 "use client";
 
-import { useRef, useEffect } from "react";
+import { useEditor, EditorContent } from "@tiptap/react";
+import StarterKit from "@tiptap/starter-kit";
+import Link from "@tiptap/extension-link";
+import Image from "@tiptap/extension-image";
+import { 
+  Bold, 
+  Italic, 
+  List, 
+  ListOrdered, 
+  Quote, 
+  Heading1, 
+  Heading2, 
+  Undo, 
+  Redo, 
+  Link as LinkIcon,
+  Image as ImageIcon
+} from "lucide-react";
+import { Toggle } from "@/components/ui/toggle";
+import { Button } from "@/components/ui/button";
 
 interface RichTextEditorProps {
-  value: string;
-  onChange: (value: string) => void;
-  placeholder?: string;
-  className?: string;
-  error?: string;
+  content: string;
+  onChange: (content: string) => void;
 }
 
-export function RichTextEditor({ value, onChange, placeholder = "Write your content here...", className = "", error }: RichTextEditorProps) {
-  const editorRef = useRef<HTMLDivElement>(null);
+export function RichTextEditor({ content, onChange }: RichTextEditorProps) {
+  const editor = useEditor({
+    extensions: [
+      StarterKit,
+      Link.configure({
+        openOnClick: false,
+        HTMLAttributes: {
+          class: "text-primary underline",
+        },
+      }),
+      Image.configure({
+        HTMLAttributes: {
+          class: "rounded-lg max-w-full h-auto",
+        },
+      }),
+    ],
+    content,
+    onUpdate: ({ editor }) => {
+      onChange(editor.getHTML());
+    },
+    editorProps: {
+      attributes: {
+        class: "prose prose-sm sm:prose lg:prose-lg xl:prose-2xl m-5 focus:outline-none min-h-[300px]",
+      },
+    },
+  });
 
-  useEffect(() => {
-    if (editorRef.current && editorRef.current.innerHTML !== value) {
-      editorRef.current.innerHTML = value;
-    }
-  }, [value]);
+  if (!editor) {
+    return null;
+  }
 
-  const handleInput = () => {
-    if (editorRef.current) {
-      onChange(editorRef.current.innerHTML);
+  const addImage = () => {
+    const url = window.prompt('URL');
+    if (url) {
+      editor.chain().focus().setImage({ src: url }).run();
     }
-  };
+  }
 
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.ctrlKey || e.metaKey) {
-      switch (e.key) {
-        case "b":
-          e.preventDefault();
-          document.execCommand("bold");
-          break;
-        case "i":
-          e.preventDefault();
-          document.execCommand("italic");
-          break;
-        case "u":
-          e.preventDefault();
-          document.execCommand("underline");
-          break;
-      }
+  const setLink = () => {
+    const previousUrl = editor.getAttributes('link').href;
+    const url = window.prompt('URL', previousUrl);
+    if (url === null) return;
+    if (url === '') {
+      editor.chain().focus().extendMarkRange('link').unsetLink().run();
+      return;
     }
-  };
-
-  const formatText = (command: string) => {
-    document.execCommand(command, false);
-    if (editorRef.current) {
-      onChange(editorRef.current.innerHTML);
-    }
-  };
+    editor.chain().focus().extendMarkRange('link').setLink({ href: url }).run();
+  }
 
   return (
-    <div className="w-full">
-      <div className="border rounded-t-md bg-gray-50 p-2 flex items-center gap-2 border-b-0">
-        <button
-          type="button"
-          onClick={() => formatText("bold")}
-          className="px-2 py-1 text-sm font-bold hover:bg-gray-200 rounded"
-          title="Bold (Ctrl+B)"
+    <div className="border rounded-md">
+      <div className="border-b p-2 flex flex-wrap gap-2 bg-gray-50">
+        <Toggle
+          size="sm"
+          pressed={editor.isActive("bold")}
+          onPressedChange={() => editor.chain().focus().toggleBold().run()}
         >
-          B
-        </button>
-        <button
-          type="button"
-          onClick={() => formatText("italic")}
-          className="px-2 py-1 text-sm italic hover:bg-gray-200 rounded"
-          title="Italic (Ctrl+I)"
+          <Bold className="h-4 w-4" />
+        </Toggle>
+        <Toggle
+          size="sm"
+          pressed={editor.isActive("italic")}
+          onPressedChange={() => editor.chain().focus().toggleItalic().run()}
         >
-          I
-        </button>
-        <button
-          type="button"
-          onClick={() => formatText("underline")}
-          className="px-2 py-1 text-sm underline hover:bg-gray-200 rounded"
-          title="Underline (Ctrl+U)"
+          <Italic className="h-4 w-4" />
+        </Toggle>
+        
+        <div className="w-px h-6 bg-gray-300 mx-1" />
+
+        <Toggle
+          size="sm"
+          pressed={editor.isActive("heading", { level: 1 })}
+          onPressedChange={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
         >
-          U
-        </button>
-        <div className="w-px h-6 bg-gray-300"></div>
-        <button
-          type="button"
-          onClick={() => formatText("insertUnorderedList")}
-          className="px-2 py-1 text-sm hover:bg-gray-200 rounded"
-          title="Bullet List"
+          <Heading1 className="h-4 w-4" />
+        </Toggle>
+        <Toggle
+          size="sm"
+          pressed={editor.isActive("heading", { level: 2 })}
+          onPressedChange={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
         >
-          • List
-        </button>
-        <button
-          type="button"
-          onClick={() => formatText("insertOrderedList")}
-          className="px-2 py-1 text-sm hover:bg-gray-200 rounded"
-          title="Numbered List"
+          <Heading2 className="h-4 w-4" />
+        </Toggle>
+
+        <div className="w-px h-6 bg-gray-300 mx-1" />
+
+        <Toggle
+          size="sm"
+          pressed={editor.isActive("bulletList")}
+          onPressedChange={() => editor.chain().focus().toggleBulletList().run()}
         >
-          1. List
-        </button>
-        <div className="w-px h-6 bg-gray-300"></div>
-        <button
-          type="button"
-          onClick={() => formatText("justifyLeft")}
-          className="px-2 py-1 text-sm hover:bg-gray-200 rounded"
-          title="Align Left"
+          <List className="h-4 w-4" />
+        </Toggle>
+        <Toggle
+          size="sm"
+          pressed={editor.isActive("orderedList")}
+          onPressedChange={() => editor.chain().focus().toggleOrderedList().run()}
         >
-          ⬅
-        </button>
-        <button
-          type="button"
-          onClick={() => formatText("justifyCenter")}
-          className="px-2 py-1 text-sm hover:bg-gray-200 rounded"
-          title="Align Center"
+          <ListOrdered className="h-4 w-4" />
+        </Toggle>
+        <Toggle
+          size="sm"
+          pressed={editor.isActive("blockquote")}
+          onPressedChange={() => editor.chain().focus().toggleBlockquote().run()}
         >
-          ⬌
-        </button>
-        <button
-          type="button"
-          onClick={() => formatText("justifyRight")}
-          className="px-2 py-1 text-sm hover:bg-gray-200 rounded"
-          title="Align Right"
+          <Quote className="h-4 w-4" />
+        </Toggle>
+
+        <div className="w-px h-6 bg-gray-300 mx-1" />
+
+        <Button size="sm" variant="ghost" onClick={setLink} className={editor.isActive('link') ? 'bg-accent' : ''}>
+          <LinkIcon className="h-4 w-4" />
+        </Button>
+        <Button size="sm" variant="ghost" onClick={addImage}>
+          <ImageIcon className="h-4 w-4" />
+        </Button>
+
+        <div className="flex-1" />
+
+        <Button
+          size="sm"
+          variant="ghost"
+          onClick={() => editor.chain().focus().undo().run()}
+          disabled={!editor.can().undo()}
         >
-        ➡
-        </button>
+          <Undo className="h-4 w-4" />
+        </Button>
+        <Button
+          size="sm"
+          variant="ghost"
+          onClick={() => editor.chain().focus().redo().run()}
+          disabled={!editor.can().redo()}
+        >
+          <Redo className="h-4 w-4" />
+        </Button>
       </div>
-      <div
-        ref={editorRef}
-        contentEditable
-        onInput={handleInput}
-        onKeyDown={handleKeyDown}
-        className={`min-h-[300px] p-4 border rounded-b-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${error ? "border-red-500" : "border-gray-300"} ${className}`}
-        style={{ lineHeight: "1.6" }}
-        dangerouslySetInnerHTML={{ __html: value }}
-        data-placeholder={placeholder}
-      />
-      {error && <p className="text-sm text-red-500 mt-1">{error}</p>}
-      <style jsx>{`
-        [contenteditable]:empty:before {
-          content: attr(data-placeholder);
-          color: #9ca3af;
-          pointer-events: none;
-        }
-      `}</style>
+      <div className="p-4">
+        <EditorContent editor={editor} />
+      </div>
     </div>
   );
 }

@@ -97,20 +97,20 @@ export default async function TransferResultsPage(props: TransferResultsPageProp
 
   return (
     <div className="min-h-screen bg-slate-50 pb-20">
-      <div className="bg-slate-900 text-white py-12">
-        <div className="container mx-auto px-4">
-          <h1 className="text-3xl font-bold mb-2">Transfer Options</h1>
-          <div className="flex items-center gap-2 text-slate-300">
-            <span className="font-semibold text-white">{pickup_name}</span>
+      <div className="bg-slate-900 h-24 w-full"></div>
+      
+      <div className="container mx-auto px-4 mt-8">
+        <div className="max-w-4xl mx-auto mb-8">
+          <h1 className="text-3xl font-bold mb-2 text-slate-900">Transfer Options</h1>
+          <div className="flex items-center gap-2 text-slate-600 flex-wrap">
+            <span className="font-semibold text-slate-900">{pickup_name}</span>
             <ArrowRight className="h-4 w-4" />
-            <span className="font-semibold text-white">{dropoff_name}</span>
-            <span className="mx-2">•</span>
-            <span>{format(new Date(date), 'MMMM d, yyyy HH:mm')}</span>
+            <span className="font-semibold text-slate-900">{dropoff_name}</span>
+            <span className="mx-2 hidden md:inline">•</span>
+            <span className="text-sm md:text-base">{format(new Date(date), 'MMMM d, yyyy HH:mm')}</span>
           </div>
         </div>
-      </div>
 
-      <div className="container mx-auto px-4 -mt-6">
         <div className="grid gap-6 max-w-4xl mx-auto">
           {pricesData && pricesData.data && pricesData.data.prices ? (
             Object.entries(pricesData.data.prices).map(([type, priceInfo]) => {
@@ -152,9 +152,16 @@ export default async function TransferResultsPage(props: TransferResultsPageProp
             <div className="bg-white p-8 rounded-xl shadow-sm border text-center">
               <Car className="h-12 w-12 mx-auto text-slate-300 mb-4" />
               <h3 className="text-xl font-bold mb-2">No transfers found</h3>
-              <p className="text-slate-500 mb-6">
-                We couldn't find any available transfers for this route. 
-                Please try different locations or dates.
+              <p className="text-slate-500 mb-2">
+                We couldn't find any available transfers for this route.
+              </p>
+              {pricesData?.error && (
+                <div className="bg-red-50 text-red-600 p-3 rounded-md mb-4 text-sm font-mono">
+                  {pricesData.error}
+                </div>
+              )}
+              <p className="text-slate-500 mb-6 text-sm">
+                Tip: Bookings must be made at least 6 hours in advance.
               </p>
               <Link href="/airport-transfers">
                 <Button variant="outline">Modify Search</Button>
