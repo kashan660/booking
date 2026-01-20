@@ -8,14 +8,19 @@ interface PageProps {
 }
 
 export async function generateStaticParams() {
-  const pages = await prisma.page.findMany({
-    where: { published: true },
-    select: { slug: true },
-  });
+  try {
+    const pages = await prisma.page.findMany({
+      where: { published: true },
+      select: { slug: true },
+    });
 
-  return pages.map((page) => ({
-    slug: page.slug,
-  }));
+    return pages.map((page) => ({
+      slug: page.slug,
+    }));
+  } catch (error) {
+    console.warn("Database connection failed during build, skipping static generation for pages:", error);
+    return [];
+  }
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
