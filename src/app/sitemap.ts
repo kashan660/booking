@@ -5,15 +5,22 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://lugvia.com';
 
   // 1. Fetch dynamic content from database
-  const blogPosts = await prisma.blogPost.findMany({
-    where: { published: true },
-    select: { slug: true, updatedAt: true },
-  });
+  let blogPosts: { slug: string; updatedAt: Date }[] = [];
+  let dynamicPages: { slug: string; updatedAt: Date }[] = [];
 
-  const dynamicPages = await prisma.page.findMany({
-    where: { published: true },
-    select: { slug: true, updatedAt: true },
-  });
+  try {
+    blogPosts = await prisma.blogPost.findMany({
+      where: { published: true },
+      select: { slug: true, updatedAt: true },
+    });
+
+    dynamicPages = await prisma.page.findMany({
+      where: { published: true },
+      select: { slug: true, updatedAt: true },
+    });
+  } catch (error) {
+    console.warn("Database connection failed during sitemap generation:", error);
+  }
 
   // 2. Generate Blog URLs
   const blogUrls = blogPosts.map((post) => ({
