@@ -19,15 +19,22 @@ export const metadata: Metadata = {
 export const revalidate = 3600;
 
 export default async function BlogPage() {
-  const posts = await prisma.blogPost.findMany({
-    where: { published: true },
-    orderBy: { createdAt: "desc" },
-    include: {
-      author: {
-        select: { name: true },
+  let posts: any[] = [];
+  
+  try {
+    posts = await prisma.blogPost.findMany({
+      where: { published: true },
+      orderBy: { createdAt: "desc" },
+      include: {
+        author: {
+          select: { name: true },
+        },
       },
-    },
-  });
+    });
+  } catch (error) {
+    console.warn("Database connection failed during build, rendering empty blog list:", error);
+    posts = [];
+  }
 
   return (
     <div className="bg-slate-50 min-h-screen pb-20">
