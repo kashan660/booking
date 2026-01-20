@@ -7,6 +7,7 @@ import { WhatsAppButton } from "@/components/features/WhatsAppButton";
 import { SchemaMarkup } from "@/components/features/SchemaMarkup";
 import { AffiliateScript } from "@/components/features/AffiliateScript";
 import { GoogleAdSense } from "@/components/features/GoogleAdSense";
+import { GoogleAnalytics } from "@/components/features/GoogleAnalytics";
 import { LanguageCurrencyProvider } from "@/contexts/LanguageCurrencyContext";
 
 const geistSans = Geist({
@@ -112,6 +113,7 @@ export default function RootLayout({
         suppressHydrationWarning
       >
         <LanguageCurrencyProvider>
+          <GoogleAnalytics />
           <SchemaMarkup />
           <AffiliateScript />
           <GoogleAdSense />

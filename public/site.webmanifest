@@ -1,6 +1,12 @@
 {
-    "name": "Lugvia.com",
+    "name": "Lugvia - Luxury Travel",
     "short_name": "Lugvia",
+    "description": "Book luxury airport transfers and chauffeur services worldwide.",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#003087",
+    "orientation": "portrait",
     "icons": [
         {
             "src": "/android-chrome-192x192.png",
@@ -12,8 +18,5 @@
             "sizes": "512x512",
             "type": "image/png"
         }
-    ],
-    "theme_color": "#ffffff",
-    "background_color": "#ffffff",
-    "display": "standalone"
+    ]
 }
