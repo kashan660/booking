@@ -89,6 +89,15 @@ export const metadata: Metadata = {
       'max-snippet': -1,
     },
   },
+  verification: {
+    google: "1crFdyQXzB9k8Km-jgyOtveDZ-UZXCUBU7rZvmsriGY",
+  },
+  alternates: {
+    canonical: "https://lugvia.com",
+    languages: {
+      "en-US": "https://lugvia.com",
+    },
+  },
 };
 
 export default function RootLayout({
