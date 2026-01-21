@@ -308,12 +308,22 @@ export const seoPagesData: Record<string, SEOPageProps> = {
     ]
   },
   "airport-taxi-paris": {
-    title: "Paris Airport Transfer: CDG, Orly & Beauvais Private Taxi",
-    subtitle: "Skip the metro hassle. Direct, fixed-price private transfers from Charles de Gaulle (CDG) and Orly (ORY) to your Paris hotel.",
+    title: "Paris Airport Transfer: CDG to City & Disneyland Taxi",
+    subtitle: "Skip the metro hassle. Direct, fixed-price private transfers from Charles de Gaulle (CDG) and Orly (ORY) to your hotel.",
     description: "Welcome to the City of Light. Start your Parisian journey with zero stress. Our professional drivers track your flight and greet you at the arrival terminal with a name sign. Whether you're heading to a hotel near the Eiffel Tower, Disneyland Paris, or a business meeting in La Défense, our fleet of comfortable sedans and vans ensures a smooth ride through Paris traffic.",
     heroImage: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?q=80&w=2070&auto=format&fit=crop",
     city: "Paris",
     type: "transfer",
+    keywords: [
+      "Paris Airport Transfer",
+      "CDG Taxi Price",
+      "Charles de Gaulle Chauffeur",
+      "Orly Airport Shuttle",
+      "Disneyland Paris Transfer",
+      "Beauvais Airport Taxi",
+      "Paris Private Driver",
+      "Paris Airport Van Service"
+    ],
     items: [
       {
         title: "Economy Sedan (Peugeot 508 / Toyota)",
@@ -348,11 +358,16 @@ export const seoPagesData: Record<string, SEOPageProps> = {
       {
         question: "Is the price fixed or metered?",
         answer: "All our transfer prices are fixed and confirmed at the time of booking. There are no hidden fees for traffic or luggage."
+      },
+      {
+        question: "Do you offer transfers to Disneyland Paris?",
+        answer: "Yes, we provide direct private transfers from CDG and Orly airports to all Disneyland Paris hotels and parks."
       }
     ],
     relatedLinks: [
       { title: "Best Hotels Paris", href: "/best-hotels-paris" },
-      { title: "Hourly Chauffeur Paris", href: "/hourly-booking" }
+      { title: "Hourly Chauffeur Paris", href: "/hourly-booking" },
+      { title: "Paris City Tours", href: "/tours-activities" }
     ]
   },
   "airport-taxi-istanbul": {
@@ -362,6 +377,17 @@ export const seoPagesData: Record<string, SEOPageProps> = {
     heroImage: "https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?q=80&w=2070&auto=format&fit=crop",
     city: "Istanbul",
     type: "transfer",
+    keywords: [
+      "Istanbul Airport Taxi",
+      "IST Airport Transfer",
+      "Sabiha Gokcen Transfer",
+      "Istanbul Chauffeur Service",
+      "VIP Transfer Istanbul",
+      "Istanbul Airport Shuttle",
+      "Luxury Van Istanbul",
+      "Sultanahmet Hotel Transfer",
+      "Taksim Square Taxi"
+    ],
     items: [
       {
         title: "Private Sedan (Fiat Egea / Renault)",
@@ -388,15 +414,6 @@ export const seoPagesData: Record<string, SEOPageProps> = {
         location: "IST to City Center"
       }
     ],
-    keywords: [
-      "Istanbul Airport Taxi",
-      "IST Airport Transfer",
-      "Sabiha Gokcen Transfer",
-      "Istanbul Chauffeur Service",
-      "VIP Transfer Istanbul",
-      "Istanbul Airport Shuttle",
-      "Luxury Van Istanbul"
-    ],
     faqs: [
       {
         question: "How long is the drive from New Istanbul Airport (IST) to Sultanahmet?",
@@ -413,7 +430,7 @@ export const seoPagesData: Record<string, SEOPageProps> = {
     ]
   },
   "airport-taxi-dubai": {
-    title: "Dubai Airport Transfer: VIP & Luxury Chauffeur Service",
+    title: "Dubai Airport Transfer: DXB VIP Taxi & Luxury Chauffeur",
     subtitle: "Arrive in style with Dubai's #1 rated private transfer service. From DXB to your hotel door in pure comfort.",
     description: "Experience the epitome of luxury travel in Dubai. Whether you need a seamless pickup from Dubai International Airport (DXB), a VIP chauffeur for business meetings, or a family-friendly transfer to Palm Jumeirah, our fleet of premium vehicles ensures a stress-free start to your journey. Skip the taxi queues and step into a world of comfort, punctuality, and fixed-price reliability.",
     heroImage: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=2070&auto=format&fit=crop",
@@ -421,21 +438,22 @@ export const seoPagesData: Record<string, SEOPageProps> = {
     type: "transfer",
     keywords: [
       "Dubai Airport Taxi",
-      "DXB Transfer",
-      "Dubai Chauffeur",
-      "Luxury Car Rental Dubai",
+      "DXB Airport Transfer",
+      "Dubai Chauffeur Service",
+      "Luxury Car Rental with Driver Dubai",
       "Dubai Airport Limousine",
-      "Dubai Hotel Transfer",
-      "Palm Jumeirah Taxi",
-      "Burj Khalifa Transfer"
+      "Private Transfer Dubai Airport to Hotel",
+      "Palm Jumeirah Taxi Service",
+      "Burj Khalifa Transfer",
+      "Business Class Transfer Dubai"
     ],
     items: [
       {
-        title: "Standard Luxury Sedan (Lexus ES)",
+        title: "Standard Luxury Sedan (Lexus ES / BMW 5 Series)",
         description: "The perfect balance of comfort and affordability. Our immaculately clean Lexus ES sedans offer a smooth ride for up to 3 passengers, ideal for couples and business travelers.",
         image: "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&q=80",
         features: ["All-Inclusive Fixed Rates", "Free Waiting Time (60 mins)", "Professional Uniformed Driver", "Flight Monitoring"],
-        price: "From AED 120",
+        price: "From AED 150",
         location: "DXB to Downtown / Marina"
       },
       {
@@ -443,16 +461,24 @@ export const seoPagesData: Record<string, SEOPageProps> = {
         description: "Make a statement upon arrival. Sink into the leather seats of a pristine Mercedes S-Class or BMW 7 Series. Includes meet & greet service inside the terminal.",
         image: "https://images.unsplash.com/photo-1563720223185-11003d516935?auto=format&fit=crop&q=80",
         features: ["VIP Meet & Greet", "Bottled Water & Wi-Fi", "Executive Chauffeur", "Ultimate Privacy"],
-        price: "From AED 350",
+        price: "From AED 450",
         location: "DXB to Palm Jumeirah"
       },
       {
-        title: "Family SUV (GMC Yukon XL)",
+        title: "Family SUV (GMC Yukon XL / Cadillac Escalade)",
         description: "Traveling with family or extra luggage? Our spacious American SUVs provide ample room for 6 passengers and 6 suitcases without compromising on luxury.",
         image: "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&q=80",
         features: ["Spacious Interior", "Child Seats Available", "Extra Luggage Capacity", "Safe & Secure"],
-        price: "From AED 250",
+        price: "From AED 350",
         location: "DXB to JBR / Marina"
+      },
+      {
+        title: "Luxury Van (Mercedes V-Class)",
+        description: "Ideal for delegations and large families who demand luxury. Conference seating layout available.",
+        image: "https://images.unsplash.com/photo-1566008885218-90abf9200ddb?auto=format&fit=crop&q=80",
+        features: ["Conference Seating", "Privacy Glass", "Group VIP Travel", "Up to 7 Pax"],
+        price: "From AED 400",
+        location: "DXB to City"
       }
     ],
     faqs: [
@@ -463,11 +489,16 @@ export const seoPagesData: Record<string, SEOPageProps> = {
       {
         question: "Can I book a transfer to Abu Dhabi?",
         answer: "Absolutely. We provide seamless inter-city transfers from Dubai Airport to Abu Dhabi hotels, Yas Island, and more."
+      },
+      {
+        question: "Is there a surcharge for late-night pickups?",
+        answer: "No, our prices are fixed 24/7 with no hidden night surcharges."
       }
     ],
     relatedLinks: [
       { title: "Best Hotels Dubai", href: "/best-hotels-dubai" },
-      { title: "Dubai City Tours", href: "/tours-activities" }
+      { title: "Dubai City Tours", href: "/tours-activities" },
+      { title: "Chauffeur Service Dubai", href: "/chauffeur-service" }
     ]
   },
   "airport-taxi-antalya": {
@@ -519,35 +550,45 @@ export const seoPagesData: Record<string, SEOPageProps> = {
     ]
   },
   "jeddah-to-makkah-taxi": {
-    title: "Jeddah Airport to Makkah: Umrah Taxi & VIP Transfers",
+    title: "Jeddah Airport to Makkah Taxi: 2025 Umrah Transfer Rates",
     subtitle: "Perform your Umrah with peace of mind. Reliable, spiritual journeys from Jeddah Airport (JED) to Makkah hotels.",
-    description: "Your spiritual journey begins the moment you land. We specialize in transporting pilgrims from King Abdulaziz International Airport to the Holy City of Makkah. Our drivers are respectful, experienced with pilgrim needs, and knowledgeable about Makkah's hotels. Choose from spacious GMCs for families or comfortable sedans for quick trips.",
+    description: "Book your Jeddah to Makkah taxi today. We specialize in transporting pilgrims from King Abdulaziz International Airport (JED) to the Holy City. Our service includes meet & greet at the arrival terminal, assistance with luggage, and a comfortable ride in GMC Yukons or Toyota Camrys. We offer fixed rates, no hidden fees, and drivers experienced in Umrah logistics.",
     heroImage: "https://images.unsplash.com/photo-1565552629477-0df6019181f5?q=80&w=2070&auto=format&fit=crop",
     city: "Makkah",
     type: "transfer",
+    keywords: [
+      "Jeddah to Makkah Taxi",
+      "Jeddah Airport Taxi Price",
+      "Umrah Taxi Service",
+      "GMC Yukon Makkah Transfer",
+      "Haramain Train vs Taxi",
+      "Jeddah Airport to Makkah Distance",
+      "Private Driver Jeddah",
+      "VIP Umrah Transport"
+    ],
     items: [
       {
-        title: "GMC Yukon / Chevy Tahoe",
+        title: "GMC Yukon / Chevy Tahoe (2024 Model)",
         description: "The preferred choice for families performing Umrah. These large American SUVs offer immense space, powerful air conditioning, and a smooth ride for up to 7 passengers.",
         image: "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&q=80",
         features: ["Spacious", "Powerful AC", "7 Seats", "Luggage Space"],
-        price: "From SAR 350",
+        price: "From SAR 400",
         location: "Jeddah to Makkah"
       },
       {
-        title: "Toyota Camry",
-        description: "Reliable, clean, and economical. The Toyota Camry is the standard for comfortable sedan travel in Saudi Arabia.",
+        title: "Toyota Camry Hybrid",
+        description: "Reliable, clean, and economical. The Toyota Camry is the standard for comfortable sedan travel in Saudi Arabia. Perfect for couples or small families.",
         image: "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&q=80",
         features: ["Budget Friendly", "AC", "Comfortable", "4 Pax"],
-        price: "From SAR 200",
+        price: "From SAR 250",
         location: "Jeddah to Makkah"
       },
       {
-        title: "Toyota Hiace",
+        title: "Toyota Hiace VIP",
         description: "Traveling with a larger group? Our Hiace buses are perfect for groups of 10-14 pilgrims with luggage.",
         image: "https://images.unsplash.com/photo-1552168324-d612d77725e3?auto=format&fit=crop&q=80",
         features: ["10-14 Seats", "Group Travel", "Economical", "AC"],
-        price: "From SAR 400",
+        price: "From SAR 500",
         location: "Jeddah to Makkah"
       }
     ],
@@ -557,8 +598,12 @@ export const seoPagesData: Record<string, SEOPageProps> = {
         answer: "Yes, absolutely. Our drivers are accustomed to serving pilgrims and will assist with your luggage."
       },
       {
+        question: "How much is a taxi from Jeddah Airport to Makkah?",
+        answer: "Our fixed rates start from SAR 250 for a sedan and SAR 400 for a GMC Yukon. Prices are all-inclusive."
+      },
+      {
         question: "How long does it take to reach Makkah?",
-        answer: "The journey from Jeddah Airport to the Haram area typically takes 60 to 90 minutes."
+        answer: "The journey from Jeddah Airport to the Haram area typically takes 60 to 90 minutes depending on traffic and checkpoints."
       }
     ],
     relatedLinks: [
@@ -567,16 +612,24 @@ export const seoPagesData: Record<string, SEOPageProps> = {
     ]
   },
   "city-transfers-makkah-madina": {
-    title: "Makkah to Madina Taxi & City Transfers",
+    title: "Makkah to Madina Taxi Price: VIP & Group Transfers",
     subtitle: "Comfortable intercity transfers between the Holy Cities.",
-    description: "Travel between Makkah and Madina in comfort. We offer private VIP transfers that are faster and more convenient than the bus.",
+    description: "Travel between Makkah and Madina in absolute comfort. While the train is an option, our private VIP transfers offer door-to-door service from your hotel lobby in Makkah directly to your hotel in Madina. No waiting at stations, no luggage hauling. Choose from luxury GMCs or spacious buses for your group.",
     heroImage: "/images/hero/madina.jpg",
     city: "Madina",
     type: "transfer",
+    keywords: [
+      "Makkah to Madina Taxi Fare",
+      "Madina to Makkah Private Car",
+      "GMC Makkah to Madina",
+      "Umrah Transport Services",
+      "Makkah to Madina Distance by Car",
+      "VIP Bus Makkah Madina"
+    ],
     items: [
       {
-        title: "VIP GMC Transfer",
-        description: "Luxury travel between the two Holy Cities.",
+        title: "VIP GMC Yukon Transfer",
+        description: "Luxury travel between the two Holy Cities. Enjoy a smooth 4-5 hour journey with stops on request.",
         image: "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&q=80",
         features: ["Door to Door", "No Stops", "Luxury Comfort", "4-5 Hours"],
         price: "From SAR 800",
@@ -584,7 +637,7 @@ export const seoPagesData: Record<string, SEOPageProps> = {
       },
       {
         title: "Hyundai Staria / H1",
-        description: "Modern van perfect for families.",
+        description: "Modern van perfect for families. Features sliding doors and ample legroom.",
         image: "https://images.unsplash.com/photo-1617788138017-80ad40651399?auto=format&fit=crop&q=80",
         features: ["Spacious", "Modern", "7-8 Pax", "AC"],
         price: "From SAR 700",
@@ -592,7 +645,7 @@ export const seoPagesData: Record<string, SEOPageProps> = {
       },
       {
         title: "Private Bus (Coaster)",
-        description: "For large groups performing Umrah together.",
+        description: "For large groups performing Umrah together. Includes a dedicated luggage trailer.",
         image: "https://images.unsplash.com/photo-1552168324-d612d77725e3?auto=format&fit=crop&q=80",
         features: ["20+ Seats", "Group Rates", "Luggage Trailer", "Experienced Driver"],
         price: "From SAR 1200",
@@ -602,11 +655,11 @@ export const seoPagesData: Record<string, SEOPageProps> = {
     faqs: [
       {
         question: "Is the train better than a taxi?",
-        answer: "The Haramain train is faster, but a taxi offers door-to-door service, which is better if you have a lot of luggage or elderly family members."
+        answer: "The Haramain train is faster (2.5 hours vs 4.5 hours), but a taxi offers door-to-door service. If you have heavy luggage or elderly family members, a private car is often much more convenient."
       },
       {
-        question: "How long is the drive?",
-        answer: "The drive between Makkah and Madina takes approximately 4 to 5 hours on the highway."
+        question: "Can we stop at a Miqat on the way?",
+        answer: "Yes, if you are traveling from Madina to Makkah for Umrah, we can stop at the Miqat (Dhul Hulaifah) for you to enter Ihram."
       }
     ],
     relatedLinks: [
@@ -615,12 +668,23 @@ export const seoPagesData: Record<string, SEOPageProps> = {
     ]
   },
   "airport-taxi-london": {
-    title: "London Airport Transfer: Heathrow, Gatwick & Stansted Taxi",
+    title: "London Airport Transfer: Heathrow, Gatwick & Stansted Chauffeur",
     subtitle: "Reliable, fixed-price transfers from all London airports to the city center.",
-    description: "Navigate London's busy streets with ease. Whether you're landing at Heathrow, Gatwick, Stansted, or Luton, our professional drivers provide a seamless connection to your hotel or business meeting. Avoid the stress of the Tube with luggage and enjoy a private ride in comfort.",
+    description: "Book premium London airport transfers with Lugvia. Whether arriving at Heathrow (LHR), Gatwick (LGW), Stansted, or Luton, our professional chauffeur service ensures a seamless journey to your hotel or business meeting. Avoid the stress of the Tube with luggage and enjoy a private, comfortable ride with free waiting time and flight tracking.",
     heroImage: "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?q=80&w=2070&auto=format&fit=crop",
     city: "London",
     type: "transfer",
+    keywords: [
+      "London Airport Transfer",
+      "Heathrow Taxi",
+      "Gatwick Chauffeur",
+      "Stansted Airport Taxi",
+      "Luton Airport Transfer",
+      "London City Airport Taxi",
+      "Private Driver London",
+      "Luxury Chauffeur Service London",
+      "Heathrow to Central London Taxi"
+    ],
     items: [
       {
         title: "Standard Sedan (Toyota Prius / Ford Mondeo)",
@@ -645,6 +709,14 @@ export const seoPagesData: Record<string, SEOPageProps> = {
         features: ["7 Seats", "Large Luggage Capacity", "Group Travel", "Family Friendly"],
         price: "From £110",
         location: "LHR to Central London"
+      },
+      {
+        title: "First Class (Mercedes S-Class)",
+        description: "The ultimate luxury experience. Recline in the back of a flagship Mercedes S-Class with a dedicated chauffeur.",
+        image: "https://images.unsplash.com/photo-1563720223185-11003d516935?auto=format&fit=crop&q=80",
+        features: ["First Class Comfort", "Newest Model", "VIP Service", "Privacy Glass"],
+        price: "From £150",
+        location: "LHR to Central London"
       }
     ],
     faqs: [
@@ -655,11 +727,16 @@ export const seoPagesData: Record<string, SEOPageProps> = {
       {
         question: "Where will the driver meet me at Heathrow?",
         answer: "Your driver will be waiting in the arrival hall with a name board, typically near the information desk or Costa Coffee."
+      },
+      {
+        question: "How long is the transfer from Gatwick to Central London?",
+        answer: "The journey usually takes 1 hour and 30 minutes, depending on traffic. We monitor traffic real-time to choose the best route."
       }
     ],
     relatedLinks: [
       { title: "Best Hotels London", href: "#" },
-      { title: "London City Tours", href: "/tours-activities" }
+      { title: "London City Tours", href: "/tours-activities" },
+      { title: "Chauffeur Service London", href: "/chauffeur-service" }
     ]
   },
   "airport-taxi-newyork": {

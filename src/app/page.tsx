@@ -7,6 +7,12 @@ import { CheckCircle, Clock, Globe, Shield, ArrowRightLeft, Hotel, Plane, MapPin
 import Image from "next/image";
 import Link from "next/link";
 
+export const metadata = {
+  title: "Lugvia | Luxury Airport Transfers, Chauffeur Service & Hotel Booking Worldwide",
+  description: "Book reliable airport transfers, VIP chauffeur services, and luxury hotels worldwide. Lugvia operates in 150+ countries including Dubai, London, Paris, Istanbul, and Makkah. Fixed prices, professional drivers, and 24/7 support.",
+  keywords: "Airport Transfer, Chauffeur Service, Luxury Travel, Hotel Booking, Dubai Transfers, Istanbul Taxi, Makkah Umrah Taxi, VIP Transport, City to City Transfer, Private Driver Service, Global Chauffeur",
+};
+
 export default async function Home() {
   // Static trip.com section data (replaced Prisma query)
   const tripSettings: any = {};
