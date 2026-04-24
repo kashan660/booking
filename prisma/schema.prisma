@@ -134,3 +134,131 @@ model PageSection {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+model SiteSettings {
+  id              String   @id @default(cuid())
+  brandName       String   @default("Lugvia Movers")
+  primaryPhone    String?
+  whatsappNumber  String   @default("+16467197124")
+  supportEmail    String?
+  addressLine     String?
+  defaultOgImage  String?
+  // SEO / Verification
+  googleSiteVerification String?
+  googleAnalyticsId      String?
+  googleTagManagerId     String?
+
+  // Social links
+  facebookUrl   String?
+  instagramUrl  String?
+  twitterUrl    String?
+  youtubeUrl    String?
+  updatedAt       DateTime @updatedAt
+}
+
+model MovingCity {
+  id            String   @id @default(cuid())
+  name          String
+  slug          String   @unique
+  state         String?
+  country       String   @default("USA")
+  heroImage     String?
+  content       String   @db.Text
+  published     Boolean  @default(false)
+
+  // SEO
+  seoTitle      String?
+  description   String?
+  keywords      String[]
+  ogImage       String?
+
+  // Optional structured FAQ JSON: [{question, answer}]
+  faqs          Json?
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model MovingService {
+  id            String   @id @default(cuid())
+  name          String
+  slug          String   @unique
+  shortIntro    String?
+  heroImage     String?
+  content       String   @db.Text
+  published     Boolean  @default(false)
+
+  // SEO
+  seoTitle      String?
+  description   String?
+  keywords      String[]
+  ogImage       String?
+  faqs          Json?
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model MovingLead {
+  id             String   @id @default(cuid())
+  originCity     String?
+  originState    String?
+  destinationCity String?
+  destinationState String?
+  moveDate       DateTime?
+  propertySize   String?
+  services       String[] // packing, storage, etc.
+  notes          String?
+
+  fullName       String
+  phone          String
+  email          String?
+  preferredContact String? // phone, whatsapp, email
+
+  status         String   @default("new") // new, contacted, booked, lost
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model MovingRateCard {
+  id            String   @id @default(cuid())
+  name          String
+  active        Boolean  @default(true)
+
+  // Scope
+  serviceSlug   String?  // null = applies to any service
+  originState   String?  // null = any
+  originCity    String?  // null = any
+
+  // Base pricing
+  currency      String   @default("USD")
+  minimumPrice  Int      @default(0) // cents
+  basePrice     Int      @default(0) // cents
+  perMile       Int      @default(0) // cents per mile (optional)
+
+  // Labor time approximation (per move size) in hours
+  hoursStudio   Decimal  @default(2.5)
+  hours1br      Decimal  @default(3.5)
+  hours2br      Decimal  @default(5.0)
+  hours3br      Decimal  @default(7.0)
+  hours4brPlus  Decimal  @default(9.0)
+
+  // Labor price
+  perHour       Int      @default(0) // cents per hour
+
+  // Multipliers / add-ons
+  packingFullMultiplier     Decimal @default(1.35)
+  packingPartialMultiplier  Decimal @default(1.20)
+  storageFlat              Int     @default(0) // cents
+  junkRemovalFlat          Int     @default(0) // cents
+  assemblyFlat             Int     @default(0) // cents
+
+  // Margin / resell
+  resellerMarkupPercent Int @default(20) // % added on top
+
+  updatedAt     DateTime @updatedAt
+  createdAt     DateTime @default(now())
+
+  @@index([active, serviceSlug])
+  @@index([originState, originCity])
+}

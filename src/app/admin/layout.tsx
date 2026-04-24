@@ -2,7 +2,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import Link from "next/link";
-import { LayoutDashboard, FileText, Settings, LogOut, Globe, Layout as LayoutIcon } from "lucide-react";
+import { LayoutDashboard, FileText, Settings, LogOut, Globe, Layout as LayoutIcon, MapPin, PackageSearch, Inbox, BadgeDollarSign } from "lucide-react";
 import Image from "next/image";
 
 export default async function AdminLayout({
@@ -51,6 +51,39 @@ export default async function AdminLayout({
               <FileText className="h-5 w-5" />
               Blog Posts
             </Link>
+            <div className="mt-6 pt-6 border-t border-slate-800">
+              <div className="px-4 pb-2 text-xs font-semibold text-slate-400 uppercase tracking-wide">
+                Moving
+              </div>
+              <Link
+                href="/admin/moving/cities"
+                className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-slate-800 transition-colors"
+              >
+                <MapPin className="h-5 w-5" />
+                Cities
+              </Link>
+              <Link
+                href="/admin/moving/services"
+                className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-slate-800 transition-colors"
+              >
+                <PackageSearch className="h-5 w-5" />
+                Services
+              </Link>
+              <Link
+                href="/admin/moving/leads"
+                className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-slate-800 transition-colors"
+              >
+                <Inbox className="h-5 w-5" />
+                Leads
+              </Link>
+              <Link
+                href="/admin/moving/pricing"
+                className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-slate-800 transition-colors"
+              >
+                <BadgeDollarSign className="h-5 w-5" />
+                Pricing
+              </Link>
+            </div>
             <Link
               href="/admin/settings"
               className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-slate-800 transition-colors"
