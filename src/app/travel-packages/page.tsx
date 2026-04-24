@@ -62,7 +62,7 @@ const travelPackageSchema = {
 };
 
 export default function TravelPackagesPage() {
-  const { convertAndFormatPrice, currentCurrency, currencyCode } = useLanguageCurrency();
+  const { formatPrice: convertAndFormatPrice, currentCurrency, currencyCode } = useLanguageCurrency();
 
   // Convert prices to user's currency
   const basePrices = {
