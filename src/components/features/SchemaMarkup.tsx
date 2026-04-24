@@ -2,10 +2,10 @@ export function SchemaMarkup() {
   const jsonLd = [
     {
       "@context": "https://schema.org",
-      "@type": "TravelAgency",
+      "@type": "MovingCompany",
       "@id": "https://lugvia.com/#organization",
-      name: "Lugvia",
-      legalName: "Lugvia Travel Ltd",
+      name: "Lugvia Movers",
+      legalName: "Lugvia Movers",
       url: "https://lugvia.com",
       logo: {
         "@type": "ImageObject",
@@ -14,65 +14,57 @@ export function SchemaMarkup() {
         "height": 512
       },
       image: [
-        "https://lugvia.com/images/hero/dubai.jpg",
-        "https://lugvia.com/images/hero/london.jpg",
-        "https://lugvia.com/images/hero/paris.jpg"
+        "https://lugvia.com/images/hero/dubai.jpg"
       ],
       description:
-        "Lugvia is a premium travel agency specializing in luxury airport transfers, private chauffeur services, and exclusive hotel bookings worldwide. We operate in over 150 countries including Dubai, London, Paris, Istanbul, and Makkah.",
+        "Lugvia Movers is a reseller-based moving platform connecting customers with discounted partner rates for local, long-distance, and commercial moving services.",
       areaServed: [
-        { "@type": "Country", "name": "United Kingdom" },
-        { "@type": "Country", "name": "United Arab Emirates" },
-        { "@type": "Country", "name": "Turkey" },
-        { "@type": "Country", "name": "France" },
-        { "@type": "Country", "name": "Saudi Arabia" },
-        { "@type": "Place", "name": "Worldwide" }
+        { "@type": "Country", "name": "United States" }
       ],
       sameAs: [
         "https://facebook.com/lugvia",
         "https://instagram.com/lugvia",
-        "https://twitter.com/lugvia",
-        "https://linkedin.com/company/lugvia"
+        "https://twitter.com/lugvia"
       ],
       contactPoint: [
         {
           "@type": "ContactPoint",
-          telephone: "+44-7466-779542",
+          telephone: "+1-646-719-7124",
           contactType: "customer service",
-          areaServed: "Worldwide",
-          availableLanguage: ["en", "ar", "tr", "fr"],
+          areaServed: "US",
+          availableLanguage: ["en"],
           email: "support@lugvia.com"
         },
       ],
       priceRange: "$$",
-      paymentAccepted: "Cash, Credit Card, PayPal, Stripe",
-      currenciesAccepted: "USD, EUR, GBP, SAR, AED, TRY",
+      paymentAccepted: "Cash, Credit Card",
+      currenciesAccepted: "USD",
       hasOfferCatalog: {
         "@type": "OfferCatalog",
-        name: "Travel Services",
+        name: "Moving Services",
         itemListElement: [
           {
             "@type": "Offer",
             itemOffered: {
               "@type": "Service",
-              name: "Airport Transfers",
-              description: "Reliable and luxury airport pickup and drop-off services."
+              name: "Local Moving",
+              description: "Residential and apartment moves with optional packing services."
             }
           },
           {
             "@type": "Offer",
             itemOffered: {
               "@type": "Service",
-              name: "Chauffeur Service",
-              description: "Professional private drivers for hourly or daily hire."
+              name: "Long-Distance Moving",
+              description: "Intercity and interstate relocation coordination with partner carriers."
             }
           },
           {
             "@type": "Offer",
             itemOffered: {
               "@type": "Service",
-              name: "City to City Transfer",
-              description: "Comfortable long-distance transfers between cities."
+              name: "Packing and Storage",
+              description: "Optional full/partial packing, supplies, and short-term storage."
             }
           }
         ]
@@ -83,15 +75,10 @@ export function SchemaMarkup() {
       "@type": "WebSite",
       "@id": "https://lugvia.com/#website",
       url: "https://lugvia.com",
-      name: "Lugvia Premium Travel",
-      alternateName: ["Lugvia Travel", "Lugvia Transfers"],
+      name: "Lugvia Movers",
+      alternateName: ["Lugvia Packers and Movers"],
       publisher: {
         "@id": "https://lugvia.com/#organization"
-      },
-      potentialAction: {
-        "@type": "SearchAction",
-        target: "https://lugvia.com/search?q={search_term_string}",
-        "query-input": "required name=search_term_string"
       }
     }
   ];

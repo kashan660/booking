@@ -14,6 +14,7 @@ import { RichTextEditor } from "@/components/ui/rich-text-editor";
 import { ArrowLeft, Loader2, Save } from "lucide-react";
 import Link from "next/link";
 import { Page } from "@prisma/client";
+import { ImageUpload } from "@/components/ui/image-upload";
 import {
   Select,
   SelectContent,
@@ -236,6 +237,7 @@ export default function PageEditForm({ page }: PageEditFormProps) {
                     <SelectItem value="landing">Landing Page</SelectItem>
                     <SelectItem value="full-width">Full Width</SelectItem>
                     <SelectItem value="contact">Contact Page</SelectItem>
+                    <SelectItem value="guide">Guide (SEO)</SelectItem>
                   </SelectContent>
                 </Select>
               </div>

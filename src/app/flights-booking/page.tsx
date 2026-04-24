@@ -21,7 +21,6 @@ export default function FlightsBookingPage() {
             fill
             priority
             className="object-cover opacity-80"
-            unoptimized
           />
           <div className="absolute inset-0 bg-gradient-to-b from-slate-900/30 to-slate-900/60" />
         </div>

@@ -253,6 +253,7 @@ export default function NewPage() {
                     <SelectItem value="landing">Landing Page</SelectItem>
                     <SelectItem value="full-width">Full Width</SelectItem>
                     <SelectItem value="contact">Contact Page</SelectItem>
+                    <SelectItem value="guide">Guide (SEO)</SelectItem>
                   </SelectContent>
                 </Select>
               </div>

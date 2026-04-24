@@ -1,10 +1,38 @@
+"use client";
+
 import Link from "next/link";
-import { MessageCircle } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
+
+function normalizeWhatsAppNumber(input: string) {
+  const digits = input.replace(/[^\d]/g, "");
+  return digits;
+}
 
 export function WhatsAppButton() {
-  const phoneNumber = "447466779542";
-  const message = encodeURIComponent("Hello! I would like to book a transfer.");
-  const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
+  const [phoneNumber, setPhoneNumber] = useState<string>("+16467197124");
+  const message = encodeURIComponent("Hello! I would like to get a moving quote.");
+
+  useEffect(() => {
+    let mounted = true;
+    (async () => {
+      try {
+        const res = await fetch("/api/settings/site");
+        const json = await res.json();
+        if (!mounted) return;
+        if (json?.whatsappNumber) setPhoneNumber(String(json.whatsappNumber));
+      } catch {
+        // keep default
+      }
+    })();
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
+  const whatsappUrl = useMemo(() => {
+    const normalized = normalizeWhatsAppNumber(phoneNumber);
+    return `https://wa.me/${normalized}?text=${message}`;
+  }, [phoneNumber, message]);
 
   return (
     <Link

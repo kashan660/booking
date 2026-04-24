@@ -18,7 +18,7 @@ export default function HotelBookingPage() {
     <div className="pb-20">
       <div className="bg-slate-900 text-white py-20 relative overflow-hidden">
         <div className="absolute inset-0 opacity-20">
-            <Image src="https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&q=80" alt="Background" fill className="object-cover" unoptimized />
+            <Image src="https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&q=80" alt="Background" fill className="object-cover" />
         </div>
         <div className="container mx-auto px-4 text-center relative z-10">
           <h1 className="text-4xl md:text-6xl font-bold mb-6">Hotel Booking</h1>

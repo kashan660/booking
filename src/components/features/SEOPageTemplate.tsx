@@ -91,7 +91,7 @@ export function SEOPageTemplate({
               <div className="flex -space-x-2">
                 {[1,2,3,4].map(i => (
                   <div key={i} className="w-8 h-8 rounded-full border-2 border-white bg-slate-200 overflow-hidden relative">
-                     <Image src={`https://i.pravatar.cc/100?img=${i+10}`} alt="User" fill className="object-cover" unoptimized />
+                     <Image src={`https://i.pravatar.cc/100?img=${i+10}`} alt="User" fill className="object-cover" />
                   </div>
                 ))}
               </div>

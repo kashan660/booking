@@ -7,6 +7,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // 1. Fetch dynamic content from database
   let blogPosts: { slug: string; updatedAt: Date }[] = [];
   let dynamicPages: { slug: string; updatedAt: Date }[] = [];
+  let movingCities: { slug: string; updatedAt: Date }[] = [];
+  let movingServices: { slug: string; updatedAt: Date }[] = [];
 
   try {
     blogPosts = await prisma.blogPost.findMany({
@@ -15,6 +17,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     });
 
     dynamicPages = await prisma.page.findMany({
+      where: { published: true },
+      select: { slug: true, updatedAt: true },
+    });
+
+    movingCities = await prisma.movingCity.findMany({
+      where: { published: true },
+      select: { slug: true, updatedAt: true },
+    });
+
+    movingServices = await prisma.movingService.findMany({
       where: { published: true },
       select: { slug: true, updatedAt: true },
     });
@@ -38,38 +50,32 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.6,
   }));
 
+  const movingCityUrls = movingCities.map((c) => ({
+    url: `${baseUrl}/movers/${c.slug}`,
+    lastModified: c.updatedAt,
+    changeFrequency: "monthly" as const,
+    priority: 0.7,
+  }));
+
+  const movingServiceUrls = movingServices.map((s) => ({
+    url: `${baseUrl}/services/${s.slug}`,
+    lastModified: s.updatedAt,
+    changeFrequency: "monthly" as const,
+    priority: 0.7,
+  }));
+
   // 4. Define Static Routes
   const staticRoutes = [
     '',
     '/about',
     '/contact',
-    '/destinations',
-    '/airport-transfers',
-    '/city-to-city',
-    '/hourly-booking',
-    '/chauffeur-service',
-    '/hotel-booking',
-    '/flights-booking',
-    '/tours-activities',
-    '/travel-packages',
+    '/driver-registration',
+    '/vehicle-registration',
+    '/movers',
+    '/services',
+    '/guides',
+    '/get-a-quote',
     '/blog',
-    // Landing pages (keep these if they are hardcoded files)
-    '/airport-taxi-london',
-    '/airport-taxi-newyork',
-    '/airport-taxi-tokyo',
-    '/airport-taxi-singapore',
-    '/airport-taxi-paris',
-    '/airport-taxi-dubai',
-    '/airport-taxi-istanbul',
-    '/airport-taxi-antalya',
-    '/jeddah-to-makkah-taxi',
-    '/city-transfers-makkah-madina',
-    '/best-hotels-paris',
-    '/best-hotels-istanbul',
-    '/best-hotels-dubai',
-    '/best-hotels-antalya',
-    '/best-hotels-makkah',
-    '/best-hotels-madina',
   ].map((route) => ({
     url: `${baseUrl}${route}`,
     lastModified: new Date(),
@@ -78,5 +84,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }));
 
   // 5. Merge all routes
-  return [...staticRoutes, ...blogUrls, ...pageUrls];
+  return [...staticRoutes, ...blogUrls, ...pageUrls, ...movingCityUrls, ...movingServiceUrls];
 }

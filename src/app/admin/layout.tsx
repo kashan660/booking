@@ -2,7 +2,21 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import Link from "next/link";
-import { LayoutDashboard, FileText, Settings, LogOut, Globe, Layout as LayoutIcon, MapPin, PackageSearch, Inbox, BadgeDollarSign } from "lucide-react";
+import {
+  LayoutDashboard,
+  FileText,
+  Settings,
+  LogOut,
+  Globe,
+  Layout as LayoutIcon,
+  MapPin,
+  PackageSearch,
+  Inbox,
+  BadgeDollarSign,
+  Users,
+  Truck,
+  Image as ImageIcon,
+} from "lucide-react";
 import Image from "next/image";
 
 export default async function AdminLayout({
@@ -51,6 +65,13 @@ export default async function AdminLayout({
               <FileText className="h-5 w-5" />
               Blog Posts
             </Link>
+            <Link
+              href="/admin/media"
+              className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-slate-800 transition-colors"
+            >
+              <ImageIcon className="h-5 w-5" />
+              Media Gallery
+            </Link>
             <div className="mt-6 pt-6 border-t border-slate-800">
               <div className="px-4 pb-2 text-xs font-semibold text-slate-400 uppercase tracking-wide">
                 Moving
@@ -82,6 +103,25 @@ export default async function AdminLayout({
               >
                 <BadgeDollarSign className="h-5 w-5" />
                 Pricing
+              </Link>
+            </div>
+            <div className="mt-6 pt-6 border-t border-slate-800">
+              <div className="px-4 pb-2 text-xs font-semibold text-slate-400 uppercase tracking-wide">
+                Team
+              </div>
+              <Link
+                href="/admin/team/drivers"
+                className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-slate-800 transition-colors"
+              >
+                <Users className="h-5 w-5" />
+                Driver Registrations
+              </Link>
+              <Link
+                href="/admin/team/vehicles"
+                className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-slate-800 transition-colors"
+              >
+                <Truck className="h-5 w-5" />
+                Vehicle Registrations
               </Link>
             </div>
             <Link

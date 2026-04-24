@@ -1,108 +1,75 @@
-"use client";
+import type { Metadata } from "next";
+import Link from "next/link";
+import { Mail, Phone, MapPin } from "lucide-react";
+import { getSiteSettings } from "@/lib/site-settings";
 
-import { Mail, Phone, MapPin, Send } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { useSearchParams } from "next/navigation";
-import { Suspense } from "react";
-
-function ContactForm() {
-  const searchParams = useSearchParams();
-  const subject = searchParams.get("subject") || "";
-
-  return (
-    <div className="bg-slate-50 p-8 rounded-xl">
-      <h2 className="text-2xl font-bold mb-6">Send us a message</h2>
-      <form className="space-y-4">
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <label className="block text-sm font-medium mb-2">First Name</label>
-            <Input placeholder="John" />
-          </div>
-          <div>
-            <label className="block text-sm font-medium mb-2">Last Name</label>
-            <Input placeholder="Doe" />
-          </div>
-        </div>
-        
-        <div>
-          <label className="block text-sm font-medium mb-2">Email</label>
-          <Input type="email" placeholder="john@example.com" />
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium mb-2">Subject</label>
-          <Input placeholder="Booking inquiry" defaultValue={subject} />
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium mb-2">Message</label>
-          <textarea 
-            className="w-full min-h-[150px] p-3 rounded-md border border-input bg-background ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-            placeholder="How can we help you?"
-          ></textarea>
-        </div>
-
-        <Button className="w-full">
-          Send Message <Send className="ml-2 h-4 w-4" />
-        </Button>
-      </form>
-    </div>
-  );
+export async function generateMetadata(): Promise<Metadata> {
+  const settings = await getSiteSettings();
+  return {
+    title: `Contact ${settings.brandName}`,
+    description: "Contact our reseller support team for quotes, partnerships, and team registration.",
+  };
 }
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  const settings = await getSiteSettings();
   return (
-    <div className="container mx-auto px-4 py-12">
-      <h1 className="text-4xl font-bold mb-8">Contact Us</h1>
-      
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-        <div>
-          <p className="text-xl text-muted-foreground mb-8">
-            Have questions about your booking or need assistance? Our 24/7 support team is here to help.
-          </p>
+    <div className="min-h-screen bg-white pt-28 pb-16">
+      <div className="container mx-auto px-4">
+        <h1 className="text-4xl font-bold text-slate-900">Contact us</h1>
+        <p className="mt-3 max-w-3xl text-slate-600">
+          We manage reseller pricing and partner coordination. Reach us for customer quotes, bulk business requests, or
+          team onboarding.
+        </p>
 
-          <div className="space-y-6 mb-12">
-            <div className="flex items-start space-x-4">
-              <div className="bg-primary/10 p-3 rounded-full">
-                <Phone className="h-6 w-6 text-primary" />
-              </div>
+        <div className="mt-10 grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div className="rounded-2xl border border-slate-200 p-6 space-y-5">
+            <div className="flex items-start gap-3">
+              <Phone className="h-5 w-5 text-blue-600 mt-0.5" />
               <div>
-                <h3 className="font-semibold text-lg">Phone & WhatsApp</h3>
-                <p className="text-muted-foreground">+44 7466 779542</p>
-                <p className="text-sm text-muted-foreground mt-1">Available 24/7</p>
+                <h2 className="font-semibold text-slate-900">Phone / WhatsApp</h2>
+                <p className="text-slate-600">{settings.primaryPhone || settings.whatsappNumber}</p>
               </div>
             </div>
 
-            <div className="flex items-start space-x-4">
-              <div className="bg-primary/10 p-3 rounded-full">
-                <Mail className="h-6 w-6 text-primary" />
-              </div>
+            <div className="flex items-start gap-3">
+              <Mail className="h-5 w-5 text-blue-600 mt-0.5" />
               <div>
-                <h3 className="font-semibold text-lg">Email</h3>
-                <p className="text-muted-foreground">support@lugvia.com</p>
-                <p className="text-sm text-muted-foreground mt-1">We reply within 2 hours</p>
+                <h2 className="font-semibold text-slate-900">Email</h2>
+                <p className="text-slate-600">{settings.supportEmail || "support@lugvia.com"}</p>
               </div>
             </div>
 
-            <div className="flex items-start space-x-4">
-              <div className="bg-primary/10 p-3 rounded-full">
-                <MapPin className="h-6 w-6 text-primary" />
-              </div>
+            <div className="flex items-start gap-3">
+              <MapPin className="h-5 w-5 text-blue-600 mt-0.5" />
               <div>
-                <h3 className="font-semibold text-lg">Office</h3>
-                <p className="text-muted-foreground">
-                  123 Business Street<br />
-                  Tech City, TC 90210
-                </p>
+                <h2 className="font-semibold text-slate-900">Address</h2>
+                <p className="text-slate-600">{settings.addressLine || "United States"}</p>
               </div>
             </div>
           </div>
-        </div>
 
-        <Suspense fallback={<div className="bg-slate-50 p-8 rounded-xl h-[600px] animate-pulse"></div>}>
-          <ContactForm />
-        </Suspense>
+          <div className="rounded-2xl border border-slate-200 p-6">
+            <h2 className="text-xl font-semibold text-slate-900">Quick actions</h2>
+            <div className="mt-4 space-y-3">
+              <Link className="block rounded-xl border border-slate-200 px-4 py-3 hover:bg-slate-50" href="/get-a-quote">
+                Request a customer quote
+              </Link>
+              <Link
+                className="block rounded-xl border border-slate-200 px-4 py-3 hover:bg-slate-50"
+                href="/driver-registration"
+              >
+                Driver registration
+              </Link>
+              <Link
+                className="block rounded-xl border border-slate-200 px-4 py-3 hover:bg-slate-50"
+                href="/vehicle-registration"
+              >
+                Vehicle registration
+              </Link>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
